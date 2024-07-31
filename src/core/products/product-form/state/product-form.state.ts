@@ -5,7 +5,8 @@ import { ProductForm } from "../models/types";
 
 interface ProductFormState {
   product: ProductForm;
-  setProduct: (product: Product) => void;
+  productToEdit: ProductForm;
+  setProductToEdit: (barCode: string, newProduct?: Product) => void;
 }
 
 const initialData: ProductForm = {
@@ -31,6 +32,9 @@ const initialData2: ProductForm = {
 };
 
 export const useProductFormState = create<ProductFormState>((set) => ({
-  product: initialData2,
-  setProduct: (product: Product) => set(() => ({ product })),
+  product: initialData,
+  productToEdit: initialData,
+  setProductToEdit: (_, newProduct?: Product) => {
+    set({ productToEdit: newProduct ? newProduct : initialData });
+  },
 }));

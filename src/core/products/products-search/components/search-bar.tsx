@@ -2,10 +2,14 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ROUTES } from "@/lib/constants/nav";
+
 import type { Product } from "@prisma/client";
 
 import { getProduct } from "../services/products-search.service";
@@ -26,6 +30,9 @@ interface Props {
 }
 
 const SearchBar = ({ toEdit, productsListIds, addToState }: Props) => {
+  const { push } = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof ProductSearchSchema>>({
     resolver: zodResolver(ProductSearchSchema),
     defaultValues: {
@@ -46,10 +53,21 @@ const SearchBar = ({ toEdit, productsListIds, addToState }: Props) => {
     }
 
     getProduct({ barcode }).then(({ data }) => {
-      if (!data) return;
+      if (!data) {
+        form.reset();
+        toast({
+          variant: "destructive",
+          title: "Upps, ocurrio un error",
+          description: "No se encontro el producto",
+        });
+        return;
+      }
 
-      console.log(data);
       addToState?.(data.barcode, data);
+
+      if (toEdit) {
+        push(`${ROUTES.EDIT_PRODUCTS}/${data.barcode}`);
+      }
 
       form.resetField("barcode");
     });
@@ -76,7 +94,7 @@ const SearchBar = ({ toEdit, productsListIds, addToState }: Props) => {
           )}
         />
         <Button type="submit" className="">
-          Agregar Producto
+          {toEdit ? "Editar Producto" : "Agregar Producto"}
         </Button>
       </form>
     </Form>

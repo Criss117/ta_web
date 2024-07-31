@@ -10,30 +10,41 @@ import {
 } from "lucide-react";
 import { NavItem } from "../models";
 
+export const ROUTES = {
+  SALES: "/sales",
+  CLIENTS: "/clients",
+  PRODUCTS: "/products",
+  INVENTORY: "/inventory",
+  CONFIG: "/config",
+  CREATE_PRODUCTS: "/products/create",
+  EDIT_PRODUCTS: "/products/edit",
+  DELETE_PRODUCTS: "/products/delete",
+} as const;
+
 export const NAVITEMS: NavItem[] = [
   {
     name: "Ventas",
-    href: "/sales",
+    href: ROUTES.SALES,
     icon: BadgeDollarSign,
   },
   {
     name: "Clientes",
-    href: "/clients",
+    href: ROUTES.CLIENTS,
     icon: Users,
   },
   {
     name: "Productos",
-    href: "/products/create",
+    href: ROUTES.CREATE_PRODUCTS,
     icon: PackageSearch,
   },
   {
     name: "Inventario",
-    href: "/inventory",
+    href: ROUTES.INVENTORY,
     icon: TableCellsMerge,
   },
   {
     name: "Configuración",
-    href: "/config",
+    href: ROUTES.CONFIG,
     icon: Bolt,
   },
 ];
@@ -41,17 +52,17 @@ export const NAVITEMS: NavItem[] = [
 export const PRODUCTS_NAVITEMS: NavItem[] = [
   {
     name: "Crear",
-    href: "/products/create",
+    href: ROUTES.CREATE_PRODUCTS,
     icon: FilePlus2,
   },
   {
     name: "Editar",
-    href: "/products/edit",
+    href: ROUTES.EDIT_PRODUCTS,
     icon: FilePenLine,
   },
   {
     name: "Eliminar",
-    href: "/products/delete",
+    href: ROUTES.DELETE_PRODUCTS,
     icon: Trash2,
   },
 ];

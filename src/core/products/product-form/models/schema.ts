@@ -74,3 +74,7 @@ export const ProductFormSchema = z.object({
       })
   ),
 });
+
+export const EditProductFormSchema = ProductFormSchema.extend({
+  id: z.number().min(1),
+});

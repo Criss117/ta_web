@@ -1,9 +1,11 @@
 "use client";
 
-import FormItemInput from "@/components/form/form-item-input";
-import { Form, FormField } from "@/components/ui/form";
+import { Loader } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Form, FormField } from "@/components/ui/form";
+import ErrorMessage from "@/components/form/error-message";
+import FormItemInput from "@/components/form/form-item-input";
 
 import useFormProduct from "../hooks/use.product-form";
 
@@ -59,16 +61,20 @@ const formItemsStock = [
 ] as const;
 
 interface Props {
-  id?: string;
+  barcode?: string;
   onPage: "create" | "edit";
 }
 
-function ProductForm({ id, onPage }: Props) {
-  const { form, onSubmit } = useFormProduct({ id, onPage });
+function ProductForm({ barcode, onPage }: Props) {
+  const { form, isError, response, isLoading, onSubmit } = useFormProduct({
+    barcode,
+    onPage,
+  });
 
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="space-y-10">
+        <ErrorMessage isError={isError} error={response?.error} />
         <fieldset className="space-y-2">
           {formItemsText.map((item) => (
             <FormField
@@ -100,8 +106,14 @@ function ProductForm({ id, onPage }: Props) {
           ))}
         </fieldset>
 
-        <Button type="submit" className="w-full">
-          Crear Producto
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? (
+            <Loader className="mr-2 h-4 w-4 animate-spin" />
+          ) : onPage === "create" ? (
+            "Guardar producto"
+          ) : (
+            "Guardar cambios"
+          )}
         </Button>
       </form>
     </Form>

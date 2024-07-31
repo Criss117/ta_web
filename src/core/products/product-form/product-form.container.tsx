@@ -1,15 +1,22 @@
+"use client";
+
 import ProductsSearchContainer from "../products-search/products-search.container";
 import ProductForm from "./components/product-form";
+import { useProductFormState } from "./state/product-form.state";
 
 interface Props {
-  id?: string;
+  barcode?: string;
   onPage: "create" | "edit";
 }
 
-function ProductFormContainer({ id, onPage }: Props) {
-  if (!id && onPage === "edit") return <ProductsSearchContainer />;
+function ProductFormContainer({ barcode, onPage }: Props) {
+  const { setProductToEdit } = useProductFormState();
 
-  if (id && onPage === "edit") return <ProductForm id={id} onPage={onPage} />;
+  if (!barcode && onPage === "edit")
+    return <ProductsSearchContainer addToState={setProductToEdit} toEdit />;
+
+  if (barcode && onPage === "edit")
+    return <ProductForm barcode={barcode} onPage={onPage} />;
 
   if (onPage === "edit") return <ProductForm onPage={onPage} />;
 

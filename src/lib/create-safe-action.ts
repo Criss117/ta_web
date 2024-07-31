@@ -15,8 +15,6 @@ export function createSafeAction<T, P>(
   handler: (validateData: T) => Promise<ActionState<T, P>>
 ) {
   return async (data: T): Promise<ActionState<T, P>> => {
-    console.log(data);
-
     const validatedData = schema.safeParse(data);
     if (!validatedData.success) {
       return {

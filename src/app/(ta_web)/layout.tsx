@@ -3,6 +3,7 @@
 import { PropsWithChildren } from "react";
 
 import NavBar from "@/components/ui/navbar";
+import { Toaster } from "@/components/ui/toaster";
 import TansTackProvider from "@/plugins/tanstack.provider";
 
 const Layout = ({ children }: PropsWithChildren) => {
@@ -10,6 +11,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     <TansTackProvider>
       <main className="bg-lightbg-200 min-h-screen">
         <NavBar />
+        <Toaster />
         {children}
       </main>
     </TansTackProvider>
