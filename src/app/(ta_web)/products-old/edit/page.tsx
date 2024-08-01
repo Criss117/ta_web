@@ -1,4 +1,4 @@
-import ProductFormContainer from "@/core/products/product-form/product-form.container";
+import ProductFormContainer from "@/core/products-old/product-form/product-form.container";
 
 const EditProductsPage = () => {
   return (

@@ -1,5 +1,5 @@
 "use client";
-import ProductsSearchContainer from "../products/products-search/products-search.container";
+import ProductsSearchContainer from "../products-old/products-search/products-search.container";
 import TicketTable from "./components/ticket-table";
 import TicketsNav from "./components/tickets-nav";
 

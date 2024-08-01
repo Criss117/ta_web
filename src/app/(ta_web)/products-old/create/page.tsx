@@ -1,4 +1,4 @@
-import ProductForm from "@/core/products/product-form/components/product-form";
+import ProductForm from "@/core/products-old/product-form/components/product-form";
 
 const CreateProductPage = () => {
   return (

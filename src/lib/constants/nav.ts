@@ -13,7 +13,7 @@ import { NavItem } from "../models";
 export const ROUTES = {
   SALES: "/sales",
   CLIENTS: "/clients",
-  PRODUCTS: "/products",
+  PRODUCTS: "/products?page=1&offset=10",
   INVENTORY: "/inventory",
   CONFIG: "/config",
   CREATE_PRODUCTS: "/products/create",
@@ -34,13 +34,8 @@ export const NAVITEMS: NavItem[] = [
   },
   {
     name: "Productos",
-    href: ROUTES.CREATE_PRODUCTS,
+    href: ROUTES.PRODUCTS,
     icon: PackageSearch,
-  },
-  {
-    name: "Inventario",
-    href: ROUTES.INVENTORY,
-    icon: TableCellsMerge,
   },
   {
     name: "Configuración",

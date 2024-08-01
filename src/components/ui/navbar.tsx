@@ -29,7 +29,7 @@ const NavBar = ({ variant = "primary" }: Props) => {
       case "primary":
         newNavItems = NAVITEMS.map((item) => ({
           ...item,
-          current: pathname.split("/")[1] === item.href.split("/")[1],
+          current: item.href.includes(pathname),
         }));
         break;
       case "products":
