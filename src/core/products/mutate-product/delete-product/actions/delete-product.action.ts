@@ -1,29 +1,30 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-
-import { sleep } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
+
+import prisma from "@/lib/prisma";
 import { PRISMACODES } from "@/lib/constants/prisma-codes";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
-import {
-  EditProductInputType,
-  MutateProductReturnType,
-} from "../../models/types";
 
-export async function editProduct(
-  product: EditProductInputType
+import type { MutateProductReturnType } from "../../models/types";
+import { sleep } from "@/lib/utils";
+
+export async function deleteProduct(
+  barcode: string,
+  id: number
 ): Promise<MutateProductReturnType> {
-  // await sleep(2000);
+  await sleep(2000);
 
   try {
-    // throw new Error("test");
     const res = await prisma.product.update({
       where: {
-        barcode: product.barcode,
-        id: product.id,
+        barcode,
+        id,
       },
-      data: product,
+      data: {
+        deletedAt: new Date(),
+        isActive: false,
+      },
     });
 
     return {
@@ -43,7 +44,7 @@ export async function editProduct(
     }
 
     return {
-      error: PRODUCT_FORM_MESSAGES.ERROR,
+      error: PRODUCT_FORM_MESSAGES.DELETED_ERROR,
     };
   }
 }

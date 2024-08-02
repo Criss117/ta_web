@@ -22,4 +22,5 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+  isActive Boolean @default(true)
 }

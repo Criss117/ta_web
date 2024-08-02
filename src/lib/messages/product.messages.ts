@@ -34,8 +34,11 @@ export const PRODUCT_FORM_MESSAGES = {
     MIN: "El stock minimo debe ser mayor a 0",
     MAX_STOCK: "El stock minimo debe ser menor o igual al stock",
   },
-  SUCCESS: "Producto guardadro exitosamente",
+  DELETED_SUCCESS: "Producto eliminado exitosamente",
+  DELETED_ERROR: "Error al eliminar el producto",
+  SUCCESS: "Producto guardado exitosamente",
   ERROR_TITLE: "Upps, ocurrio un error",
   ERROR: "Error al guardar el producto",
   EXIST: "Ya existe un producto con ese código de barras",
+  UNKNOWN_ERROR: "Hubo un error inesperado",
 };

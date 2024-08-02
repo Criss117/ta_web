@@ -4,6 +4,7 @@ import { cn, formatCurrency } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
+import MutateProductContainer from "../../mutate-product/mutate-product.container";
 
 export const productsColumns: ColumnDef<Product>[] = [
   {
@@ -48,11 +49,14 @@ export const productsColumns: ColumnDef<Product>[] = [
     id: "actions",
     cell: ({ row }) => {
       const product = row.original;
+
       return (
         <div className="flex gap-2">
-          <Button variant="destructive" className="w-1/2">
-            Eliminar
-          </Button>
+          <MutateProductContainer
+            barcode={product.barcode}
+            action="delete"
+            id={product.id}
+          />
           <Link
             className={cn("w-1/2", buttonVariants({ variant: "outline" }))}
             href={`${ROUTES.EDIT_PRODUCTS}/${product.barcode}`}
