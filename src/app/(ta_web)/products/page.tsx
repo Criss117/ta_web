@@ -5,8 +5,8 @@ import { ROUTES } from "@/lib/constants/nav";
 
 interface Props {
   searchParams?: {
-    page: string;
-    offset: string;
+    page?: string;
+    offset?: string;
   };
 }
 

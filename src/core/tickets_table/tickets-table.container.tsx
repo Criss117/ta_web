@@ -12,10 +12,10 @@ const TicketsTableContainer = () => {
 
   return (
     <>
-      <ProductsSearchContainer
+      {/* <ProductsSearchContainer
         productsListIds={barCodes}
         addToState={addProduct}
-      />
+      /> */}
       <TicketsNav />
       <TicketTable />
       {JSON.stringify(tickets, null, 2)}

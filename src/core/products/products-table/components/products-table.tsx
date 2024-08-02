@@ -20,9 +20,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface Props {
   data: Product[];
   offset: number;
+  isFetching: boolean;
 }
 
-const ProductsTable = ({ data, offset }: Props) => {
+const ProductsTable = ({ data, offset, isFetching }: Props) => {
   const table = useReactTable({
     data,
     columns: productsColumns,
@@ -30,8 +31,8 @@ const ProductsTable = ({ data, offset }: Props) => {
   });
 
   return (
-    <Table className="rounded-xl">
-      <TableHeader className="bg-lightaccent-100 rounded-xl">
+    <Table>
+      <TableHeader className="bg-lightaccent-100">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
@@ -67,16 +68,27 @@ const ProductsTable = ({ data, offset }: Props) => {
           ))
         ) : (
           <>
-            {Array.from({ length: offset }).map((_, index) => (
-              <TableRow key={index}>
+            {isFetching &&
+              Array.from({ length: offset }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell
+                    colSpan={productsColumns.length}
+                    className="h-[73px]"
+                  >
+                    <Skeleton className="w-full h-full" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            {!isFetching && data.length === 0 && (
+              <TableRow>
                 <TableCell
                   colSpan={productsColumns.length}
-                  className="h-[73px]"
+                  className="h-[73px] text-center"
                 >
-                  <Skeleton className="w-full h-full" />
+                  No hay resultados
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </>
         )}
       </TableBody>

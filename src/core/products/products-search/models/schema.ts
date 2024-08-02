@@ -1,6 +1,5 @@
 import { z } from "zod";
 
 export const ProductSearchSchema = z.object({
-  barcode: z.string().min(1),
-  description: z.string().min(1).optional(),
+  query: z.string().min(1),
 });

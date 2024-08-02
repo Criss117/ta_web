@@ -1,11 +1,14 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { ROUTES } from "@/lib/constants/nav";
+import { cn, formatCurrency } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
 export const productsColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "barcode",
-    header: "Código de barras",
+    header: "Código de Barras",
   },
   {
     accessorKey: "description",
@@ -14,10 +17,16 @@ export const productsColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "costPrice",
     header: "Costo",
+    cell: ({ row }) => {
+      return formatCurrency(row.getValue("costPrice"));
+    },
   },
   {
     accessorKey: "salePrice",
     header: "Precio de venta",
+    cell: ({ row }) => {
+      return formatCurrency(row.getValue("salePrice"));
+    },
   },
   {
     accessorKey: "stock",
@@ -44,9 +53,12 @@ export const productsColumns: ColumnDef<Product>[] = [
           <Button variant="destructive" className="w-1/2">
             Eliminar
           </Button>
-          <Button variant="outline" className="w-1/2">
+          <Link
+            className={cn("w-1/2", buttonVariants({ variant: "outline" }))}
+            href={`${ROUTES.EDIT_PRODUCTS}/${product.barcode}`}
+          >
             Editar
-          </Button>
+          </Link>
         </div>
       );
     },

@@ -9,11 +9,18 @@ interface Props {
   placeholder?: string;
   type: HTMLInputTypeAttribute | undefined;
   field: any;
+  hidden?: boolean;
 }
 
-const FormItemInput = ({ label, placeholder, type, field }: Props) => {
+const FormItemInput = ({
+  label,
+  placeholder,
+  type,
+  field,
+  hidden = false,
+}: Props) => {
   return (
-    <FormItem>
+    <FormItem hidden={hidden}>
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <Input placeholder={placeholder} {...field} type={type} />

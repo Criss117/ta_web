@@ -17,17 +17,40 @@ export async function findProducts({
   page = 0,
   filters = { minStock: false },
 }: FindProductsInputType) {
-  console.log("page", page, "offSet", offSet, "filters", filters);
-  await sleep(2000);
+  // await sleep(2000);
 
   const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {
     skip: page * offSet,
     take: offSet,
+    select: {
+      barcode: true,
+      description: true,
+      costPrice: true,
+      salePrice: true,
+      stock: true,
+      minStock: true,
+      createdAt: true,
+    },
   };
 
   if (filters.minStock) {
     queryOptions.orderBy = {
       stock: "asc",
+    };
+  }
+
+  if (filters.query) {
+    queryOptions.where = {
+      OR: [
+        {
+          barcode: filters.query,
+        },
+        {
+          description: {
+            contains: filters.query,
+          },
+        },
+      ],
     };
   }
 
@@ -38,6 +61,24 @@ export async function findProducts({
   return products;
 }
 
-export async function countProducts() {
-  return await prisma.product.count();
+export async function countProducts(query?: string) {
+  const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {};
+  if (query) {
+    queryOptions.where = {
+      OR: [
+        {
+          barcode: query,
+        },
+        {
+          description: {
+            contains: query,
+          },
+        },
+      ],
+    };
+  }
+
+  return await prisma.product.count({
+    where: queryOptions.where,
+  });
 }
