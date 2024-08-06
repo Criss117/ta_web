@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import ProductsSearchContainer from "./products-search/products-search.container";
-import ProductTableContainer from "./products-table/products-table.container";
-import { useProductsTableState } from "./products-table/state/products-table.state";
+
 import { ROUTES } from "@/lib/constants/nav";
 import { buttonVariants } from "@/components/ui/button";
+
+import ProductTableContainer from "./products-table/products-table.container";
+import ProductsSearchContainer from "./products-search/products-search.container";
+import { useProductsTableState } from "./products-table/state/products-table.state";
 
 interface Props {
   page: number;

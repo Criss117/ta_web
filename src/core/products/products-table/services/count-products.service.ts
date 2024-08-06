@@ -5,7 +5,11 @@ export class CountProductsService {
     return await countProducts();
   }
   static async countToPagination(offset: number, query?: string) {
-    const total = await countProducts(query);
+    const res = await countProducts(query);
+
+    const total = res.data;
+
+    if (!total) return { totalProducts: 0, totalPage: 0 };
 
     return { totalProducts: total, totalPage: Math.ceil(total / offset) };
   }

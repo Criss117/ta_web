@@ -66,12 +66,10 @@ export async function findProducts({
       ...queryOptions,
     });
 
-    console.log(products);
-
-    return products;
+    return {
+      data: products,
+    };
   } catch (error) {
-    console.log(error);
-
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       const prismaError = PRISMACODES.ERRORS.find(
         (err) => err.code === error.code
@@ -108,9 +106,13 @@ export async function countProducts(query?: string) {
       };
     }
 
-    return await prisma.product.count({
+    const res = await prisma.product.count({
       where: { ...queryOptions.where },
     });
+
+    return {
+      data: res,
+    };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       const prismaError = PRISMACODES.ERRORS.find(

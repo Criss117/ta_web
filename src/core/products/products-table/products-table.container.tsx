@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import useProductTable from "./hooks/use.product-table";
 import ProductsTable from "./components/products-table";
 import ProductsTablePag from "./components/products-table-pag";
 import { useProductsTableState } from "./state/products-table.state";
 import { CountProductsService } from "./services/count-products.service";
-import { useRouter } from "next/navigation";
 
 interface Props {
   page: number;
@@ -39,7 +39,6 @@ const ProductTableContainer = ({ offset, page, query }: Props) => {
   }, [offset]);
 
   useEffect(() => {
-    if (!query) return;
     CountProductsService.countToPagination(offset, query).then((count) => {
       setTotalProducts(count.totalProducts, count.totalPage);
       router.push(`?page=1&offset=${offset}`);
@@ -54,7 +53,7 @@ const ProductTableContainer = ({ offset, page, query }: Props) => {
         productCount={{ totalProducts, totalPage }}
       />
       <ProductsTable
-        data={findProductsQuery.data || []}
+        data={findProductsQuery.data?.data || []}
         offset={offset}
         isFetching={findProductsQuery.isFetching}
       />

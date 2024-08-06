@@ -1,5 +1,4 @@
-import { findOneProduct } from "../../actions/find-one-product.action";
-import { MutateProductReturnType } from "../models/types";
+import { findOneProduct } from "../actions/find-one-product.action";
 
 export class FindOneProductService {
   private barcode: string;
@@ -7,7 +6,7 @@ export class FindOneProductService {
     this.barcode = barcode;
   }
 
-  async execute(): Promise<MutateProductReturnType> {
+  async execute() {
     const product = await findOneProduct(this.barcode);
     return product;
   }

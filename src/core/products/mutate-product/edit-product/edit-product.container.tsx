@@ -1,12 +1,10 @@
 "use client";
 
 import ProductForm from "../components/product-form";
-import useFindOneProduct from "./hooks/use.find-one-product";
 import { ProductReceivedAdapter } from "./adapters/product-edit.adapter";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import BackButton from "@/components/ui/back-button";
 import useEditProduct from "./hooks/use.edit-product";
+import useFindOneProduct from "../../hooks/use.find-one-product";
 
 interface Props {
   barcode: string;

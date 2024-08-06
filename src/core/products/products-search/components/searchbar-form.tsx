@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Form,
@@ -7,23 +9,29 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-
-import { ProductSearchSchema } from "../models/schema";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-const SearchBarForm = () => {
+import { ProductSearchSchema } from "../models/schema";
+
+interface Props {
+  searchByBarcodeFn?: (barcode: string) => void;
+}
+
+const SearchBarForm = ({ searchByBarcodeFn }: Props) => {
   const form = useForm<z.infer<typeof ProductSearchSchema>>({
     resolver: zodResolver(ProductSearchSchema),
     defaultValues: {
-      query: "",
+      barcode: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof ProductSearchSchema>) => {
-    const { query } = values;
+    const { barcode } = values;
+
+    searchByBarcodeFn?.(barcode);
+
+    form.reset();
   };
 
   return (
@@ -34,14 +42,14 @@ const SearchBarForm = () => {
       >
         <FormField
           control={form.control}
-          name="query"
+          name="barcode"
           render={({ field }) => (
             <FormItem className="w-full items-center">
               <FormLabel
                 className="text-xl text-lighttext-200"
                 htmlFor="barcode"
               >
-                Código de Barras o descripción:
+                Código de Barras:
               </FormLabel>
               <FormControl>
                 <Input type="text" id="barcode" {...field} />
@@ -49,7 +57,7 @@ const SearchBarForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Buscar Producto</Button>
+        <Button type="submit">Agregar Producto</Button>
       </form>
     </Form>
   );
