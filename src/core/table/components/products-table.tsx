@@ -9,24 +9,24 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Product } from "@prisma/client";
-import { productsColumns } from "./products-colums";
 import { Skeleton } from "@/components/ui/skeleton";
 
-interface Props {
-  data: Product[];
+interface Props<T> {
+  data: T[];
   offset: number;
   isFetching: boolean;
+  columns: ColumnDef<T, any>[];
 }
 
-const ProductsTable = ({ data, offset, isFetching }: Props) => {
+function TableComponent<T>({ data, offset, isFetching, columns }: Props<T>) {
   const table = useReactTable({
     data,
-    columns: productsColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
@@ -71,10 +71,7 @@ const ProductsTable = ({ data, offset, isFetching }: Props) => {
             {isFetching &&
               Array.from({ length: offset }).map((_, index) => (
                 <TableRow key={index}>
-                  <TableCell
-                    colSpan={productsColumns.length}
-                    className="h-[73px]"
-                  >
+                  <TableCell colSpan={columns.length} className="h-[73px]">
                     <Skeleton className="w-full h-full" />
                   </TableCell>
                 </TableRow>
@@ -82,7 +79,7 @@ const ProductsTable = ({ data, offset, isFetching }: Props) => {
             {!isFetching && data.length === 0 && (
               <TableRow>
                 <TableCell
-                  colSpan={productsColumns.length}
+                  colSpan={columns.length}
                   className="h-[73px] text-center"
                 >
                   No hay resultados
@@ -94,6 +91,6 @@ const ProductsTable = ({ data, offset, isFetching }: Props) => {
       </TableBody>
     </Table>
   );
-};
+}
 
-export default ProductsTable;
+export default TableComponent;

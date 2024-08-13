@@ -16,8 +16,8 @@ const TansTackProvider = ({ children }: PropsWithChildren) => {
       {children}
       <ReactQueryDevtools
         initialIsOpen={false}
-        position="top"
-        buttonPosition="top-right"
+        // position="top"
+        // buttonPosition="top-right"
       />
     </QueryClientProvider>
   );

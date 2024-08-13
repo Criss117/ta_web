@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import useProductTable from "./hooks/use.product-table";
-import ProductsTable from "./components/products-table";
-import ProductsTablePag from "./components/products-table-pag";
-import { useProductsTableState } from "./state/products-table.state";
 import { CountProductsService } from "./services/count-products.service";
+import TablePag from "@/components/table/table-pag";
+import { useTableState } from "@/core/table/state/table.state";
+import TableComponent from "@/core/table/components/products-table";
+import { productsColumns } from "./components/products-colums";
 
 interface Props {
   page: number;
@@ -17,8 +18,7 @@ interface Props {
 
 const ProductTableContainer = ({ offset, page, query }: Props) => {
   const router = useRouter();
-  const { totalProducts, totalPage, setTotalProducts } =
-    useProductsTableState();
+  const { totalItems, totalPage, setTotalItems } = useTableState();
 
   const { findProductsQuery } = useProductTable({
     page,
@@ -34,34 +34,27 @@ const ProductTableContainer = ({ offset, page, query }: Props) => {
   useEffect(() => {
     if (query) return;
     CountProductsService.countToPagination(offset).then((count) =>
-      setTotalProducts(count.totalProducts, count.totalPage)
+      setTotalItems(count.totalProducts, count.totalPage)
     );
   }, [offset]);
 
   useEffect(() => {
     CountProductsService.countToPagination(offset, query).then((count) => {
-      setTotalProducts(count.totalProducts, count.totalPage);
+      setTotalItems(count.totalProducts, count.totalPage);
       router.push(`?page=1&offset=${offset}`);
     });
   }, [offset, query]);
 
   return (
     <section>
-      <ProductsTablePag
-        page={page}
-        offset={offset}
-        productCount={{ totalProducts, totalPage }}
-      />
-      <ProductsTable
+      <TablePag page={page} offset={offset} count={{ totalItems, totalPage }} />
+      <TableComponent
         data={findProductsQuery.data?.data || []}
         offset={offset}
         isFetching={findProductsQuery.isFetching}
+        columns={productsColumns}
       />
-      <ProductsTablePag
-        page={page}
-        offset={offset}
-        productCount={{ totalProducts, totalPage }}
-      />
+      <TablePag page={page} offset={offset} count={{ totalItems, totalPage }} />
     </section>
   );
 };

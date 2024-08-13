@@ -1,26 +1,26 @@
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
-import OffSetSelector from "./offset-selector";
 import { useMemo } from "react";
 import { cn } from "@/lib/utils";
+import OffSetSelector from "./offset-selector";
 
 interface Props {
   page: number;
   offset: number;
-  productCount: {
-    totalProducts: number;
+  count: {
+    totalItems: number;
     totalPage: number;
   };
 }
 
-const ProductsTablePag = ({ page, offset, productCount }: Props) => {
-  const { totalPage } = productCount;
+const TablePag = ({ page, offset, count }: Props) => {
+  const { totalPage } = count;
 
   const prevPage = page > 1 ? page - 1 : 1;
   const nextPage = page < totalPage ? page + 1 : totalPage;
@@ -98,4 +98,4 @@ const ProductsTablePag = ({ page, offset, productCount }: Props) => {
   );
 };
 
-export default ProductsTablePag;
+export default TablePag;
