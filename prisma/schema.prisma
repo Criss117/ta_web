@@ -14,11 +14,24 @@ model Product {
   id    Int @id @default(autoincrement())
   barcode String @unique
   description  String
-  costPrice Int 
+  costPrice Int
   salePrice Int
   wholesalePrice Int
   stock Int
   minStock Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isActive Boolean @default(true)
+}
+
+model Client {
+  id    Int @id @default(autoincrement())
+  fullName  String
+  address String?
+  phone String?
+  creditLimit Int
+  balance Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?

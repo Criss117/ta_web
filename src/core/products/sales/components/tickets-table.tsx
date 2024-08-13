@@ -71,7 +71,7 @@ const TicketsTable = () => {
     removeProductFromCurrentTicket,
   } = useSaleState();
 
-  const data = getCurrentTicket()?.products || [];
+  const currentTicket = getCurrentTicket();
 
   const onChangeSalePrice = (
     barcode: string,
@@ -94,8 +94,8 @@ const TicketsTable = () => {
       </TableHeader>
       <TableBody>
         <>
-          {data.length ? (
-            data.map((product) => (
+          {currentTicket?.products.length ? (
+            currentTicket.products.map((product) => (
               <TableRow key={product.barcode}>
                 <TableCell>{product.barcode}</TableCell>
                 <TableCell>{product.description}</TableCell>
@@ -129,8 +129,9 @@ const TicketsTable = () => {
                 </TableCell>
                 <TableCell>{product.subTotal}</TableCell>
                 <TableCell>{product.currentStock}</TableCell>
-                <TableCell className="flex gap-x-2">
+                <TableCell className="flex gap-x-2 justify-between">
                   <Button
+                    className="w-1/2"
                     variant="destructive"
                     onClick={() =>
                       removeProductFromCurrentTicket(product.barcode)
@@ -140,7 +141,10 @@ const TicketsTable = () => {
                   </Button>
                   <Link
                     href={`${ROUTES.EDIT_PRODUCTS}/${product.barcode}`}
-                    className={buttonVariants({ variant: "default" })}
+                    className={cn(
+                      buttonVariants({ variant: "default" }),
+                      "w-1/2"
+                    )}
                   >
                     <SquarePen size={18} />
                   </Link>

@@ -1,22 +1,23 @@
-import { create } from "zustand";
-import type { ProductTicket, Ticket } from "../models/type";
-import { TicketLS } from "../models/type";
-import { LOCAL_STORAGE_KEYS } from "@/lib/constants/local-storage";
 import { z } from "zod";
+import { create } from "zustand";
+
 import { TicketSchema } from "../models/schema";
+import type { ProductTicket, Ticket } from "../models/type";
+import { LOCAL_STORAGE_KEYS } from "@/lib/constants/local-storage";
 
 interface State {
   currentTicketId: number;
   tickets: Ticket[];
   newTicket: () => void;
+  deleteTicket: (ticketId: number) => void;
   setInitialState: (tickets: Ticket[], currentTicketId: number) => void;
   changeCurrentTicketId: (id: number) => void;
   addProductToCurrentTicket: (product: ProductTicket) => void;
   getCurrentTicket: () => Ticket | null;
   changeSaleORquantity: (
     barcode: string,
-    salePrice: number,
-    quantity: number
+    newSalePrice: number,
+    newQuantity: number
   ) => void;
   removeProductFromCurrentTicket: (barcode: string) => void;
   getStateFromLS: () => void;
@@ -118,6 +119,25 @@ export const useSaleState = create<State>((set, get) => ({
       JSON.stringify(newTicket.id)
     );
   },
+  deleteTicket: (ticketId) => {
+    if (ticketId <= 0) return;
+
+    const tickets = get().tickets;
+
+    if (tickets.length <= 1) return;
+
+    const newTickets = tickets.filter((ticket) => ticket.id !== ticketId);
+
+    set({ tickets: newTickets, currentTicketId: newTickets[0].id });
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.TICKETS,
+      JSON.stringify(newTickets)
+    );
+    localStorage.setItem(
+      LOCAL_STORAGE_KEYS.CURRENT_TICKET,
+      JSON.stringify(newTickets[0].id)
+    );
+  },
   getCurrentTicket: () => {
     const { tickets, currentTicketId } = get();
 
@@ -129,7 +149,7 @@ export const useSaleState = create<State>((set, get) => ({
 
     return currentTicket;
   },
-  changeSaleORquantity: (barcode, salePrice, quantity) => {
+  changeSaleORquantity: (barcode, newSalePrice, newQuantity) => {
     const { tickets, getCurrentTicket } = get();
     const currentTicket = getCurrentTicket();
 
@@ -139,12 +159,17 @@ export const useSaleState = create<State>((set, get) => ({
       ...currentTicket,
       products: currentTicket.products.map((product) => {
         if (product.barcode === barcode) {
+          const quantity =
+            newQuantity > 0 && newQuantity + 1 <= product.stock
+              ? newQuantity
+              : product.quantity;
+
           return {
             ...product,
-            salePrice: salePrice < 0 ? product.originalPrice : salePrice,
-            quantity: quantity > 0 ? quantity : 1,
-            subTotal: salePrice * product.quantity,
-            currentStock: product.stock - quantity,
+            salePrice: newSalePrice < 0 ? product.originalPrice : newSalePrice,
+            quantity,
+            subTotal: newSalePrice * newQuantity,
+            currentStock: product.stock - newQuantity,
           };
         }
         return product;
@@ -192,16 +217,14 @@ export const useSaleState = create<State>((set, get) => ({
       JSON.stringify({ tickets: newTickets })
     );
   },
-  getStateFromLS: () => {
-    const ticketsLS: Ticket[] | null = JSON.parse(
+  getStateFromLS: async () => {
+    const ticketsLS: Ticket[] | null = await JSON.parse(
       localStorage.getItem(LOCAL_STORAGE_KEYS.TICKETS) || "[]"
     );
 
-    const currentTicketIdLS = Number(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.CURRENT_TICKET)
+    const currentTicketIdLS = await JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEYS.CURRENT_TICKET) || "0"
     );
-
-    if (!ticketsLS || !currentTicketIdLS) return;
 
     try {
       const TicketsSchema = z.array(TicketSchema);
@@ -213,8 +236,8 @@ export const useSaleState = create<State>((set, get) => ({
         : initalState.currentTicketId;
 
       set({
-        tickets: newTickets,
-        currentTicketId: newCurrentTicketId,
+        tickets: newTickets.length ? newTickets : initalState.tickets,
+        currentTicketId: newCurrentTicketId < 1 ? 1 : newCurrentTicketId,
       });
       return;
     } catch (error) {
