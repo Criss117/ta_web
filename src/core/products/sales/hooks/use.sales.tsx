@@ -6,7 +6,7 @@ import { useSaleState } from "../state/sale.state";
 import { useQueryClient } from "@tanstack/react-query";
 import useFindOneProduct from "../../hooks/use.find-one-product";
 import { ProductForTickerAdapter } from "../adapters/porduct-for-ticker.adapter";
-import type { MutateProductReturnType } from "../../mutate-product/models/types";
+import { MutateProductReturnType } from "../../modules/mutate-product/models/types";
 
 const useSales = () => {
   const [barCodeState, setBarCodeState] = useState<string>("");

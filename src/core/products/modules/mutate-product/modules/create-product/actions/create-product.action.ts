@@ -1,28 +1,29 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
-
 import prisma from "@/lib/prisma";
+
+import { sleep } from "@/lib/utils";
+import { Prisma } from "@prisma/client";
 import { PRISMACODES } from "@/lib/constants/prisma-codes";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
-import { MutateProductReturnType } from "../modules/mutate-product/models/types";
-import { sleep } from "@/lib/utils";
+import {
+  CreateProductInputType,
+  MutateProductReturnType,
+} from "../../../models/types";
 
-export async function findOneProduct(
-  barcode: string
+export async function createProduct(
+  product: CreateProductInputType
 ): Promise<MutateProductReturnType> {
   // await sleep(2000);
 
   try {
     // throw new Error("test");
-    const product = await prisma.product.findFirst({
-      where: {
-        barcode,
-      },
+    const res = await prisma.product.create({
+      data: product,
     });
 
     return {
-      data: product,
+      data: res,
     };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {

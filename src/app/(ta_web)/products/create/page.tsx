@@ -1,4 +1,4 @@
-import MutateProductContainer from "@/core/products/mutate-product/mutate-product.container";
+import MutateProductContainer from "@/core/products/modules/mutate-product/mutate-product.container";
 
 const CreateProductPage = () => {
   return <MutateProductContainer action="create" />;

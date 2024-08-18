@@ -1,28 +1,33 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
-
 import prisma from "@/lib/prisma";
+
+import { sleep } from "@/lib/utils";
+import { Prisma } from "@prisma/client";
 import { PRISMACODES } from "@/lib/constants/prisma-codes";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
-import { MutateProductReturnType } from "../modules/mutate-product/models/types";
-import { sleep } from "@/lib/utils";
+import type {
+  EditProductInputType,
+  MutateProductReturnType,
+} from "@/core/products/modules/mutate-product/models/types";
 
-export async function findOneProduct(
-  barcode: string
+export async function editProduct(
+  product: EditProductInputType
 ): Promise<MutateProductReturnType> {
   // await sleep(2000);
 
   try {
     // throw new Error("test");
-    const product = await prisma.product.findFirst({
+    const res = await prisma.product.update({
       where: {
-        barcode,
+        barcode: product.barcode,
+        id: product.id,
       },
+      data: product,
     });
 
     return {
-      data: product,
+      data: res,
     };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {

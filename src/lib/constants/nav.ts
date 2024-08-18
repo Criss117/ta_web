@@ -19,6 +19,7 @@ export const ROUTES = {
   CREATE_PRODUCTS: "/products/create",
   EDIT_PRODUCTS: "/products/edit",
   DELETE_PRODUCTS: "/products/delete",
+  EDIT_CLIENTS: "/clients/edit",
 } as const;
 
 export const NAVITEMS: NavItem[] = [

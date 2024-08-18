@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import type { MutateProductReturnType } from "../mutate-product/models/types";
 import { FindOneProductService } from "../services/find-one-product.service";
+import { MutateProductReturnType } from "../modules/mutate-product/models/types";
 
 async function findOneProduct(
   barcode: string

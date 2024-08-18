@@ -5,24 +5,30 @@ import { Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { PRISMACODES } from "@/lib/constants/prisma-codes";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
-import { MutateProductReturnType } from "../modules/mutate-product/models/types";
+
+import type { MutateProductReturnType } from "../../../models/types";
 import { sleep } from "@/lib/utils";
 
-export async function findOneProduct(
-  barcode: string
+export async function deleteProduct(
+  barcode: string,
+  id: number
 ): Promise<MutateProductReturnType> {
-  // await sleep(2000);
+  await sleep(2000);
 
   try {
-    // throw new Error("test");
-    const product = await prisma.product.findFirst({
+    const res = await prisma.product.update({
       where: {
         barcode,
+        id,
+      },
+      data: {
+        deletedAt: new Date(),
+        isActive: false,
       },
     });
 
     return {
-      data: product,
+      data: res,
     };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -38,7 +44,7 @@ export async function findOneProduct(
     }
 
     return {
-      error: PRODUCT_FORM_MESSAGES.ERROR,
+      error: PRODUCT_FORM_MESSAGES.DELETED_ERROR,
     };
   }
 }

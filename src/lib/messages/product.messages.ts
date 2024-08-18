@@ -1,3 +1,7 @@
+export const FORM_MESSAGES = {
+  UNKNOWN_ERROR: "Hubo un error inesperado",
+};
+
 export const PRODUCT_FORM_MESSAGES = {
   BARCODE: {
     REQUIRED: "El código de barras es requerido",

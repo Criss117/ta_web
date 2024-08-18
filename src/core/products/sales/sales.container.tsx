@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 
+import PayContainer from "@/core/pay/pay.container";
 import useSales from "./hooks/use.sales";
 import { useSaleState } from "./state/sale.state";
 import TicketsNav from "./components/tickets-nav";
-import PayContainer from "@/core/pay/pay.container";
 import TicketsTable from "./components/tickets-table";
-import ProductsSearchContainer from "../products-search/products-search.container";
+import ProductsSearchContainer from "../modules/products-search/products-search.container";
 
 const SalesContainer = () => {
   const { tickets, currentTicketId, getStateFromLS } = useSaleState();

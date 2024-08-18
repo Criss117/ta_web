@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { ROUTES } from "@/lib/constants/nav";
 import { buttonVariants } from "@/components/ui/button";
 
-import ProductTableContainer from "./products-table/products-table.container";
-import ProductsSearchContainer from "./products-search/products-search.container";
+import ProductTableContainer from "./modules/products-table/products-table.container";
+import ProductsSearchContainer from "./modules/products-search/products-search.container";
 import { useTableState } from "../table/state/table.state";
 
 interface Props {
