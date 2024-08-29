@@ -1,8 +1,5 @@
-import type {
-  EditProductInputType,
-  ProductForm,
-} from "@/core/products/mutate-product/models/types";
 import { Product } from "@prisma/client";
+import { EditProductInputType, ProductForm } from "../../../models/types";
 
 export class ProductReceivedAdapter {
   static adapt(product: Product | undefined | null): ProductForm | undefined {

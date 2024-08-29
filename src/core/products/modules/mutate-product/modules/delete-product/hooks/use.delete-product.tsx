@@ -1,14 +1,12 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { DeleteProductService } from "../services/delete-product.service";
 import { toast } from "@/components/ui/use-toast";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
+import { deleteProductAction } from "../actions/delete-product.action";
 
 async function deleteProduct({ barcode, id }: { barcode: string; id: number }) {
-  const deleteProductService = new DeleteProductService(barcode, id);
-
-  const res = await deleteProductService.execute();
+  const res = await deleteProductAction(barcode, id);
 
   return res;
 }

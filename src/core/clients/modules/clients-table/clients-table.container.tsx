@@ -1,9 +1,13 @@
 "use client";
-import { useTableState } from "@/core/table/state/table.state";
-import useClientsTable from "./hooks/use.clients-table";
 import { useEffect } from "react";
-import TableComponent from "@/core/table/components/products-table";
+import { useRouter } from "next/navigation";
+
+import TablePag from "@/components/table/table-pag";
+import useClientsTable from "./hooks/use.clients-table";
 import { clientsColumns } from "./components/clients-column";
+import { useTableState } from "@/core/table/state/table.state";
+import TableComponent from "@/core/table/components/products-table";
+import { countClientsAction } from "./actions/find-clients.action";
 
 interface Props {
   page: number;
@@ -12,6 +16,7 @@ interface Props {
 }
 
 const ClientsTableContainer = ({ offset, page, query }: Props) => {
+  const router = useRouter();
   const { totalItems, totalPage, setTotalItems } = useTableState();
   const { findClientsQuery } = useClientsTable({
     page,
@@ -24,32 +29,32 @@ const ClientsTableContainer = ({ offset, page, query }: Props) => {
     findClientsQuery.refetch();
   }, [page, offset, query]);
 
-  // useEffect(() => {
-  //   if (query) return;
-  //   CountProductsService.countToPagination(offset).then((count) =>
-  //     setTotalItems(count.totalProducts, count.totalPage)
-  //   );
-  // }, [offset]);
+  useEffect(() => {
+    if (query) return;
+    countClientsAction({ offset }).then(({ data }) => {
+      if (!data) return;
+      setTotalItems(data.totalItems, data.totalPage);
+    });
+  }, [offset]);
 
-  // useEffect(() => {
-  //   CountProductsService.countToPagination(offset, query).then((count) => {
-  //     setTotalItems(count.totalProducts, count.totalPage);
-  //     router.push(`?page=1&offset=${offset}`);
-  //   });
-  // }, [offset, query]);
+  useEffect(() => {
+    countClientsAction({ offset, query }).then(({ data }) => {
+      if (!data) return;
+      setTotalItems(data.totalItems, data.totalPage);
+      router.push(`?page=1&offset=${offset}`);
+    });
+  }, [offset, query]);
 
   return (
     <section>
+      <TablePag page={page} offset={offset} count={{ totalItems, totalPage }} />
       <TableComponent
         data={findClientsQuery.data?.data || []}
         offset={offset}
         isFetching={findClientsQuery.isFetching}
         columns={clientsColumns}
       />
-
-      <pre>
-        <code>{JSON.stringify(findClientsQuery.data, null, 2)}</code>
-      </pre>
+      <TablePag page={page} offset={offset} count={{ totalItems, totalPage }} />
     </section>
   );
 };

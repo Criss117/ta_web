@@ -8,7 +8,7 @@ import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
 import { MutateProductReturnType } from "../modules/mutate-product/models/types";
 import { sleep } from "@/lib/utils";
 
-export async function findOneProduct(
+export async function findOneProductAction(
   barcode: string
 ): Promise<MutateProductReturnType> {
   // await sleep(2000);

@@ -4,6 +4,8 @@ import prisma from "../lib/prisma";
 async function main() {
   const items = JSON.parse(fs.readFileSync("./src/seed/data.json", "utf8"));
 
+  console.log("Seeding...");
+
   await prisma.product
     .deleteMany()
     .then(async () => {
@@ -19,6 +21,8 @@ async function main() {
     })
     .catch((e) => console.log(e))
     .finally(() => prisma.$disconnect());
+
+  console.log("Completed");
 }
 
 (() => {

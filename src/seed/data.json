@@ -7,7 +7,8 @@
       "address": "Carrera 45 #30-10, Bogotá",
       "phone": "3001234567",
       "creditLimit": 5000000,
-      "balance": 1500000
+      "balance": 1500000,
+      "ccNumber": "1234567890123456"
     },
     {
       "id": 2,
@@ -15,7 +16,8 @@
       "address": "Calle 10 #20-30, Medellín",
       "phone": "3102345678",
       "creditLimit": 8000000,
-      "balance": 3000000
+      "balance": 3000000,
+      "ccNumber": "2345678901234567"
     },
     {
       "id": 3,
@@ -23,7 +25,8 @@
       "address": "Carrera 7 #12-14, Cali",
       "phone": "3203456789",
       "creditLimit": 7000000,
-      "balance": 2500000
+      "balance": 2500000,
+      "ccNumber": "3456789012345678"
     },
     {
       "id": 4,
@@ -31,7 +34,8 @@
       "address": "Calle 22 #15-25, Cartagena",
       "phone": "3004567890",
       "creditLimit": 6000000,
-      "balance": 2000000
+      "balance": 2000000,
+      "ccNumber": "4567890123456789"
     },
     {
       "id": 5,
@@ -39,7 +43,8 @@
       "address": "Carrera 50 #30-20, Barranquilla",
       "phone": "3105678901",
       "creditLimit": 9000000,
-      "balance": 4000000
+      "balance": 4000000,
+      "ccNumber": "5678901234567890"
     },
     {
       "id": 6,
@@ -47,7 +52,8 @@
       "address": "Calle 15 #25-35, Bucaramanga",
       "phone": "3206789012",
       "creditLimit": 5500000,
-      "balance": 1800000
+      "balance": 1800000,
+      "ccNumber": "6789012345678901"
     },
     {
       "id": 7,
@@ -55,7 +61,8 @@
       "address": "Carrera 35 #40-50, Pereira",
       "phone": "3007890123",
       "creditLimit": 6500000,
-      "balance": 2300000
+      "balance": 2300000,
+      "ccNumber": "7890123456789012"
     },
     {
       "id": 8,
@@ -63,7 +70,8 @@
       "address": "Calle 5 #10-20, Manizales",
       "phone": "3108901234",
       "creditLimit": 10000000,
-      "balance": 5000000
+      "balance": 5000000,
+      "ccNumber": "8901234567890123"
     },
     {
       "id": 9,
@@ -71,7 +79,8 @@
       "address": "Carrera 12 #15-40, Cúcuta",
       "phone": "3209012345",
       "creditLimit": 4500000,
-      "balance": 1400000
+      "balance": 1400000,
+      "ccNumber": "9012345678901234"
     },
     {
       "id": 10,
@@ -79,7 +88,8 @@
       "address": "Calle 35 #20-30, Neiva",
       "phone": "3000123456",
       "creditLimit": 6000000,
-      "balance": 2200000
+      "balance": 2200000,
+      "ccNumber": "0123456789012345"
     },
     {
       "id": 11,
@@ -87,7 +97,8 @@
       "address": "Carrera 40 #25-10, Popayán",
       "phone": "3101234567",
       "creditLimit": 7000000,
-      "balance": 2500000
+      "balance": 2500000,
+      "ccNumber": "12345678901234"
     },
     {
       "id": 12,
@@ -95,7 +106,8 @@
       "address": "Calle 8 #15-20, Ibagué",
       "phone": "3202345678",
       "creditLimit": 8000000,
-      "balance": 3500000
+      "balance": 3500000,
+      "ccNumber": "23456789012345"
     },
     {
       "id": 13,
@@ -103,7 +115,8 @@
       "address": "Carrera 25 #30-15, Pasto",
       "phone": "3003456789",
       "creditLimit": 9000000,
-      "balance": 3000000
+      "balance": 3000000,
+      "ccNumber": "34567890123456"
     },
     {
       "id": 14,
@@ -111,7 +124,8 @@
       "address": "Calle 50 #20-10, Montería",
       "phone": "3104567890",
       "creditLimit": 5500000,
-      "balance": 1700000
+      "balance": 1700000,
+      "ccNumber": "45678901234567"
     },
     {
       "id": 15,
@@ -119,7 +133,8 @@
       "address": "Carrera 15 #25-30, Villavicencio",
       "phone": "3205678901",
       "creditLimit": 7500000,
-      "balance": 2700000
+      "balance": 2700000,
+      "ccNumber": "56789012345678"
     },
     {
       "id": 16,
@@ -127,7 +142,8 @@
       "address": "Calle 30 #40-50, Santa Marta",
       "phone": "3006789012",
       "creditLimit": 8500000,
-      "balance": 3200000
+      "balance": 3200000,
+      "ccNumber": "67890123456789"
     },
     {
       "id": 17,
@@ -135,7 +151,8 @@
       "address": "Carrera 10 #15-20, Armenia",
       "phone": "3107890123",
       "creditLimit": 6500000,
-      "balance": 2200000
+      "balance": 2200000,
+      "ccNumber": "78901234567890"
     },
     {
       "id": 18,
@@ -143,7 +160,8 @@
       "address": "Calle 7 #12-14, Tunja",
       "phone": "3208901234",
       "creditLimit": 5000000,
-      "balance": 1600000
+      "balance": 1600000,
+      "ccNumber": "89012345678901"
     },
     {
       "id": 19,
@@ -151,7 +169,8 @@
       "address": "Carrera 25 #35-40, Sincelejo",
       "phone": "3009012345",
       "creditLimit": 7500000,
-      "balance": 2800000
+      "balance": 2800000,
+      "ccNumber": "90123456789012"
     },
     {
       "id": 20,
@@ -159,7 +178,8 @@
       "address": "Calle 9 #20-25, Quibdó",
       "phone": "3100123456",
       "creditLimit": 6000000,
-      "balance": 1900000
+      "balance": 1900000,
+      "ccNumber": "01234567890123"
     }
   ],
   "products": [

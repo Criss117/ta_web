@@ -45,7 +45,7 @@ export const clientsColumns: ColumnDef<Client>[] = [
           <Button variant={"destructive"}>Eliminar</Button>
           <Link
             className={cn("w-1/2", buttonVariants({ variant: "outline" }))}
-            href={`${ROUTES.EDIT_CLIENTS}/${client.id}`}
+            href={`${ROUTES.EDIT_CLIENTS}/${client.ccNumber}`}
           >
             Editar
           </Link>

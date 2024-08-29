@@ -3,14 +3,10 @@
 import { Prisma } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
 import prisma from "@/lib/prisma";
-import { PRISMACODES } from "@/lib/constants/prisma-codes";
-import {
-  FORM_MESSAGES,
-  PRODUCT_FORM_MESSAGES,
-} from "@/lib/messages/product.messages";
-import type { FindEntitiesParams } from "@/core/models/interfaces";
+import type { FindEntitiesParams } from "@/core/common/models/interfaces";
+import { validateCatchError } from "@/lib/utils";
 
-export async function findProducts({
+export async function findProductsAction({
   offset = 10,
   page = 0,
   filters = { minStock: false },
@@ -64,25 +60,17 @@ export async function findProducts({
       data: products,
     };
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      const prismaError = PRISMACODES.ERRORS.find(
-        (err) => err.code === error.code
-      );
-
-      if (prismaError) {
-        return {
-          error: prismaError.message,
-        };
-      }
-    }
-
-    return {
-      error: FORM_MESSAGES.UNKNOWN_ERROR,
-    };
+    return validateCatchError(error);
   }
 }
 
-export async function countProducts(query?: string) {
+export async function countProductsAction({
+  query,
+  offset = 10,
+}: {
+  query?: string;
+  offset?: number;
+}) {
   try {
     const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {};
     if (query) {
@@ -100,28 +88,16 @@ export async function countProducts(query?: string) {
       };
     }
 
-    const res = await prisma.product.count({
+    const total = await prisma.product.count({
       where: { ...queryOptions.where },
     });
 
+    if (!total) return { data: { totalItems: 0, totalPage: 0 } };
+
     return {
-      data: res,
+      data: { totalItems: total, totalPage: Math.ceil(total / offset) },
     };
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      const prismaError = PRISMACODES.ERRORS.find(
-        (err) => err.code === error.code
-      );
-
-      if (prismaError) {
-        return {
-          error: prismaError.message,
-        };
-      }
-    }
-
-    return {
-      error: PRODUCT_FORM_MESSAGES.UNKNOWN_ERROR,
-    };
+    return validateCatchError(error);
   }
 }

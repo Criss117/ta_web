@@ -2,16 +2,13 @@
 
 import prisma from "@/lib/prisma";
 
-import { sleep } from "@/lib/utils";
-import { Prisma } from "@prisma/client";
-import { PRISMACODES } from "@/lib/constants/prisma-codes";
-import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
+import { sleep, validateCatchError } from "@/lib/utils";
 import type {
   EditProductInputType,
   MutateProductReturnType,
 } from "@/core/products/modules/mutate-product/models/types";
 
-export async function editProduct(
+export async function editProductAction(
   product: EditProductInputType
 ): Promise<MutateProductReturnType> {
   // await sleep(2000);
@@ -30,20 +27,6 @@ export async function editProduct(
       data: res,
     };
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      const prismaError = PRISMACODES.ERRORS.find(
-        (err) => err.code === error.code
-      );
-
-      if (prismaError) {
-        return {
-          error: prismaError.message,
-        };
-      }
-    }
-
-    return {
-      error: PRODUCT_FORM_MESSAGES.ERROR,
-    };
+    return validateCatchError(error);
   }
 }

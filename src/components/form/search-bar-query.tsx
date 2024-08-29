@@ -8,10 +8,11 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 interface Props {
+  label: string;
   searchByQueryFn?: (query: string) => void;
 }
 
-const SearchBarQuery = ({ searchByQueryFn }: Props) => {
+const SearchBarQuery = ({ label, searchByQueryFn }: Props) => {
   const [query, setQuery] = useState("");
   const queryDebaunce = useDebounce(query, 500);
 
@@ -32,11 +33,11 @@ const SearchBarQuery = ({ searchByQueryFn }: Props) => {
   return (
     <>
       <div className="grid w-full max-w-xl items-center gap-1.5 relative">
-        <Label htmlFor="query">Codigo de barras o descripción</Label>
+        <Label htmlFor="query">{label}</Label>
         <Input
           type="text"
           id="query"
-          placeholder="Código de barras o descripción"
+          placeholder={label}
           value={query}
           onChange={(e) => {
             setQuery(e.target.value.trim());

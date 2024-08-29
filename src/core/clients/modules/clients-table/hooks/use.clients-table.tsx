@@ -1,6 +1,6 @@
-import type { Filters } from "@/core/models/types";
-import { FindClientsService } from "../services/find-clients.service";
+import type { Filters } from "@/core/common/models/types";
 import { useQuery } from "@tanstack/react-query";
+import { findClientsAction } from "../actions/find-clients.action";
 
 interface Props {
   page?: number;
@@ -17,8 +17,7 @@ async function findClients({
   offset: number;
   filters?: Filters;
 }) {
-  const findClients = new FindClientsService(page, offset, filters);
-  return await findClients.execute();
+  return await findClientsAction({ page, offset, filters });
 }
 
 const useClientsTable = ({ page = 1, offset = 10, filters }: Props) => {

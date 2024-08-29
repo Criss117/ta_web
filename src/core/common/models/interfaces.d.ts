@@ -5,3 +5,8 @@ export interface FindEntitiesParams {
   page: number;
   filters?: Filters;
 }
+
+export interface CountEnititesParamas {
+  offset: number;
+  query?: string;
+}

@@ -1,16 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { EditProductService } from "../service/edit-product.service";
+import { toast } from "@/components/ui/use-toast";
 import { ProductToEditAdapter } from "../adapters/product-edit.adapter";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
-import { toast } from "@/components/ui/use-toast";
-import type { ProductForm } from "@/core/products/mutate-product/models/types";
+import { ProductForm } from "../../../models/types";
+import { editProductAction } from "../actions/edit-product.action";
 
 async function editProduct(product: ProductForm) {
   const adaptedProduct = ProductToEditAdapter.adapt(product);
 
-  const editProductService = new EditProductService(adaptedProduct);
-
-  const res = await editProductService.execute();
+  const res = await editProductAction(adaptedProduct);
 
   return res;
 }

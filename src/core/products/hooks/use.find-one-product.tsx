@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { FindOneProductService } from "../services/find-one-product.service";
 import { MutateProductReturnType } from "../modules/mutate-product/models/types";
+import { findOneProductAction } from "../actions/find-one-product.action";
 
 async function findOneProduct(
   barcode: string
@@ -11,9 +11,7 @@ async function findOneProduct(
     };
   }
 
-  const findProductService = new FindOneProductService(barcode);
-
-  const res = await findProductService.execute();
+  const res = await findOneProductAction(barcode);
 
   return res;
 }

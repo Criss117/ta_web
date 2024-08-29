@@ -1,5 +1,8 @@
+import { Prisma } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { PRISMACODES } from "./constants/prisma-codes";
+import { FORM_MESSAGES } from "./messages/product.messages";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,4 +24,24 @@ export function formatCurrency(
   return new Intl.NumberFormat(locale, { style: "currency", currency }).format(
     amount
   );
+}
+
+export function validateCatchError(error: unknown) {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    const prismaError = PRISMACODES.ERRORS.find(
+      (err) => err.code === error.code
+    );
+
+    if (prismaError) {
+      return {
+        error: prismaError.message,
+        data: undefined,
+      };
+    }
+  }
+
+  return {
+    error: FORM_MESSAGES.UNKNOWN_ERROR,
+    data: undefined,
+  };
 }

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { FindProductsService } from "../services/find-products.service";
-import type { Filters } from "@/core/models/types";
+import type { Filters } from "@/core/common/models/types";
+import { findProductsAction } from "../actions/find-products.action";
 
 interface Props {
   page?: number;
@@ -17,8 +17,7 @@ async function findProducts({
   offset: number;
   filters?: Filters;
 }) {
-  const findProducts = new FindProductsService(page, offset, filters);
-  return await findProducts.execute();
+  return await findProductsAction({ page, offset, filters });
 }
 
 const useProductTable = ({ page = 1, offset = 10, filters }: Props) => {

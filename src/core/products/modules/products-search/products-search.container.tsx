@@ -1,6 +1,6 @@
 "use client";
+import SearchBarQuery from "@/components/form/search-bar-query";
 import SearchBarForm from "./components/searchbar-form";
-import SearchBarQuery from "./components/searchbar-query";
 
 interface Props {
   onTicket?: boolean;
@@ -18,7 +18,10 @@ const ProductsSearchContainer = ({
       {onTicket ? (
         <SearchBarForm searchByBarcodeFn={searchByBarcodeFn} />
       ) : (
-        <SearchBarQuery searchByQueryFn={searchByQueryFn} />
+        <SearchBarQuery
+          searchByQueryFn={searchByQueryFn}
+          label="Codigo de barras o Descripción"
+        />
       )}
     </>
   );

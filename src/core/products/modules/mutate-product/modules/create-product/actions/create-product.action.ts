@@ -11,7 +11,7 @@ import {
   MutateProductReturnType,
 } from "../../../models/types";
 
-export async function createProduct(
+export async function createProductAction(
   product: CreateProductInputType
 ): Promise<MutateProductReturnType> {
   // await sleep(2000);

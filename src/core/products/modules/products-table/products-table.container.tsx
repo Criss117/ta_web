@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import useProductTable from "./hooks/use.product-table";
-import { CountProductsService } from "./services/count-products.service";
 import TablePag from "@/components/table/table-pag";
 import { useTableState } from "@/core/table/state/table.state";
 import TableComponent from "@/core/table/components/products-table";
 import { productsColumns } from "./components/products-colums";
+import { countProductsAction } from "./actions/find-products.action";
 
 interface Props {
   page: number;
@@ -33,14 +33,16 @@ const ProductTableContainer = ({ offset, page, query }: Props) => {
 
   useEffect(() => {
     if (query) return;
-    CountProductsService.countToPagination(offset).then((count) =>
-      setTotalItems(count.totalProducts, count.totalPage)
-    );
+    countProductsAction({ offset }).then(({ data }) => {
+      if (!data) return;
+      setTotalItems(data.totalItems, data.totalPage);
+    });
   }, [offset]);
 
   useEffect(() => {
-    CountProductsService.countToPagination(offset, query).then((count) => {
-      setTotalItems(count.totalProducts, count.totalPage);
+    countProductsAction({ offset, query }).then(({ data }) => {
+      if (!data) return;
+      setTotalItems(data.totalItems, data.totalPage);
       router.push(`?page=1&offset=${offset}`);
     });
   }, [offset, query]);

@@ -9,6 +9,7 @@ import FormItemInput from "@/components/form/form-item-input";
 
 import useProductForm from "../hooks/use.product-form";
 import type { MutateProductReturnType, ProductForm } from "../models/types";
+import { StatusType } from "@/core/common/models/types";
 
 const formItemsText = [
   {
@@ -61,16 +62,10 @@ const formItemsStock = [
   },
 ] as const;
 
-type StatusType = {
-  isError: boolean;
-  isLoading: boolean;
-  response?: MutateProductReturnType;
-};
-
 interface Props {
   data?: ProductForm;
   mutateFn: (product: ProductForm) => void;
-  status: StatusType;
+  status: StatusType<MutateProductReturnType>;
 }
 
 function ProductForm({ data, status, mutateFn }: Props) {

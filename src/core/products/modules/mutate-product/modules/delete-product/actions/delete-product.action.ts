@@ -9,7 +9,7 @@ import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
 import type { MutateProductReturnType } from "../../../models/types";
 import { sleep } from "@/lib/utils";
 
-export async function deleteProduct(
+export async function deleteProductAction(
   barcode: string,
   id: number
 ): Promise<MutateProductReturnType> {
