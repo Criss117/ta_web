@@ -1,4 +1,4 @@
-import EditClientContainer from "@/core/clients/modules/mutate-client/modules/edit-client/edit-client.container";
+import MutateClientContainer from "@/core/clients/modules/mutate-client/mutate-client.container";
 
 interface Props {
   params: {
@@ -11,7 +11,7 @@ const EditClientPage = ({ params }: Props) => {
 
   const ccnumberDecode = decodeURIComponent(ccnumber);
 
-  return <EditClientContainer ccNumber={ccnumberDecode} />;
+  return <MutateClientContainer ccNumber={ccnumberDecode} action="edit" />;
 };
 
 export default EditClientPage;

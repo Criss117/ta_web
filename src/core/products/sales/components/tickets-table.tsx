@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import type { ProductTicket } from "../models/type";
 import { useSaleState } from "../state/sale.state";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 interface Props {
   data: ProductTicket[];

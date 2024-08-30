@@ -5,6 +5,7 @@ import BackButton from "@/components/ui/back-button";
 import useEditProduct from "./hooks/use.edit-product";
 import useFindOneProduct from "@/core/products/hooks/use.find-one-product";
 import ProductForm from "@/core/products/modules/mutate-product/components/product-form";
+import { useEffect } from "react";
 
 interface Props {
   barcode: string;

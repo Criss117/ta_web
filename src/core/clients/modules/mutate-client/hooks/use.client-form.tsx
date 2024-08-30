@@ -17,7 +17,7 @@ const initialData: ClientForm = {
 const useClientForm = (data?: ClientForm) => {
   const clientForm = useForm<ClientForm>({
     resolver: zodResolver(data ? EditClientFormSchema : ClientFormSchema),
-    defaultValues: data || initialData,
+    defaultValues: data,
   });
 
   const onSubmit = async (

@@ -4,23 +4,26 @@ import { create } from "zustand";
 import { TicketSchema } from "../models/schema";
 import type { ProductTicket, Ticket } from "../models/type";
 import { LOCAL_STORAGE_KEYS } from "@/lib/constants/local-storage";
+import { getAllProducts } from "./get-all-products";
 
 interface State {
   currentTicketId: number;
   tickets: Ticket[];
+  clearState: () => void;
   newTicket: () => void;
   deleteTicket: (ticketId: number) => void;
+  clearTicket: (ticketId: number) => void;
   setInitialState: (tickets: Ticket[], currentTicketId: number) => void;
   changeCurrentTicketId: (id: number) => void;
   addProductToCurrentTicket: (product: ProductTicket) => void;
   getCurrentTicket: () => Ticket | null;
+  removeProductFromCurrentTicket: (barcode: string) => void;
+  getStateFromLS: () => void;
   changeSaleORquantity: (
     barcode: string,
     newSalePrice: number,
     newQuantity: number
   ) => void;
-  removeProductFromCurrentTicket: (barcode: string) => void;
-  getStateFromLS: () => void;
 }
 
 const initalState = {
@@ -34,11 +37,19 @@ const initalState = {
   ],
 };
 
-export const useSaleState = create<State>((set, get) => ({
+export const useSaleState = create<State>()((set, get) => ({
   currentTicketId: initalState.currentTicketId,
   tickets: initalState.tickets,
   setInitialState: (tickets, currentTicketId) => {
     set({ tickets, currentTicketId });
+  },
+  clearState: () => {
+    set({
+      currentTicketId: initalState.currentTicketId,
+      tickets: initalState.tickets,
+    });
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.TICKETS);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.CURRENT_TICKET);
   },
   changeCurrentTicketId: (id) => {
     set({ currentTicketId: id });
@@ -122,21 +133,50 @@ export const useSaleState = create<State>((set, get) => ({
   deleteTicket: (ticketId) => {
     if (ticketId <= 0) return;
 
-    const tickets = get().tickets;
+    const { tickets, currentTicketId } = get();
 
-    if (tickets.length <= 1) return;
-
+    if (tickets.length <= 1) {
+      set({
+        currentTicketId: initalState.currentTicketId,
+        tickets: initalState.tickets,
+      });
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.TICKETS);
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.CURRENT_TICKET);
+      return;
+    }
     const newTickets = tickets.filter((ticket) => ticket.id !== ticketId);
 
-    set({ tickets: newTickets, currentTicketId: newTickets[0].id });
+    const newCurrentTicketId =
+      currentTicketId === ticketId ? newTickets[0].id : currentTicketId;
+
+    set({ tickets: newTickets, currentTicketId: newCurrentTicketId });
+
     localStorage.setItem(
       LOCAL_STORAGE_KEYS.TICKETS,
       JSON.stringify(newTickets)
     );
     localStorage.setItem(
       LOCAL_STORAGE_KEYS.CURRENT_TICKET,
-      JSON.stringify(newTickets[0].id)
+      JSON.stringify(newCurrentTicketId)
     );
+  },
+  clearTicket: (ticketId) => {
+    if (ticketId <= 0) return;
+    const tickets = get().tickets;
+
+    if (tickets.length <= 1) return;
+
+    const newTickets = tickets.map((ticket) => {
+      if (ticket.id === ticketId) {
+        return {
+          ...ticket,
+          products: [],
+        };
+      }
+      return ticket;
+    });
+
+    set({ tickets: newTickets });
   },
   getCurrentTicket: () => {
     const { tickets, currentTicketId } = get();
@@ -214,7 +254,7 @@ export const useSaleState = create<State>((set, get) => ({
 
     localStorage.setItem(
       LOCAL_STORAGE_KEYS.TICKETS,
-      JSON.stringify({ tickets: newTickets })
+      JSON.stringify(newTickets)
     );
   },
   getStateFromLS: async () => {

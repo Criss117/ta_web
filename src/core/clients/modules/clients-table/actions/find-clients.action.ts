@@ -23,11 +23,16 @@ export async function findClientsAction({
 
     if (filters && filters.query) {
       queryOptions.where = {
-        OR: [
+        AND: [
           {
-            fullName: {
-              contains: filters.query,
-            },
+            isActive: true,
+            OR: [
+              {
+                fullName: {
+                  contains: filters.query,
+                },
+              },
+            ],
           },
         ],
       };
@@ -53,19 +58,29 @@ export async function countClientsAction({
   offset?: number;
 }) {
   try {
-    const queryOptions: Prisma.ClientFindManyArgs<DefaultArgs> = {};
+    const queryOptions: Prisma.ClientFindManyArgs<DefaultArgs> = {
+      where: {
+        isActive: true,
+      },
+    };
+
     if (query) {
       queryOptions.where = {
-        OR: [
+        AND: [
           {
-            ccNumber: {
-              contains: query,
-            },
-          },
-          {
-            fullName: {
-              contains: query,
-            },
+            isActive: true,
+            OR: [
+              {
+                ccNumber: {
+                  contains: query,
+                },
+              },
+              {
+                fullName: {
+                  contains: query,
+                },
+              },
+            ],
           },
         ],
       };

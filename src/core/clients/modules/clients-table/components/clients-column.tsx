@@ -5,11 +5,20 @@ import type { Client } from "@prisma/client";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ROUTES } from "@/lib/constants/nav";
 import { cn } from "@/lib/utils";
+import MutateClientContainer from "../../mutate-client/mutate-client.container";
 
 export const clientsColumns: ColumnDef<Client>[] = [
   {
     accessorKey: "fullName",
     header: "Nombre",
+    // cell: ({ row }) => {
+    //   const client = row.original;
+    //   return (
+    //     <Link href={`${ROUTES.CLIENT}/${client.ccNumber}`}>
+    //       {client.fullName}
+    //     </Link>
+    //   );
+    // },
   },
   {
     accessorKey: "phone",
@@ -41,11 +50,16 @@ export const clientsColumns: ColumnDef<Client>[] = [
       const client = row.original;
 
       return (
-        <div className="flex gap-2">
-          <Button variant={"destructive"}>Eliminar</Button>
+        <div className="flex gap-2 z-50">
+          <MutateClientContainer
+            action="delete"
+            ccNumber={client.ccNumber}
+            id={client.id}
+          />
           <Link
             className={cn("w-1/2", buttonVariants({ variant: "outline" }))}
             href={`${ROUTES.EDIT_CLIENTS}/${client.ccNumber}`}
+            onClick={(e) => e.stopPropagation()}
           >
             Editar
           </Link>

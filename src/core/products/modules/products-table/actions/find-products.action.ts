@@ -27,6 +27,7 @@ export async function findProductsAction({
         stock: true,
         minStock: true,
         createdAt: true,
+        isActive: true,
       },
     };
 
@@ -38,15 +39,19 @@ export async function findProductsAction({
 
     if (filters.query) {
       queryOptions.where = {
-        ...queryOptions.where,
-        OR: [
+        AND: [
           {
-            barcode: filters.query,
-          },
-          {
-            description: {
-              contains: filters.query,
-            },
+            isActive: true,
+            OR: [
+              {
+                barcode: filters.query,
+              },
+              {
+                description: {
+                  contains: filters.query,
+                },
+              },
+            ],
           },
         ],
       };
@@ -55,6 +60,8 @@ export async function findProductsAction({
     const products = await prisma.product.findMany({
       ...queryOptions,
     });
+
+    console.log({ queryOptions });
 
     return {
       data: products,
@@ -72,17 +79,26 @@ export async function countProductsAction({
   offset?: number;
 }) {
   try {
-    const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {};
+    const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {
+      where: {
+        isActive: true,
+      },
+    };
     if (query) {
       queryOptions.where = {
-        OR: [
+        AND: [
           {
-            barcode: query,
-          },
-          {
-            description: {
-              contains: query,
-            },
+            isActive: true,
+            OR: [
+              {
+                barcode: query,
+              },
+              {
+                description: {
+                  contains: query,
+                },
+              },
+            ],
           },
         ],
       };

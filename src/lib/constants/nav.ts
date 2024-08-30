@@ -12,6 +12,7 @@ import { NavItem } from "../models";
 
 export const ROUTES = {
   SALES: "/sales",
+  CLIENT: "/clients",
   CLIENTS: "/clients?page=1&offset=10",
   PRODUCTS: "/products?page=1&offset=10",
   INVENTORY: "/inventory",

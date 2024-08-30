@@ -47,7 +47,7 @@ const NavBar = ({ variant = "primary" }: Props) => {
   }, [pathname]);
 
   return (
-    <nav className="p-5">
+    <nav className="p-5 sticky top-0 z-50 bg-lightbg-200">
       <ul className="flex gap-5">
         {navItems.map(({ name, href, icon: Icon, current }) => (
           <li key={href}>

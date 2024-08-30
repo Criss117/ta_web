@@ -7,6 +7,9 @@ import type {
   EditProductInputType,
   MutateProductReturnType,
 } from "@/core/products/modules/mutate-product/models/types";
+import { Prisma } from "@prisma/client";
+import { PRISMACODES } from "@/lib/constants/prisma-codes";
+import { FORM_MESSAGES } from "@/lib/messages/product.messages";
 
 export async function editProductAction(
   product: EditProductInputType
@@ -17,7 +20,6 @@ export async function editProductAction(
     // throw new Error("test");
     const res = await prisma.product.update({
       where: {
-        barcode: product.barcode,
         id: product.id,
       },
       data: product,
@@ -27,6 +29,22 @@ export async function editProductAction(
       data: res,
     };
   } catch (error) {
-    return validateCatchError(error);
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      const prismaError = PRISMACODES.ERRORS.find(
+        (err) => err.code === error.code
+      );
+
+      if (prismaError) {
+        return {
+          error: prismaError.message,
+          data: undefined,
+        };
+      }
+    }
+
+    return {
+      error: FORM_MESSAGES.UNKNOWN_ERROR,
+      data: undefined,
+    };
   }
 }

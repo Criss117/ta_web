@@ -1,21 +1,23 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import {
-  EditClientInputType,
-  MutateClientReturnType,
-} from "../../../models/type";
 import { validateCatchError } from "@/lib/utils";
+import type { MutateClientReturnType } from "../../../models/type";
 
-export async function editClientAction(
-  client: EditClientInputType
+export async function deleteClientAction(
+  ccNumber: string,
+  id: number
 ): Promise<MutateClientReturnType> {
   try {
     const res = await prisma.client.update({
       where: {
-        id: client.id,
+        ccNumber,
+        id,
       },
-      data: client,
+      data: {
+        deletedAt: new Date(),
+        isActive: false,
+      },
     });
 
     return {

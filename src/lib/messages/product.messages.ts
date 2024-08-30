@@ -72,4 +72,6 @@ export const ClIENT_FORM_MESSAGES = {
   ERROR_TITLE: "Upps, ocurrio un error",
   UNKNOWN_ERROR: "Hubo un error inesperado",
   SUCCESS: "Cliente guardado exitosamente",
-};
+  DELETE_SUCCESS: "Cliente eliminado exitosamente",
+  DELETE_ERROR: "Error al eliminar el cliente",
+} as const;

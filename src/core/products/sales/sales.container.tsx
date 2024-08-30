@@ -21,7 +21,7 @@ const SalesContainer = () => {
   return (
     <>
       <section className="mx-10">
-        <nav className="mt-5">
+        <nav className="mt-5 sticky top-20 z-50 bg-lightbg-200">
           <header className="w-2/3">
             <ProductsSearchContainer
               onTicket

@@ -6,7 +6,7 @@ import TablePag from "@/components/table/table-pag";
 import useClientsTable from "./hooks/use.clients-table";
 import { clientsColumns } from "./components/clients-column";
 import { useTableState } from "@/core/table/state/table.state";
-import TableComponent from "@/core/table/components/products-table";
+import TableComponent from "@/core/table/components/table-component";
 import { countClientsAction } from "./actions/find-clients.action";
 
 interface Props {
@@ -53,6 +53,8 @@ const ClientsTableContainer = ({ offset, page, query }: Props) => {
         offset={offset}
         isFetching={findClientsQuery.isFetching}
         columns={clientsColumns}
+        navigateTo={"clients/"}
+        objectName="ccNumber"
       />
       <TablePag page={page} offset={offset} count={{ totalItems, totalPage }} />
     </section>

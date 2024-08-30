@@ -1,14 +1,18 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useSaleState } from "../state/sale.state";
-import { PlusCircle } from "lucide-react";
+import { CircleXIcon, EraserIcon, PlusCircle } from "lucide-react";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { Separator } from "@/components/ui/separator";
 
 const TicketsNav = () => {
   const {
@@ -17,6 +21,7 @@ const TicketsNav = () => {
     newTicket,
     changeCurrentTicketId,
     deleteTicket,
+    clearTicket,
   } = useSaleState();
 
   const ticketsLabels = tickets.map((t) => {
@@ -28,6 +33,9 @@ const TicketsNav = () => {
       },
       onDelete: () => {
         deleteTicket(t.id);
+      },
+      onClear: () => {
+        clearTicket(t.id);
       },
     };
   });
@@ -46,12 +54,22 @@ const TicketsNav = () => {
               <p>{t.label}</p>
             </Button>
           </ContextMenuTrigger>
-          <ContextMenuContent>
+          <ContextMenuContent className="py-2">
+            <ContextMenuLabel>{t.label}</ContextMenuLabel>
+            <ContextMenuSeparator />
             <ContextMenuItem
-              className="hover:cursor-pointer"
-              onClick={t.onDelete}
+              className="hover:cursor-pointer space-x-2"
+              onSelect={t.onClear}
             >
-              <p>Eliminar</p>
+              <EraserIcon />
+              <p>Limpiar</p>
+            </ContextMenuItem>
+            <ContextMenuItem
+              className="hover:cursor-pointer space-x-2"
+              onSelect={t.onDelete}
+            >
+              <CircleXIcon className="text-destructive" />
+              <p className="text-destructive">Eliminar</p>
             </ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>

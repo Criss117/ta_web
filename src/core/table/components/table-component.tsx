@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   Table,
   TableBody,
@@ -15,15 +16,26 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface Props<T> {
   data: T[];
   offset: number;
   isFetching: boolean;
   columns: ColumnDef<T, any>[];
+  navigateTo?: string;
+  objectName?: string;
 }
 
-function TableComponent<T>({ data, offset, isFetching, columns }: Props<T>) {
+function TableComponent<T>({
+  data,
+  offset,
+  isFetching,
+  columns,
+  navigateTo,
+  objectName,
+}: Props<T>) {
+  const router = useRouter();
   const table = useReactTable({
     data,
     columns,
@@ -55,9 +67,18 @@ function TableComponent<T>({ data, offset, isFetching, columns }: Props<T>) {
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <TableRow
-              className="hover:bg-lightaccent-100/20 text-center"
+              className={cn(
+                "hover:bg-lightaccent-100/20 text-center",
+                navigateTo && "cursor-pointer"
+              )}
               key={row.id}
               data-state={row.getIsSelected() && "selected"}
+              onClick={() => {
+                if (!navigateTo || !objectName) return;
+                const data = row.original[objectName as keyof T];
+
+                router.push(`${navigateTo}/${data as string}`);
+              }}
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import useProductTable from "./hooks/use.product-table";
 import TablePag from "@/components/table/table-pag";
 import { useTableState } from "@/core/table/state/table.state";
-import TableComponent from "@/core/table/components/products-table";
+import TableComponent from "@/core/table/components/table-component";
 import { productsColumns } from "./components/products-colums";
 import { countProductsAction } from "./actions/find-products.action";
 
