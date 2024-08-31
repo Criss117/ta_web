@@ -23,6 +23,8 @@ model Product {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   isActive Boolean @default(true)
+
+  productSales ProductSale[]
 }
 
 model Client {
@@ -37,4 +39,38 @@ model Client {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   isActive Boolean @default(true)
+
+  tickets Ticket[]
+}
+
+model Ticket{
+  id Int @id @default(autoincrement())
+  total Int
+  state String 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isActive Boolean @default(true)
+  
+  clientId Int?
+  client Client? @relation(fields: [clientId], references: [id])
+
+  productSales ProductSale[]
+}
+
+model ProductSale {
+  id Int @id @default(autoincrement())
+  salePrice Int
+  quantity Int
+  subTotal Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isActive Boolean @default(true)
+
+  ticketId Int
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
 }

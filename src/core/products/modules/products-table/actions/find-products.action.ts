@@ -61,8 +61,6 @@ export async function findProductsAction({
       ...queryOptions,
     });
 
-    console.log({ queryOptions });
-
     return {
       data: products,
     };

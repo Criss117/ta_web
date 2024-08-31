@@ -1,15 +1,17 @@
 "use client";
 
 import { create } from "zustand";
-import { ProductPay } from "../models/types";
+import { ProductSale } from "../models/types";
 
 interface State {
+  clientId?: number;
   total: number;
-  products: ProductPay[] | [];
-  setInitialState: (products: ProductPay[]) => void;
+  products: ProductSale[] | [];
+  setInitialState: (products: ProductSale[]) => void;
 }
 
 export const usePayState = create<State>((set) => ({
+  clientId: undefined,
   total: 0,
   products: [],
   setInitialState: (products) => {

@@ -27,7 +27,7 @@ interface State {
 }
 
 const initalState = {
-  currentTicketId: 1,
+  currentTicketId: -1,
   tickets: [
     {
       id: 1,

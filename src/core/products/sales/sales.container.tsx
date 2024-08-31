@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import PayContainer from "@/core/pay/pay.container";
 import useSales from "./hooks/use.sales";
@@ -10,9 +10,13 @@ import TicketsTable from "./components/tickets-table";
 import ProductsSearchContainer from "../modules/products-search/products-search.container";
 
 const SalesContainer = () => {
-  const { tickets, currentTicketId, getStateFromLS } = useSaleState();
-
+  const { tickets, currentTicketId, getStateFromLS, getCurrentTicket } =
+    useSaleState();
   const { handleSearch } = useSales();
+
+  const currentTicket = useMemo(() => {
+    return getCurrentTicket();
+  }, [currentTicketId, tickets]);
 
   useEffect(() => {
     getStateFromLS();
@@ -32,7 +36,7 @@ const SalesContainer = () => {
         </nav>
         <TicketsTable />
       </section>
-      <PayContainer tickets={tickets} currentTicketId={currentTicketId} />
+      <PayContainer ticket={currentTicket} />
     </>
   );
 };

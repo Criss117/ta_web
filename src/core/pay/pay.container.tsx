@@ -8,22 +8,19 @@ import { usePayState } from "./state/pay.state";
 import { Ticket } from "../products/sales/models/type";
 import { ProductTicketToPayAdapter } from "./adapters/product-ticket-to-pay.adapter";
 import { formatCurrency } from "@/lib/utils";
+import PayModal from "./components/pay-modal";
 
 interface Props {
-  currentTicketId: number;
-  tickets: Ticket[];
+  ticket: Ticket | null;
 }
 
-function PayContainer({ currentTicketId, tickets }: Props) {
+function PayContainer({ ticket }: Props) {
   const { total, setInitialState } = usePayState();
 
   useEffect(() => {
-    const dataAdapted = ProductTicketToPayAdapter.adapt(
-      tickets.find((t) => t.id === currentTicketId) || null
-    );
-
-    setInitialState(dataAdapted);
-  }, [tickets, currentTicketId]);
+    if (!ticket) return;
+    setInitialState(ProductTicketToPayAdapter.adapt(ticket));
+  }, [ticket?.products, ticket?.products.length]);
 
   return (
     <div className="fixed bottom-0 w-full bg-lightbg-300 h-32 py-2 px-10 flex">
@@ -34,9 +31,7 @@ function PayContainer({ currentTicketId, tickets }: Props) {
       </div>
       <div className="h-full flex items-center  w-1/2">
         <div className="w-1/2 flex justify-end">
-          <Button variant="default" className="h-20 w-52">
-            Pagar
-          </Button>
+          <PayModal />
         </div>
         <Separator orientation="vertical" className="mx-5" />
         <div className="w-1/2">

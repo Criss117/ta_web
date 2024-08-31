@@ -35,13 +35,11 @@ export function validateCatchError(error: unknown) {
     if (prismaError) {
       return {
         error: prismaError.message,
-        data: undefined,
       };
     }
   }
 
   return {
     error: FORM_MESSAGES.UNKNOWN_ERROR,
-    data: undefined,
   };
 }
