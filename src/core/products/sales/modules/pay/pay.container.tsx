@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { usePayState } from "./state/pay.state";
 
-import { Ticket } from "../products/sales/models/type";
 import { ProductTicketToPayAdapter } from "./adapters/product-ticket-to-pay.adapter";
 import { formatCurrency } from "@/lib/utils";
 import PayModal from "./components/pay-modal";
+import { Ticket } from "../../models/type";
 
 interface Props {
   ticket: Ticket | null;
