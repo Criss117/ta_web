@@ -47,7 +47,7 @@ export const PRODUCT_FORM_MESSAGES = {
   UNKNOWN_ERROR: "Hubo un error inesperado",
 } as const;
 
-export const ClIENT_FORM_MESSAGES = {
+export const CLIENT_FORM_MESSAGES = {
   CCNUMBER: {
     REQUIRED: "El número de cédula es requerido",
     MIN: "El número de cédula debe tener al menos 5 caracter",
@@ -75,3 +75,9 @@ export const ClIENT_FORM_MESSAGES = {
   DELETE_SUCCESS: "Cliente eliminado exitosamente",
   DELETE_ERROR: "Error al eliminar el cliente",
 } as const;
+
+export const PAY_MESSAGES = {
+  ERROR_TITLE: "Upps, ocurrio un error",
+  UNKNOWN_ERROR: "Hubo un error inesperado",
+  SUCCESS: "Cobro realizado exitosamente",
+};

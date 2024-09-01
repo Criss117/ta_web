@@ -19,6 +19,7 @@ export async function editClientAction(
     });
 
     return {
+      success: true,
       data: res,
     };
   } catch (error) {

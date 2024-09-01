@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { toast } from "@/components/ui/use-toast";
-import { ClIENT_FORM_MESSAGES } from "@/lib/messages/product.messages";
+import { CLIENT_FORM_MESSAGES } from "@/lib/messages/product.messages";
 
 import { ClientForm } from "../../../models/type";
 import { CreateClientService } from "../services/create-client.service";
@@ -25,14 +25,14 @@ const useCreateClient = () => {
       if (res.error) {
         toast({
           variant: "destructive",
-          title: ClIENT_FORM_MESSAGES.ERROR_TITLE,
+          title: CLIENT_FORM_MESSAGES.ERROR_TITLE,
           description: res.error,
         });
         return;
       }
 
       toast({
-        title: ClIENT_FORM_MESSAGES.SUCCESS,
+        title: CLIENT_FORM_MESSAGES.SUCCESS,
       });
 
       router.push(ROUTES.CLIENTS);

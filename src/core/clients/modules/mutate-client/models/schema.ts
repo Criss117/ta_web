@@ -1,50 +1,50 @@
-import { ClIENT_FORM_MESSAGES } from "@/lib/messages/product.messages";
+import { CLIENT_FORM_MESSAGES } from "@/lib/messages/product.messages";
 import { z } from "zod";
 
 export const ClientFormSchema = z.object({
   ccNumber: z
     .string({
-      required_error: ClIENT_FORM_MESSAGES.CCNUMBER.REQUIRED,
+      required_error: CLIENT_FORM_MESSAGES.CCNUMBER.REQUIRED,
     })
     .min(5, {
-      message: ClIENT_FORM_MESSAGES.CCNUMBER.MIN,
+      message: CLIENT_FORM_MESSAGES.CCNUMBER.MIN,
     }),
   fullName: z
     .string({
-      required_error: ClIENT_FORM_MESSAGES.FULLNAME.REQUIRED,
+      required_error: CLIENT_FORM_MESSAGES.FULLNAME.REQUIRED,
     })
     .min(5, {
-      message: ClIENT_FORM_MESSAGES.FULLNAME.MIN,
+      message: CLIENT_FORM_MESSAGES.FULLNAME.MIN,
     })
     .max(255, {
-      message: ClIENT_FORM_MESSAGES.FULLNAME.MAX,
+      message: CLIENT_FORM_MESSAGES.FULLNAME.MAX,
     }),
   address: z
     .string()
     .min(5, {
-      message: ClIENT_FORM_MESSAGES.ADDRESS.MIN,
+      message: CLIENT_FORM_MESSAGES.ADDRESS.MIN,
     })
     .max(255, {
-      message: ClIENT_FORM_MESSAGES.ADDRESS.MAX,
+      message: CLIENT_FORM_MESSAGES.ADDRESS.MAX,
     })
     .optional(),
   phone: z
     .string()
     .min(10, {
-      message: ClIENT_FORM_MESSAGES.PHONE.MIN,
+      message: CLIENT_FORM_MESSAGES.PHONE.MIN,
     })
     .max(10, {
-      message: ClIENT_FORM_MESSAGES.PHONE.MIN,
+      message: CLIENT_FORM_MESSAGES.PHONE.MIN,
     })
     .optional(),
   creditLimit: z.preprocess(
     (value) => Number(value) || 0,
     z
       .number({
-        required_error: ClIENT_FORM_MESSAGES.CREDITLIMIT.REQUIRED,
+        required_error: CLIENT_FORM_MESSAGES.CREDITLIMIT.REQUIRED,
       })
       .min(1, {
-        message: ClIENT_FORM_MESSAGES.CREDITLIMIT.MIN,
+        message: CLIENT_FORM_MESSAGES.CREDITLIMIT.MIN,
       })
   ),
 });

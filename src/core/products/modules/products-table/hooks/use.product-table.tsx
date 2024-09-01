@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Filters } from "@/core/common/models/types";
+import type { Product } from "@prisma/client";
+import type {
+  Filters,
+  FindEntitiesReturnType,
+} from "@/core/common/models/types";
 import { findProductsAction } from "../actions/find-products.action";
 
 interface Props {
@@ -16,7 +20,7 @@ async function findProducts({
   page: number;
   offset: number;
   filters?: Filters;
-}) {
+}): Promise<FindEntitiesReturnType<Product[]>> {
   return await findProductsAction({ page, offset, filters });
 }
 

@@ -7,7 +7,7 @@ import useClientsTable from "./hooks/use.clients-table";
 import { clientsColumns } from "./components/clients-column";
 import { useTableState } from "@/core/table/state/table.state";
 import TableComponent from "@/core/table/components/table-component";
-import { countClientsAction } from "./actions/find-clients.action";
+import { countClientsAction } from "../../actions/find-clients.action";
 
 interface Props {
   page: number;

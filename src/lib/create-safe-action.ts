@@ -8,6 +8,7 @@ export type ActionState<T, P> = {
   fieldErros?: FieldErrors<T>;
   error?: string | null;
   data?: P | null;
+  success?: boolean;
 };
 
 export function createSafeAction<T, P>(

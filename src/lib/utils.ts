@@ -26,7 +26,7 @@ export function formatCurrency(
   );
 }
 
-export function validateCatchError(error: unknown) {
+export function validateCatchError(error: any) {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     const prismaError = PRISMACODES.ERRORS.find(
       (err) => err.code === error.code
@@ -36,11 +36,21 @@ export function validateCatchError(error: unknown) {
       return {
         data: undefined,
         error: prismaError.message,
+        success: false,
       };
     }
   }
 
+  if (error.cause) {
+    return {
+      success: false,
+      data: undefined,
+      error: error.cause,
+    };
+  }
+
   return {
+    success: false,
     data: undefined,
     error: FORM_MESSAGES.UNKNOWN_ERROR,
   };

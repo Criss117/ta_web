@@ -3,7 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { deleteClientAction } from "../actions/delete-client.action";
 import { toast } from "@/components/ui/use-toast";
-import { ClIENT_FORM_MESSAGES } from "@/lib/messages/product.messages";
+import { CLIENT_FORM_MESSAGES } from "@/lib/messages/product.messages";
 
 async function deleteClient({
   ccNumber,
@@ -24,14 +24,14 @@ const useDeleteClient = () => {
       if (res.error) {
         toast({
           variant: "destructive",
-          title: ClIENT_FORM_MESSAGES.ERROR_TITLE,
+          title: CLIENT_FORM_MESSAGES.ERROR_TITLE,
           description: res.error,
         });
         return;
       }
 
       toast({
-        title: ClIENT_FORM_MESSAGES.DELETE_SUCCESS,
+        title: CLIENT_FORM_MESSAGES.DELETE_SUCCESS,
       });
     },
   });

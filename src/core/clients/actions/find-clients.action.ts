@@ -1,7 +1,8 @@
 "use server";
 
-import { Prisma, Product } from "@prisma/client";
+import { Client, Prisma } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
+
 import prisma from "@/lib/prisma";
 import { validateCatchError } from "@/lib/utils";
 import type {
@@ -9,48 +10,28 @@ import type {
   FindEntitiesReturnType,
 } from "@/core/common/models/types";
 
-export async function findProductsAction({
+export async function findClientsAction({
   offset = 10,
   page = 0,
-  filters = { minStock: false },
-}: FindEntitesInputType): Promise<FindEntitiesReturnType<Product[]>> {
+  filters,
+}: FindEntitesInputType): Promise<FindEntitiesReturnType<Client[]>> {
   try {
-    const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {
+    const queryOptions: Prisma.ClientFindManyArgs<DefaultArgs> = {
       skip: page * offset,
       take: offset,
       where: {
         isActive: true,
       },
-      select: {
-        id: true,
-        barcode: true,
-        description: true,
-        costPrice: true,
-        salePrice: true,
-        stock: true,
-        minStock: true,
-        createdAt: true,
-        isActive: true,
-      },
     };
 
-    if (filters.minStock) {
-      queryOptions.orderBy = {
-        stock: "asc",
-      };
-    }
-
-    if (filters.query) {
+    if (filters && filters.query) {
       queryOptions.where = {
         AND: [
           {
             isActive: true,
             OR: [
               {
-                barcode: filters.query,
-              },
-              {
-                description: {
+                fullName: {
                   contains: filters.query,
                 },
               },
@@ -60,19 +41,20 @@ export async function findProductsAction({
       };
     }
 
-    const products = await prisma.product.findMany({
+    const clients = await prisma.client.findMany({
       ...queryOptions,
     });
 
     return {
-      data: products,
+      success: true,
+      data: clients,
     };
   } catch (error) {
     return validateCatchError(error);
   }
 }
 
-export async function countProductsAction({
+export async function countClientsAction({
   query,
   offset = 10,
 }: {
@@ -80,11 +62,12 @@ export async function countProductsAction({
   offset?: number;
 }) {
   try {
-    const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {
+    const queryOptions: Prisma.ClientFindManyArgs<DefaultArgs> = {
       where: {
         isActive: true,
       },
     };
+
     if (query) {
       queryOptions.where = {
         AND: [
@@ -92,10 +75,12 @@ export async function countProductsAction({
             isActive: true,
             OR: [
               {
-                barcode: query,
+                ccNumber: {
+                  contains: query,
+                },
               },
               {
-                description: {
+                fullName: {
                   contains: query,
                 },
               },
@@ -105,7 +90,7 @@ export async function countProductsAction({
       };
     }
 
-    const total = await prisma.product.count({
+    const total = await prisma.client.count({
       where: { ...queryOptions.where },
     });
 

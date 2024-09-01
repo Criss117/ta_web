@@ -11,14 +11,6 @@ export const clientsColumns: ColumnDef<Client>[] = [
   {
     accessorKey: "fullName",
     header: "Nombre",
-    // cell: ({ row }) => {
-    //   const client = row.original;
-    //   return (
-    //     <Link href={`${ROUTES.CLIENT}/${client.ccNumber}`}>
-    //       {client.fullName}
-    //     </Link>
-    //   );
-    // },
   },
   {
     accessorKey: "phone",
