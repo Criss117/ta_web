@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import { cn } from "../lib/utils";
 
 export const metadata: Metadata = {
   title: {
@@ -17,7 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={GeistSans.className}>{children}</body>
+      <body
+        className={cn(
+          GeistSans.className,
+          "bg-lightbg-200 min-h-screen flex flex-col"
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }

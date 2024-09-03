@@ -12,22 +12,10 @@ interface Props {
   filters?: Filters;
 }
 
-async function findProducts({
-  page,
-  offset,
-  filters,
-}: {
-  page: number;
-  offset: number;
-  filters?: Filters;
-}): Promise<FindEntitiesReturnType<Product[]>> {
-  return await findProductsAction({ page, offset, filters });
-}
-
 const useProductTable = ({ page = 1, offset = 10, filters }: Props) => {
   const findProductsQuery = useQuery({
     queryKey: ["products", page - 1, offset, filters?.query || "all"],
-    queryFn: () => findProducts({ page: page - 1, offset, filters }),
+    queryFn: () => findProductsAction({ page: page - 1, offset, filters }),
     enabled: false,
     refetchOnWindowFocus: false,
   });

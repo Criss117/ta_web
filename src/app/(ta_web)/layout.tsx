@@ -9,11 +9,9 @@ import TansTackProvider from "@/plugins/tanstack.provider";
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <TansTackProvider>
-      <main className="bg-lightbg-200 min-h-screen">
-        <NavBar />
-        <Toaster />
-        {children}
-      </main>
+      <NavBar />
+      <main className="mt-20 flex-grow flex flex-col">{children}</main>
+      <Toaster />
     </TansTackProvider>
   );
 };

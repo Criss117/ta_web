@@ -8,6 +8,7 @@ import type {
   DecrementStockInputType,
   PayReturnType,
   UpdateClientPayInputType,
+  VerifyStockInputType,
 } from "../models/types";
 import { sleep, validateCatchError } from "@/lib/utils";
 import { ProductsSaleToCreateAdapter } from "../adapters/products-sale-to-create.adapter";
@@ -93,6 +94,35 @@ export async function createProductsSaleAction(
   }
 }
 
+export async function verifyStock(verifyStock: VerifyStockInputType) {
+  const { tx, productId, quantity } = verifyStock;
+
+  if (tx) {
+    const product = await tx.product.findUnique({
+      where: {
+        id: productId,
+      },
+      select: {
+        stock: true,
+      },
+    });
+
+    console.log({ product });
+
+    if (!product) {
+      throw new Error("El producto no existe", {
+        cause: PAY_ERROR_MESSAGES.PRODUCT_NOT_EXIST,
+      });
+    }
+
+    if (product.stock < quantity) {
+      throw new Error(PAY_ERROR_MESSAGES.ERROR_TITLE, {
+        cause: PAY_ERROR_MESSAGES.STOCK_NOT_ENOUGH,
+      });
+    }
+  }
+}
+
 export async function paymentAction(
   ticketToPay: TicketToPayInputType
 ): Promise<PayReturnType> {
@@ -137,13 +167,18 @@ export async function paymentAction(
         });
       }
 
-      const decrementsPromise = products.map((product) =>
-        decrementProductStockAction({
+      const decrementsPromise = products.map(async (product) => {
+        await verifyStock({
           tx,
           productId: product.productId,
           quantity: product.quantity,
-        })
-      );
+        });
+        return decrementProductStockAction({
+          tx,
+          productId: product.productId,
+          quantity: product.quantity,
+        });
+      });
 
       const newStocks = await Promise.all(decrementsPromise);
 

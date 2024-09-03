@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const ConfigPages = () => {
-  return <div>ConfigPages</div>;
+  return <div className="bg-green-400 flex-grow">div</div>;
 };
 
 export default ConfigPages;

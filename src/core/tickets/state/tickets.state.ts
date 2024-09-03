@@ -40,7 +40,7 @@ const initalState = {
 export const useTicketsState = create<State>()((set, get) => ({
   currentTicketId: initalState.currentTicketId,
   tickets: initalState.tickets,
-  setInitialState: (tickets, currentTicketId) => {
+  setInitialState: async (tickets, currentTicketId) => {
     set({ tickets, currentTicketId });
   },
   clearState: () => {
@@ -82,7 +82,10 @@ export const useTicketsState = create<State>()((set, get) => ({
         return p;
       });
     } else {
-      newTicket.products.push(product);
+      newTicket.products.push({
+        ...product,
+        currentStock: --product.stock,
+      });
     }
 
     const newTickets = tickets.map((ticket) => {
@@ -137,7 +140,7 @@ export const useTicketsState = create<State>()((set, get) => ({
 
     if (tickets.length <= 1) {
       set({
-        currentTicketId: initalState.currentTicketId,
+        currentTicketId: 1,
         tickets: initalState.tickets,
       });
       localStorage.removeItem(LOCAL_STORAGE_KEYS.TICKETS);
@@ -165,12 +168,9 @@ export const useTicketsState = create<State>()((set, get) => ({
       const { currentTicketId } = get();
       ticketId = currentTicketId;
     }
-
     if (ticketId && ticketId <= 0) return;
 
     const tickets = get().tickets;
-
-    if (tickets.length <= 1) return;
 
     const newTickets = tickets.map((ticket) => {
       if (ticket.id === ticketId) {
@@ -210,7 +210,7 @@ export const useTicketsState = create<State>()((set, get) => ({
       products: currentTicket.products.map((product) => {
         if (product.barcode === barcode) {
           const quantity =
-            newQuantity > 0 && newQuantity + 1 <= product.stock
+            newQuantity > 0 && newQuantity <= product.stock
               ? newQuantity
               : product.quantity;
 
@@ -218,8 +218,8 @@ export const useTicketsState = create<State>()((set, get) => ({
             ...product,
             salePrice: newSalePrice < 0 ? product.originalPrice : newSalePrice,
             quantity,
-            subTotal: newSalePrice * newQuantity,
-            currentStock: product.stock - newQuantity,
+            subTotal: newSalePrice * quantity,
+            currentStock: product.stock - quantity,
           };
         }
         return product;

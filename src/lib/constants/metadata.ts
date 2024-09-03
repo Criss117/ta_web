@@ -1,7 +1,7 @@
 export const TITLES = {
   SALES: "Ventas",
   CLIENTS: "Clientes",
-  CLIENT: "Información del cliente",
+  MANAGE_CLIENT: "Estado de cuenta",
   PRODUCTS: "Productos",
   INVENTORY: "Inventario",
   CONFIG: "Configuración",

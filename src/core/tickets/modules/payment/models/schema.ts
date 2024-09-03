@@ -32,3 +32,8 @@ export const UpdateClientPaySchema = z.object({
   ccNumber: z.string(),
   total: z.number(),
 });
+
+export const VerifyStockSchema = z.object({
+  productId: z.number(),
+  quantity: z.number(),
+});

@@ -20,7 +20,7 @@ interface NavItemState extends NavItem {
 
 const NavBar = ({ variant = "primary" }: Props) => {
   const pathname = usePathname();
-  const [navItems, setNavItems] = useState<NavItemState[]>([]);
+  const [navItems, setNavItems] = useState<NavItemState[]>(NAVITEMS);
 
   useEffect(() => {
     let newNavItems: NavItemState[] = [];
@@ -47,7 +47,7 @@ const NavBar = ({ variant = "primary" }: Props) => {
   }, [pathname]);
 
   return (
-    <nav className="p-5 sticky top-0 z-50 bg-lightbg-200">
+    <nav className="flex items-center px-10 z-50 bg-lightbg-200 fixed top-0 w-full h-20">
       <ul className="flex gap-5">
         {navItems.map(({ name, href, icon: Icon, current }) => (
           <li key={href}>

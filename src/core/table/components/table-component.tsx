@@ -25,6 +25,7 @@ interface Props<T> {
   columns: ColumnDef<T, any>[];
   navigateTo?: string;
   objectName?: string;
+  className?: string;
 }
 
 function TableComponent<T>({
@@ -34,6 +35,7 @@ function TableComponent<T>({
   columns,
   navigateTo,
   objectName,
+  className,
 }: Props<T>) {
   const router = useRouter();
   const table = useReactTable({
@@ -43,7 +45,7 @@ function TableComponent<T>({
   });
 
   return (
-    <Table>
+    <Table className={cn("w-full", className)}>
       <TableHeader className="bg-lightaccent-100">
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import type { Client } from "@prisma/client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { ROUTES } from "@/lib/constants/nav";
 import { cn } from "@/lib/utils";
 import MutateClientContainer from "../../mutate-client/mutate-client.container";

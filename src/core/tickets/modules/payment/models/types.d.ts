@@ -40,6 +40,11 @@ export type UpdateClientPayInputType = z.infer<typeof UpdateClientPaySchema> & {
 export type TicketToPayInputType = z.infer<typeof TicketToPaySchema> & {
   client?: ClientPay;
 };
+
+export type VerifyStockInputType = z.infer<typeof DecremetentStockSchema> & {
+  tx?: PrismaTx;
+};
+
 export type CreateProductSale = z.infer<typeof CreateProductSaleSchema>;
 
 export type PayReturnType = ActionState<TicketToPayInputType, null>;

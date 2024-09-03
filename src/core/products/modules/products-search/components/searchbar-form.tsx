@@ -52,7 +52,7 @@ const SearchBarForm = ({ searchByBarcodeFn }: Props) => {
                 Código de Barras:
               </FormLabel>
               <FormControl>
-                <Input type="text" id="barcode" {...field} />
+                <Input type="text" id="barcode" {...field} autoFocus />
               </FormControl>
             </FormItem>
           )}
