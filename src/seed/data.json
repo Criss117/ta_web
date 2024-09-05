@@ -14462,5 +14462,12 @@
       "salePrice": 5000,
       "subTotal": 5000
     }
+  ],
+  "debtPayment": [
+    {
+      "id": 1,
+      "amount": 200000,
+      "clientId": 1
+    }
   ]
 }

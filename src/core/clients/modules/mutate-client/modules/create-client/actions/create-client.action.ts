@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 
 import { validateCatchError } from "@/lib/utils";
-import {
+import type {
   CreateClientInputType,
   MutateClientReturnType,
 } from "../../../models/type";

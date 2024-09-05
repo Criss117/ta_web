@@ -11,10 +11,16 @@ export async function findProdSalesByTicketIdAction(
   findPS: FindProdcutsSalesInputType
 ): Promise<FindProdcutsSalesReturnType> {
   // await sleep(2000);
+
   try {
     const products = await prisma.productSale.findMany({
       where: {
         ticketId: findPS.ticketId,
+        ticket: {
+          client: {
+            ccNumber: findPS.ccNumber,
+          },
+        },
         isActive: true,
       },
       select: {

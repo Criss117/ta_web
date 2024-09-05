@@ -1,13 +1,14 @@
 "use client";
+import { useState } from "react";
+
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/components/ui/use-toast";
 
 import { paymentAction } from "../actions/payment.action";
-import type { ProductSale, Ticket } from "../models/types";
-import { PAY_MESSAGES } from "@/lib/messages/product.messages";
-import { useState } from "react";
 import { useTicketsState } from "@/core/tickets/state/tickets.state";
 import { ClientPay } from "@/core/clients/modules/client-list/models/types";
+import { PAY_MESSAGES } from "@/lib/messages/pay.message";
+import type { ProductSale, Ticket } from "../models/types";
 
 interface Props {
   ticket: Ticket;

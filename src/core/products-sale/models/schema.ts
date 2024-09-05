@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const FindProductsSaleSchema = z.object({
   ticketId: z.number(),
+  ccNumber: z.string(),
 });
 
 export const ProductSaleSchema = z.object({

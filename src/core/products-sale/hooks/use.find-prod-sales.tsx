@@ -5,12 +5,13 @@ import { findProdSalesByTicketIdAction } from "../actions/find-prod-sales.action
 
 interface Props {
   ticketId: number;
+  ccNumber: string;
 }
 
-const useFindProductsSale = ({ ticketId }: Props) => {
+const useFindProductsSale = ({ ticketId, ccNumber }: Props) => {
   const findProductsSaleQuery = useQuery({
-    queryKey: ["products-sale", ticketId],
-    queryFn: () => findProdSalesByTicketIdAction({ ticketId }),
+    queryKey: ["products-sale", ccNumber, ticketId],
+    queryFn: () => findProdSalesByTicketIdAction({ ticketId, ccNumber }),
     enabled: ticketId > 0,
     refetchOnWindowFocus: false,
   });

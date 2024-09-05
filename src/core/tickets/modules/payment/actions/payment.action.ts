@@ -12,7 +12,7 @@ import type {
 } from "../models/types";
 import { sleep, validateCatchError } from "@/lib/utils";
 import { ProductsSaleToCreateAdapter } from "../adapters/products-sale-to-create.adapter";
-import { PAY_ERROR_MESSAGES } from "@/lib/messages/pay.message";
+import { PAY_MESSAGES } from "@/lib/messages/pay.message";
 
 export async function createTicketAction(newTicket: TicketInputType) {
   const { tx, ...data } = newTicket!;
@@ -65,8 +65,8 @@ export async function updateClientAction(clientPay: UpdateClientPayInputType) {
     const newBalance = credit.balance + data.total;
 
     if (newBalance > credit.creditLimit) {
-      throw new Error(PAY_ERROR_MESSAGES.ERROR_TITLE, {
-        cause: PAY_ERROR_MESSAGES.CREDIT_LIMIT,
+      throw new Error(PAY_MESSAGES.ERROR_TITLE, {
+        cause: PAY_MESSAGES.CREDIT_LIMIT,
       });
     }
 
@@ -111,13 +111,13 @@ export async function verifyStock(verifyStock: VerifyStockInputType) {
 
     if (!product) {
       throw new Error("El producto no existe", {
-        cause: PAY_ERROR_MESSAGES.PRODUCT_NOT_EXIST,
+        cause: PAY_MESSAGES.PRODUCT_NOT_EXIST,
       });
     }
 
     if (product.stock < quantity) {
-      throw new Error(PAY_ERROR_MESSAGES.ERROR_TITLE, {
-        cause: PAY_ERROR_MESSAGES.STOCK_NOT_ENOUGH,
+      throw new Error(PAY_MESSAGES.ERROR_TITLE, {
+        cause: PAY_MESSAGES.STOCK_NOT_ENOUGH,
       });
     }
   }
@@ -136,7 +136,7 @@ export async function paymentAction(
   }
 
   try {
-    await prisma.$transaction(async (tx) => {
+    const res = await prisma.$transaction(async (tx) => {
       if (client) {
         await updateClientAction({
           tx,
@@ -146,11 +146,16 @@ export async function paymentAction(
         });
       }
 
-      const newTicket = await createTicketAction({ tx, ...ticket });
+      const newTicket = await createTicketAction({
+        tx,
+        state: client ? "PAID" : "PENDING",
+        total: ticket.total,
+        clientId: client?.id,
+      });
 
       if (!newTicket || !newTicket.id) {
-        throw new Error(PAY_ERROR_MESSAGES.ERROR_TO_CREATE, {
-          cause: PAY_ERROR_MESSAGES.ERROR_TO_CREATE,
+        throw new Error(PAY_MESSAGES.ERROR_TO_CREATE, {
+          cause: PAY_MESSAGES.ERROR_TO_CREATE,
         });
       }
 
@@ -162,8 +167,8 @@ export async function paymentAction(
       });
 
       if (!newProducts) {
-        throw new Error(PAY_ERROR_MESSAGES.ERROR_TO_CREATE, {
-          cause: PAY_ERROR_MESSAGES.ERROR_TO_CREATE,
+        throw new Error(PAY_MESSAGES.ERROR_TO_CREATE, {
+          cause: PAY_MESSAGES.ERROR_TO_CREATE,
         });
       }
 

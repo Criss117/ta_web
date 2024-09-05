@@ -41,6 +41,19 @@ model Client {
   isActive Boolean @default(true)
 
   tickets Ticket[]
+  debtPayments DebtPayment[]
+}
+
+model DebtPayment {
+  id Int @id @default(autoincrement())
+  amount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isActive Boolean @default(true)
+
+  clientId Int
+  client Client @relation(fields: [clientId], references: [id])
 }
 
 model Ticket{

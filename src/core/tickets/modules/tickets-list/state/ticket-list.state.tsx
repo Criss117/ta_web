@@ -6,6 +6,7 @@ interface TicketListState {
   currentTicket: TicketList | null;
   setTicket: (ticket: TicketYear) => void;
   setCurrentTicket: (ticket: TicketList) => void;
+  clearState: () => void;
 }
 
 export const useTicketListState = create<TicketListState>()((set, get) => ({
@@ -16,5 +17,8 @@ export const useTicketListState = create<TicketListState>()((set, get) => ({
   },
   setCurrentTicket: (ticket) => {
     set({ currentTicket: ticket });
+  },
+  clearState: () => {
+    set({ tickets: {}, currentTicket: null });
   },
 }));

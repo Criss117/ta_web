@@ -27,6 +27,7 @@ export type ProductSaleInputType = {
   tx?: PrismaTx;
 };
 export type TicketInputType = z.infer<typeof TicketSchema> & {
+  clientId?: number;
   tx?: PrismaTx;
 };
 export type DecrementStockInputType = z.infer<typeof DecremetentStockSchema> & {

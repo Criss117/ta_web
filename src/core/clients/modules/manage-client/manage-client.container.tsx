@@ -44,8 +44,11 @@ const ManageClientContainer = ({ ccNumber }: Props) => {
           </p>
         </div>
       </header>
-      <ActionsNav />
-      <TicketListContainer tickets={client?.tickets || []} />
+      <ActionsNav clientId={client.id || -1} />
+      <TicketListContainer
+        tickets={client?.tickets || []}
+        ccNumber={ccNumber}
+      />
     </section>
   );
 };

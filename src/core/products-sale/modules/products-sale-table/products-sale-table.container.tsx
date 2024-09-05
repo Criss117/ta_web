@@ -1,18 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
 import useFindProductsSale from "../../hooks/use.find-prod-sales";
 import TableComponent from "@/core/table/components/table-component";
 import { productsSaleColumns } from "./components/products-sale-columns";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
 
 interface Props {
   ticketId: number;
+  ccNumber: string;
+  total: number;
 }
 
-const ProductsSaleTableContainer = ({ ticketId }: Props) => {
+const ProductsSaleTableContainer = ({ ticketId, ccNumber, total }: Props) => {
   const { findProductsSaleQuery, productsSales } = useFindProductsSale({
     ticketId,
+    ccNumber,
   });
 
   return (
@@ -22,7 +27,6 @@ const ProductsSaleTableContainer = ({ ticketId }: Props) => {
         offset={productsSales?.length || 5}
         isFetching={findProductsSaleQuery.isFetching}
         columns={productsSaleColumns}
-        navigateTo={"products-sale/"}
       />
     </ScrollArea>
   );

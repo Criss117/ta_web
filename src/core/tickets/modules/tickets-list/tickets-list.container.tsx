@@ -10,21 +10,19 @@ import { formatCurrency } from "../../../../lib/utils";
 
 interface Props {
   tickets: Ticket[];
-  callBack?: (ticketId: number, total: number) => void;
+  ccNumber: string;
 }
 
-const TicketListContainer = ({ tickets, callBack }: Props) => {
-  const { currentTicket, setTicket } = useTicketListState();
+const TicketListContainer = ({ tickets, ccNumber }: Props) => {
+  const { currentTicket, setTicket, clearState } = useTicketListState();
 
   useEffect(() => {
     setTicket(TicketsToListAdapter.adapt(tickets));
   }, [tickets]);
 
   useEffect(() => {
-    if (currentTicket?.id && callBack) {
-      callBack(currentTicket.id, currentTicket.total);
-    }
-  }, [currentTicket?.id]);
+    return () => clearState();
+  }, []);
 
   return (
     <div className="flex mt-5 gap-x-10 flex-grow">
@@ -32,7 +30,11 @@ const TicketListContainer = ({ tickets, callBack }: Props) => {
         <TicketsAccordion />
       </div>
       <div className="w-4/5 relative ">
-        <ProductsSaleTableContainer ticketId={currentTicket?.id || -1} />
+        <ProductsSaleTableContainer
+          ticketId={currentTicket?.id || -1}
+          ccNumber={ccNumber}
+          total={currentTicket?.total || 0}
+        />
         <footer className="absolute bottom-[5%] w-full bg-lightbg-300 h-16 flex justify-end">
           <p className="text-center my-auto text-xl font-semibold mx-10">
             Total:{" "}

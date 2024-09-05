@@ -6,6 +6,8 @@ async function main() {
 
   console.log("Seeding...");
 
+  await prisma.debtPayment.deleteMany().catch((e) => console.log(e));
+
   await prisma.productSale.deleteMany().catch((e) => console.log(e));
 
   await prisma.ticket.deleteMany().catch((e) => console.log(e));
@@ -23,6 +25,7 @@ async function main() {
       await prisma.client.createMany({ data: items.clients });
       await prisma.ticket.createMany({ data: items.tickets });
       await prisma.productSale.createMany({ data: items.productSale });
+      await prisma.debtPayment.createMany({ data: items.debtPayment });
     })
     .catch((e) => console.log(e));
 
