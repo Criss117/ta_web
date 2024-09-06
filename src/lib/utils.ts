@@ -27,6 +27,7 @@ export function formatCurrency(
 }
 
 export function validateCatchError(error: any) {
+  console.log({ error });
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     const prismaError = PRISMACODES.ERRORS.find(
       (err) => err.code === error.code

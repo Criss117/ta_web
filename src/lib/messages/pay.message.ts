@@ -16,4 +16,5 @@ export const DEBT_PAYMENT_MESSAGES = {
   STOCK_NOT_ENOUGH: "No hay suficiente stock disponible",
   PRODUCT_NOT_EXIST: "El producto no existe",
   SUCCESS: "Abono guardado exitosamente",
+  DELETE_SUCCESS: "Abono eliminado exitosamente",
 } as const;

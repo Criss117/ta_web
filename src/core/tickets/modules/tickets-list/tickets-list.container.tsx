@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { Ticket } from "@prisma/client";
+
 import { TicketsToListAdapter } from "./adapters/tickets-to-list.adapter";
 import TicketsAccordion from "./components/tickets-accordion";
 import { useTicketListState } from "./state/ticket-list.state";
-import ProductsSaleTableContainer from "@/core/products-sale/modules/products-sale-table/products-sale-table.container";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { formatCurrency } from "../../../../lib/utils";
+import { formatCurrency } from "@/lib/utils";
+import ProductsSaleTableContainer, {
+  ProductsSaleTableSkeleton,
+} from "@/core/products-sale/modules/products-sale-table/products-sale-table.container";
 
 interface Props {
   tickets: Ticket[];
@@ -30,11 +33,15 @@ const TicketListContainer = ({ tickets, ccNumber }: Props) => {
         <TicketsAccordion />
       </div>
       <div className="w-4/5 relative ">
-        <ProductsSaleTableContainer
-          ticketId={currentTicket?.id || -1}
-          ccNumber={ccNumber}
-          total={currentTicket?.total || 0}
-        />
+        {currentTicket ? (
+          <ProductsSaleTableContainer
+            ticketId={currentTicket?.id}
+            ccNumber={ccNumber}
+            total={currentTicket?.total || 0}
+          />
+        ) : (
+          <ProductsSaleTableSkeleton />
+        )}
         <footer className="absolute bottom-[5%] w-full bg-lightbg-300 h-16 flex justify-end">
           <p className="text-center my-auto text-xl font-semibold mx-10">
             Total:{" "}

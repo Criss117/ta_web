@@ -18,7 +18,7 @@ const ManageClientSkeleton = () => {
           </div>
         </div>
       </header>
-      <ActionsNav disabled clientId={-1} />
+      <ActionsNav disabled />
       <div className="flex mt-5 gap-x-10 h-52">
         <Skeleton className="w-1/5 h-52 bg-lightbg-100" />
 

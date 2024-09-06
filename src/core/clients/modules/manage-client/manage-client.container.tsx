@@ -44,7 +44,7 @@ const ManageClientContainer = ({ ccNumber }: Props) => {
           </p>
         </div>
       </header>
-      <ActionsNav clientId={client.id || -1} />
+      <ActionsNav clientId={client.id} />
       <TicketListContainer
         tickets={client?.tickets || []}
         ccNumber={ccNumber}

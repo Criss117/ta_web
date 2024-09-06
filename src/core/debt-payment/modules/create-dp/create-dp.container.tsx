@@ -15,8 +15,7 @@ import FormItemInput from "@/components/form/form-item-input";
 import { Separator } from "@/components/ui/separator";
 import LoaderComponent from "@/components/ui/loader-component";
 import { Form, FormField } from "@/components/ui/form";
-
-import useManageClientForm from "../hooks/use.manage-client-form";
+import { useDebtPaymentForm } from "../../hooks/use.debt-payment";
 
 interface Props {
   clientId: number;
@@ -41,7 +40,7 @@ const formItemsNumber = [
   },
 ] as const;
 
-const DebtPaymentModal = ({ clientId, disabled }: Props) => {
+const CreateDPContainer = ({ clientId, disabled }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     debtPaymentForm,
@@ -49,7 +48,7 @@ const DebtPaymentModal = ({ clientId, disabled }: Props) => {
     isSuccess,
     onCreateDebtPayment,
     clearForm,
-  } = useManageClientForm({
+  } = useDebtPaymentForm({
     clientId,
   });
 
@@ -71,12 +70,10 @@ const DebtPaymentModal = ({ clientId, disabled }: Props) => {
         setIsOpen(!isOpen);
       }}
     >
-      <DialogTrigger>
-        <Button variant="outline" asChild className="space-x-2 ">
-          <p>
-            <CircleDollarSign />
-            <span>Abonar</span>
-          </p>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="space-x-2 ">
+          <CircleDollarSign />
+          <p>Abonar</p>
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -124,4 +121,4 @@ const DebtPaymentModal = ({ clientId, disabled }: Props) => {
   );
 };
 
-export default DebtPaymentModal;
+export default CreateDPContainer;

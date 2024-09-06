@@ -9,6 +9,7 @@ import { Button } from "./button";
 
 import type { NavItem } from "@/lib/models";
 import { useEffect, useState } from "react";
+import Clock from "./clock";
 
 interface Props {
   variant?: "primary" | "products";
@@ -47,7 +48,7 @@ const NavBar = ({ variant = "primary" }: Props) => {
   }, [pathname]);
 
   return (
-    <nav className="flex items-center px-10 z-50 bg-lightbg-200 fixed top-0 w-full h-20">
+    <nav className="flex items-center px-10 z-50 bg-lightbg-200 fixed top-0 w-full h-20 justify-between">
       <ul className="flex gap-5">
         {navItems.map(({ name, href, icon: Icon, current }) => (
           <li key={href}>
@@ -68,6 +69,7 @@ const NavBar = ({ variant = "primary" }: Props) => {
           </li>
         ))}
       </ul>
+      <Clock />
     </nav>
   );
 };

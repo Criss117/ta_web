@@ -8,5 +8,9 @@ export const PRISMACODES = {
       code: "P2003",
       message: "Hubo un error al insertar el registro",
     },
+    {
+      code: "P2025",
+      message: "El registro no existe",
+    },
   ],
 };
