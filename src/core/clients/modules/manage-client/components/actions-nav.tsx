@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import CreateDPContainer from "@/core/debt-payment/modules/create-dp/create-dp.container";
 import ListDebtPaysContainer from "@/core/debt-payment/modules/list-debt-pays/list-debt-pays.container";
+import SettleDebt from "./settle-debt";
 
 const ActionsNavList = [
   {
@@ -27,7 +28,7 @@ const ActionsNavList = [
   {
     title: "Liquidar Adeudo",
     icon: CreditCard,
-    cmp: null,
+    cmp: SettleDebt,
   },
   {
     title: "Detalles de abono",

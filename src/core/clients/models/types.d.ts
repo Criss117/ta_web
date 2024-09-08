@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FindOneClientSchema } from "./schema";
+import { FindOneClientSchema, SettleDebtSchema } from "./schema";
 import { ActionState } from "@/lib/create-safe-action";
 import { Client, Ticket } from "@prisma/client";
 
@@ -12,4 +12,12 @@ export type ClientAndTickets = Client & {
 export type FindOneClientReturnType = ActionState<
   FindOneClientInputType,
   ClientAndTickets
+>;
+
+export type SettleDebtInputType = z.infer<typeof SettleDebtSchema>;
+export type SettleDebtReturnType = ActionState<
+  SettleDebtInputType,
+  {
+    ccNumber: string;
+  }
 >;

@@ -45,6 +45,7 @@ const TablePag = ({ page, offset, count }: Props) => {
         {/* {first page */}
         <Link
           href={disablePrevButton ? "#" : `?page=1&offset=${offset}`}
+          aria-label="First page"
           className={cn(
             outLineButtonClass,
             disablePrevButton && "cursor-default opacity-50 hover:bg-background"
@@ -58,6 +59,7 @@ const TablePag = ({ page, offset, count }: Props) => {
         {/* previous page */}
         <Link
           href={`?page=${prevPage}&offset=${offset}`}
+          aria-label="Previous page"
           className={cn(
             outLineButtonClass,
             disablePrevButton && "cursor-default opacity-50 hover:bg-background"
@@ -71,6 +73,7 @@ const TablePag = ({ page, offset, count }: Props) => {
         {/* next page */}
         <Link
           href={`?page=${nextPage}&offset=${offset}`}
+          aria-label="Next page"
           className={cn(
             outLineButtonClass,
             disableNextButton && "cursor-default opacity-50 hover:bg-background"
@@ -84,6 +87,7 @@ const TablePag = ({ page, offset, count }: Props) => {
         {/* last page */}
         <Link
           href={`?page=${totalPage}&offset=${offset}`}
+          aria-label="Last page"
           className={cn(
             outLineButtonClass,
             disableNextButton && "cursor-default opacity-50 hover:bg-background"

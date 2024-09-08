@@ -46,6 +46,7 @@ const SearchBarQuery = ({ label, searchByQueryFn }: Props) => {
         <Button
           variant="ghost"
           className="absolute right-0 bottom-0 bg-transparent hover:bg-transparent"
+          aria-label="Clear query"
           onClick={clearQuery}
         >
           <X />

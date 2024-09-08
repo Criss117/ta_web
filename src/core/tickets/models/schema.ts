@@ -18,3 +18,8 @@ export const TicketSchema = z.object({
   label: z.string(),
   products: z.array(ProductTicketSchema),
 });
+
+export const DeleteTicketSchema = z.object({
+  id: z.number().positive(),
+  ccNumber: z.string(),
+});

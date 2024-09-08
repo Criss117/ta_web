@@ -107,8 +107,6 @@ export async function verifyStock(verifyStock: VerifyStockInputType) {
       },
     });
 
-    console.log({ product });
-
     if (!product) {
       throw new Error("El producto no existe", {
         cause: PAY_MESSAGES.PRODUCT_NOT_EXIST,
@@ -136,7 +134,7 @@ export async function paymentAction(
   }
 
   try {
-    const res = await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx) => {
       if (client) {
         await updateClientAction({
           tx,
@@ -148,7 +146,7 @@ export async function paymentAction(
 
       const newTicket = await createTicketAction({
         tx,
-        state: client ? "PAID" : "PENDING",
+        state: client ? "PENDING" : "PAID",
         total: ticket.total,
         clientId: client?.id,
       });
@@ -172,7 +170,7 @@ export async function paymentAction(
         });
       }
 
-      const decrementsPromise = products.map(async (product) => {
+      products.map(async (product) => {
         await verifyStock({
           tx,
           productId: product.productId,
@@ -184,10 +182,6 @@ export async function paymentAction(
           quantity: product.quantity,
         });
       });
-
-      const newStocks = await Promise.all(decrementsPromise);
-
-      return [newTicket, newProducts, newStocks];
     });
 
     return {

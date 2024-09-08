@@ -1,8 +1,9 @@
+"use client";
 import { useEffect } from "react";
 import { Ticket } from "@prisma/client";
 
-import { TicketsToListAdapter } from "./adapters/tickets-to-list.adapter";
 import TicketsAccordion from "./components/tickets-accordion";
+import { TicketsToListAdapter } from "./adapters/tickets-to-list.adapter";
 import { useTicketListState } from "./state/ticket-list.state";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -10,6 +11,8 @@ import { formatCurrency } from "@/lib/utils";
 import ProductsSaleTableContainer, {
   ProductsSaleTableSkeleton,
 } from "@/core/products-sale/modules/products-sale-table/products-sale-table.container";
+import DeleteAlertDialog from "@/components/delete-alert-dialog";
+import useDeleteTicket from "../../hooks/use.delete-ticket";
 
 interface Props {
   tickets: Ticket[];
@@ -18,6 +21,10 @@ interface Props {
 
 const TicketListContainer = ({ tickets, ccNumber }: Props) => {
   const { currentTicket, setTicket, clearState } = useTicketListState();
+  const { isPending, isSuccess, deleteTicket } = useDeleteTicket({
+    ccNumber,
+    id: currentTicket?.id,
+  });
 
   useEffect(() => {
     setTicket(TicketsToListAdapter.adapt(tickets));
@@ -26,6 +33,11 @@ const TicketListContainer = ({ tickets, ccNumber }: Props) => {
   useEffect(() => {
     return () => clearState();
   }, []);
+
+  const handleClick = () => {
+    if (!currentTicket) return;
+    deleteTicket();
+  };
 
   return (
     <div className="flex mt-5 gap-x-10 flex-grow">
@@ -51,8 +63,31 @@ const TicketListContainer = ({ tickets, ccNumber }: Props) => {
           </p>
           <Separator orientation="vertical" />
           <div className="my-auto mx-10 space-x-5">
-            <Button>Imprimir</Button>
-            <Button variant="destructive">Eliminar</Button>
+            {!currentTicket?.id && (
+              <>
+                <Button disabled>Imprimir</Button>
+                <Button variant="destructive" disabled>
+                  Eliminar
+                </Button>
+              </>
+            )}
+            {currentTicket?.id && (
+              <>
+                <Button>Imprimir</Button>
+                <DeleteAlertDialog
+                  isPending={isPending}
+                  isSuccess={isSuccess}
+                  handleClick={handleClick}
+                  description={() => (
+                    <span className="flex flex-col">
+                      El ticket con código {currentTicket?.id} sera eliminado.
+                      <span>Esta operación no se puede deshacer.</span>
+                    </span>
+                  )}
+                  title="Está seguro de eliminar este ticket?"
+                />
+              </>
+            )}
           </div>
         </footer>
       </div>

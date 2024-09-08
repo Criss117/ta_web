@@ -26,6 +26,7 @@ export async function findOneClientAction(
     queryOptions.include = {
       tickets: {
         where: {
+          state: "PENDING",
           isActive: true,
         },
         orderBy: {

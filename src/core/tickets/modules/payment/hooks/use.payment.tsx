@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/components/ui/use-toast";
 
 import { paymentAction } from "../actions/payment.action";
@@ -23,6 +23,7 @@ async function pay({ ticket, products, client }: Props) {
 }
 
 const usePay = ({ products, ticket, client }: Props) => {
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const { clearTicket } = useTicketsState();
   const payMutation = useMutation({
@@ -41,6 +42,11 @@ const usePay = ({ products, ticket, client }: Props) => {
       toast({
         title: PAY_MESSAGES.SUCCESS,
       });
+
+      await queryClient.invalidateQueries({
+        queryKey: ["client", client?.ccNumber],
+      });
+
       setIsOpen(false);
     },
   });
