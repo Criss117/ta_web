@@ -17,3 +17,10 @@ export type StatusType<T> = {
   isLoading: boolean;
   response?: T;
 };
+
+export interface CommonResponse<T = null> {
+  statusCode: number;
+  message: string;
+  data?: T;
+  error?: string;
+}

@@ -1,11 +1,11 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { validateCatchError } from "@/lib/utils";
 import type {
   DeleteTicketinputType,
   DeleteTicketReturnType,
 } from "../models/type";
-import { validateCatchError } from "@/lib/utils";
 
 export default async function deleteTicketAction({
   ccNumber,
@@ -32,14 +32,32 @@ export default async function deleteTicketAction({
         });
       }
 
+      const client = await tx.client.findUnique({
+        where: {
+          ccNumber,
+          isActive: true,
+        },
+        select: {
+          balance: true,
+        },
+      });
+
+      if (!client) {
+        throw new Error("No se encontro el cliente", {
+          cause: "No se encontro el cliente",
+        });
+      }
+
       const clientUpdated = await tx.client.update({
         where: {
           ccNumber,
+          isActive: true,
         },
         data: {
-          balance: {
-            decrement: deletedTicket.total,
-          },
+          balance:
+            client.balance < deletedTicket.total
+              ? 0
+              : client.balance - deletedTicket.total,
         },
       });
 

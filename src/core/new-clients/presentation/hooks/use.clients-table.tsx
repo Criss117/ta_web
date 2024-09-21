@@ -1,6 +1,6 @@
 "use client";
-import useFindClients from "@/core/clients/hooks/use.find-clients";
 import type { Filters } from "@/core/common/models/types";
+import useFindClients from "./use.find-clients";
 
 interface Props {
   page?: number;
@@ -16,7 +16,7 @@ const useClientsTable = ({ page = 1, offset = 10, filters }: Props) => {
     queryKey: ["clients", page - 1, offset, filters?.query || "all"],
   });
 
-  return { findClientsQuery };
+  return { data: findClientsQuery.data, findClientsQuery };
 };
 
 export default useClientsTable;

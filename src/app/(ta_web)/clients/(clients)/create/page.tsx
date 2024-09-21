@@ -1,7 +1,7 @@
-import MutateClientContainer from "@/core/clients/modules/mutate-client/mutate-client.container";
+import CreateClientScreen from "@/core/new-clients/presentation/screens/create-client.screen";
 
 const CreateClientPage = () => {
-  return <MutateClientContainer action="create" />;
+  return <CreateClientScreen />;
 };
 
 export default CreateClientPage;

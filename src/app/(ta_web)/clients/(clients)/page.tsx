@@ -1,6 +1,6 @@
-import ClientsContainer from "@/core/clients/clients.container";
 import { ROUTES } from "@/lib/constants/nav";
 import { redirect } from "next/navigation";
+import ClientsTableScreen from "@/core/new-clients/presentation/screens/clients-table.screen";
 
 interface Props {
   searchParams?: {
@@ -28,7 +28,7 @@ const ClientsPage = ({ searchParams }: Props) => {
   ) {
     redirect(ROUTES.CLIENTS);
   }
-  return <ClientsContainer page={pageNumber} offset={offsetNumber} />;
+  return <ClientsTableScreen page={pageNumber} offset={offsetNumber} />;
 };
 
 export default ClientsPage;

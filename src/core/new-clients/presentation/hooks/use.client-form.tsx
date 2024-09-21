@@ -2,19 +2,21 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { ClientFormType } from "../../domain/models/type";
+import {
+  ClientFormSchema,
+  EditClientFormSchema,
+} from "../../domain/models/schemas";
 
-import type { ClientForm } from "../models/type";
-import { ClientFormSchema, EditClientFormSchema } from "../models/schema";
-
-const useClientForm = (data?: ClientForm) => {
-  const clientForm = useForm<ClientForm>({
+const useClientForm = (data?: ClientFormType) => {
+  const clientForm = useForm<ClientFormType>({
     resolver: zodResolver(data ? EditClientFormSchema : ClientFormSchema),
     defaultValues: data,
   });
 
   const onSubmit = async (
-    values: ClientForm,
-    mutationFn: (client: ClientForm) => void
+    values: ClientFormType,
+    mutationFn: (client: ClientFormType) => void
   ) => {
     clientForm.clearErrors();
 

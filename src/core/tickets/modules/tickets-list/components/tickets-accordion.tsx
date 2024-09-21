@@ -1,6 +1,5 @@
 "use client";
 import { Accordion } from "@/components/ui/accordion";
-import type { TicketYear } from "../models/types";
 
 import { AccorItem } from "./accor-item";
 import { MonthAccordion } from "./month-accordion";
@@ -29,7 +28,7 @@ const TicketsAccordion = () => {
       <Accordion type="single" collapsible className="w-full space-y-2">
         {Object.keys(tickets).map((yearStr, index) => {
           const year = Number(yearStr);
-          const mont = tickets[year];
+          const month = tickets[year];
           return (
             <AccorItem
               key={index}
@@ -37,7 +36,7 @@ const TicketsAccordion = () => {
               trigger={yearStr}
               className="px-2 bg-black shadow-xl text-white"
             >
-              <MonthAccordion ticketsList={mont} />
+              <MonthAccordion ticketsList={month} />
             </AccorItem>
           );
         })}

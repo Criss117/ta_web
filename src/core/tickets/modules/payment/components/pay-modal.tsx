@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { CircleDollarSign, Loader, Loader2, User } from "lucide-react";
+import { CircleDollarSign, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,8 +18,8 @@ import { formatCurrency } from "@/lib/utils";
 import { TicketStateEnum } from "../models/enum";
 import usePay from "../hooks/use.payment";
 import Change from "./change";
-import ClientListContainer from "@/core/clients/modules/client-list/client-list.container";
 import LoaderComponent from "@/components/ui/loader-component";
+import ClientListContainer from "@/core/clients/modules/client-list/client-list.container";
 
 const PayModal = () => {
   const { client, total, products, ticketState, setTicketState, setClient } =
