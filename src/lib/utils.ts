@@ -3,6 +3,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { PRISMACODES } from "./constants/prisma-codes";
 import { FORM_MESSAGES } from "./messages/product.messages";
+import { CommonResponse } from "@Core/common/models/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,8 +27,7 @@ export function formatCurrency(
   );
 }
 
-export function validateCatchError(error: any) {
-  console.log({ error });
+export function validateCatchError(error: any): CommonResponse<null> {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     const prismaError = PRISMACODES.ERRORS.find(
       (err) => err.code === error.code
@@ -35,23 +35,23 @@ export function validateCatchError(error: any) {
 
     if (prismaError) {
       return {
+        statusCode: 400,
         data: undefined,
         error: prismaError.message,
-        success: false,
       };
     }
   }
 
   if (error.cause) {
     return {
-      success: false,
+      statusCode: 400,
       data: undefined,
       error: error.cause,
     };
   }
 
   return {
-    success: false,
+    statusCode: 500,
     data: undefined,
     error: FORM_MESSAGES.UNKNOWN_ERROR,
   };

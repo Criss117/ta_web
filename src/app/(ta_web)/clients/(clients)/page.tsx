@@ -1,6 +1,6 @@
 import { ROUTES } from "@/lib/constants/nav";
+import ClientsTableScreen from "@Core/clients/presentation/screens/clients-table.screen";
 import { redirect } from "next/navigation";
-import ClientsTableScreen from "@/core/new-clients/presentation/screens/clients-table.screen";
 
 interface Props {
   searchParams?: {
