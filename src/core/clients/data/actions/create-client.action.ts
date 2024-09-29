@@ -4,12 +4,12 @@ import prisma from "@/lib/prisma";
 
 import { CommonResponse } from "@Core/common/models/types";
 import ClientEntity from "../../domain/entitites/client.entity";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 import { CreateClientDto } from "../dto/create-client.dto";
+import validateError from "@Core/common/lib/validate-errors";
 
 export async function createClientAction(
   clientEntity: CreateClientDto
-): Promise<CommonResponse<ClientEntity>> {
+): Promise<CommonResponse<ClientEntity | null>> {
   try {
     const client = await prisma.client.create({
       data: {
@@ -30,6 +30,6 @@ export async function createClientAction(
       },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }

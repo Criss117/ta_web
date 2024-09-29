@@ -2,12 +2,14 @@
 
 import prisma from "@/lib/prisma";
 import { CommonResponse } from "@Core/common/models/types";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 import ProductEntity from "../../domain/entities/product.entity";
+import validateError from "@/core/common/lib/validate-errors";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import { NotFoundException } from "@/core/common/lib/errors/exeptions-handler";
 
 async function findProductAction(
   barcode: string
-): Promise<CommonResponse<ProductEntity>> {
+): Promise<CommonResponse<ProductEntity | null>> {
   try {
     const product = await prisma.product.findFirst({
       where: {
@@ -16,21 +18,18 @@ async function findProductAction(
     });
 
     if (!product) {
-      return {
-        statusCode: 404,
-        message: "Product not found",
-      };
+      return NotFoundException.exeption("No se encontro el producto");
     }
 
     return {
-      statusCode: 200,
+      statusCode: HttpStatusCodes.OK.code,
       data: {
         ...product,
         productSale: [],
       },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

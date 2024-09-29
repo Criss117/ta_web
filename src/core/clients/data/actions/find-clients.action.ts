@@ -4,14 +4,15 @@ import { Client, Prisma } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
 
 import prisma from "@/lib/prisma";
-import { validateCatchError } from "@/lib/utils";
 import type { CommonResponse, FindEntities } from "@Core/common/models/types";
+import validateError from "@/core/common/lib/validate-errors";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 export async function findClientsAction({
   offset = 10,
   page = 0,
   filters,
-}: FindEntities): Promise<CommonResponse<Client[]>> {
+}: FindEntities): Promise<CommonResponse<Client[] | null>> {
   try {
     const queryOptions: Prisma.ClientFindManyArgs<DefaultArgs> = {
       skip: page * offset,
@@ -44,10 +45,10 @@ export async function findClientsAction({
     });
 
     return {
-      statusCode: 200,
+      statusCode: HttpStatusCodes.OK.code,
       data: clients,
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }

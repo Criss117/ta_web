@@ -13,7 +13,7 @@ class EditClientUseCase {
     return this.instance;
   }
 
-  async execute(client: ClientEntity): Promise<ClientEntity> {
+  async execute(client: ClientEntity) {
     return this.clientRepository.editClient(client);
   }
 }

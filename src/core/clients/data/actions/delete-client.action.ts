@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { DeleteClientDto } from "../dto/delete-client.dto";
 import { CommonResponse } from "@Core/common/models/types";
 import ClientEntity from "../../domain/entitites/client.entity";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
+import validateError from "@/core/common/lib/validate-errors";
 
 export async function deleteClientAction({
   ccNumber,
@@ -13,8 +13,8 @@ export async function deleteClientAction({
   try {
     const res = await prisma.client.update({
       where: {
-        ccNumber,
-        id,
+        ccNumber: "11",
+        id: 11,
       },
       data: {
         deletedAt: new Date(),
@@ -30,6 +30,6 @@ export async function deleteClientAction({
       },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }

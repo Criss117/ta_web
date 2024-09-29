@@ -1,4 +1,5 @@
-import HttpStatusCodes, { PRISMA_CODES } from "../errors/expetions";
+import { PRISMA_CODES } from "./errors/prisma-codes";
+import HttpStatusCodes from "./http-status-code";
 
 export function errorMessage(code: string) {
   const prismaMessage = PRISMA_CODES.ERRORS.find((err) => err.code === code);

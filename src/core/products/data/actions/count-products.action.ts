@@ -5,9 +5,10 @@ import { DefaultArgs } from "@prisma/client/runtime/library";
 
 import prisma from "@/lib/prisma";
 
-import { BadRequestException } from "@Core/common/errors/expetions";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 import { CommonResponse } from "@Core/common/models/types";
+import validateError from "@/core/common/lib/validate-errors";
+import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 export async function countProductsAction(
   query?: string
@@ -41,14 +42,13 @@ export async function countProductsAction(
       where: { ...queryOptions.where },
     });
 
-    if (!total) throw new BadRequestException("Total not found");
+    if (!total) return BadRequestException.exeption("No clients found");
 
     return {
-      message: "Total found",
-      statusCode: 200,
+      statusCode: HttpStatusCodes.OK.code,
       data: total,
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }

@@ -1,4 +1,4 @@
-import TicketEntity from "@/new-core/tickets/domain/entities/ticket.entity";
+import TicketEntity from "@Core/tickets/domain/entities/ticket.entity";
 
 class ClientEntity {
   public id: number = -1;

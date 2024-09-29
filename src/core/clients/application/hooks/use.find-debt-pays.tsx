@@ -21,8 +21,13 @@ const useFindDebtPays = (clientId: number) => {
   };
 
   return {
-    onFindDebtPays,
+    error: findDebtPaysQuery.error,
+    isError: findDebtPaysQuery.isError,
+    isFetching: findDebtPaysQuery.isFetching,
+    isSuccess: findDebtPaysQuery.isSuccess,
+    data: findDebtPaysQuery.data?.data,
     findDebtPaysQuery,
+    onFindDebtPays,
   };
 };
 

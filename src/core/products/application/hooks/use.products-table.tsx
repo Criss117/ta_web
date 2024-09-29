@@ -28,7 +28,7 @@ const useProductsTable = ({ page = 1, offset = 10, filters }: Props) => {
     refetchOnWindowFocus: false,
   });
 
-  return { data: findProductsQuery.data, findProductsQuery };
+  return { data: findProductsQuery.data?.data, findProductsQuery };
 };
 
 export default useProductsTable;

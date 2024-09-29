@@ -1,5 +1,4 @@
 import { Filters } from "@Core/common/models/types";
-import { NotFoundException } from "@Core/common/errors/expetions";
 
 import ClientMapper from "../mappers/client.mapper";
 import settleDebtAction from "../actions/settle-debt.action";
@@ -12,6 +11,8 @@ import { createClientAction } from "../actions/create-client.action";
 import { deleteClientAction } from "../actions/delete-client.action";
 import { ClientRepository } from "../../domain/repositories/clients.repository";
 import { FindByIdOrCcNumber } from "../../domain/interfaces/find-by-id-or-ccnumber";
+import { CommonResponse } from "../../../common/models/types";
+import { NotFoundException } from "@/core/common/lib/errors/exeptions-handler";
 
 class ClientRepositoryImlp implements ClientRepository {
   private static instance: ClientRepositoryImlp;
@@ -29,7 +30,7 @@ class ClientRepositoryImlp implements ClientRepository {
     offset: number,
     page: number,
     filters?: Filters
-  ): Promise<ClientEntity[]> {
+  ): Promise<CommonResponse<ClientEntity[] | []>> {
     const clientsFind = await findClientsAction({
       offset,
       page,
@@ -37,23 +38,34 @@ class ClientRepositoryImlp implements ClientRepository {
     });
 
     if (!clientsFind.data) {
-      return [];
+      return {
+        statusCode: clientsFind.statusCode,
+        data: [],
+      };
     }
 
-    return clientsFind.data.map((c) => {
-      return {
-        ...c,
-        tickets: null,
-      };
-    });
+    return {
+      statusCode: clientsFind.statusCode,
+      data: clientsFind.data.map((c) => {
+        return {
+          ...c,
+          tickets: null,
+        };
+      }),
+    };
   }
 
-  async countClients(query?: string): Promise<number> {
+  async countClients(query?: string): Promise<CommonResponse<number>> {
     const clientsCount = await countClientsAction(query);
-    return clientsCount.data || 0;
+    return {
+      statusCode: clientsCount.statusCode,
+      data: clientsCount.data || 0,
+    };
   }
 
-  async createClient(newClient: ClientEntity): Promise<ClientEntity | null> {
+  async createClient(
+    newClient: ClientEntity
+  ): Promise<CommonResponse<ClientEntity | null>> {
     const createdClient = await createClientAction({
       ccNumber: newClient.ccNumber,
       fullName: newClient.fullName,
@@ -61,51 +73,57 @@ class ClientRepositoryImlp implements ClientRepository {
       phone: newClient.phone,
       creditLimit: newClient.creditLimit,
     });
-    return createdClient.data || null;
+    return createdClient || null;
   }
 
   async deleteClient(
     id: number,
     ccNumber: string
-  ): Promise<ClientEntity | null> {
+  ): Promise<CommonResponse<ClientEntity | null>> {
     const deletedClient = await deleteClientAction({ ccNumber, id });
 
-    return deletedClient.data || null;
+    return {
+      statusCode: deletedClient.statusCode,
+      data: deletedClient.data || null,
+    };
   }
 
-  async findByIdOrCcNumber(findBy: FindByIdOrCcNumber): Promise<ClientEntity> {
-    const client = await findByIdOrCcNumber(findBy);
-
-    if (!client.data) {
-      throw new NotFoundException();
-    }
-
-    return client.data;
+  async findByIdOrCcNumber(
+    findBy: FindByIdOrCcNumber
+  ): Promise<CommonResponse<ClientEntity | null>> {
+    return await findByIdOrCcNumber(findBy);
   }
 
-  async editClient(client: ClientEntity): Promise<ClientEntity> {
+  async editClient(
+    client: ClientEntity
+  ): Promise<CommonResponse<ClientEntity | null>> {
     const clientEdited = await editClientAction(
       ClientMapper.domainToEditClientDto(client)
     );
 
     if (!clientEdited.data) {
-      throw new NotFoundException();
+      return NotFoundException.exeption(clientEdited.error);
     }
 
     return {
-      ...clientEdited.data,
-      tickets: null,
+      statusCode: clientEdited.statusCode,
+      data: { ...clientEdited.data, tickets: null },
     };
   }
 
-  async settleDebt(clientId: number): Promise<ClientEntity> {
+  async settleDebt(
+    clientId: number
+  ): Promise<CommonResponse<ClientEntity | null>> {
     const res = await settleDebtAction(clientId);
 
     if (!res.data) {
-      throw new NotFoundException();
+      return NotFoundException.exeption(res.error);
     }
 
-    return res.data;
+    return {
+      statusCode: res.statusCode,
+      data: { ...res.data, tickets: null },
+    };
   }
 }
 

@@ -1,4 +1,4 @@
-import { Filters } from "@Core/common/models/types";
+import { CommonResponse, Filters } from "@Core/common/models/types";
 
 import ProductMapper from "../mappers/product.mapper";
 import findProductAction from "../actions/find-product.action";
@@ -22,64 +22,44 @@ class ProductRepositoryImpl implements ProductRepository {
     return this.instance;
   }
 
-  async countProducts(query?: string): Promise<number> {
-    const productsCount = await countProductsAction(query);
-
-    return productsCount.data || 0;
+  async countProducts(query?: string): Promise<CommonResponse<number | null>> {
+    return await countProductsAction(query);
   }
 
   async findManyProducts(
     offSet: number,
     page: number,
     filters: Filters
-  ): Promise<ProductEntity[]> {
-    const products = await findProductsAction({
+  ): Promise<CommonResponse<ProductEntity[] | null>> {
+    return await findProductsAction({
       page,
       offset: offSet,
       filters,
     });
-
-    if (!products.data) return [];
-
-    return products.data;
   }
 
-  async createProduct(product: ProductEntity): Promise<ProductEntity | null> {
-    const newProduct = await createProductAction(
-      ProductMapper.domainToCreateDto(product)
-    );
-
-    if (!newProduct.data) return null;
-
-    return newProduct.data;
+  async createProduct(
+    product: ProductEntity
+  ): Promise<CommonResponse<ProductEntity | null>> {
+    return await createProductAction(ProductMapper.domainToCreateDto(product));
   }
 
-  async findByBarcode(barcode: string): Promise<ProductEntity> {
-    const product = await findProductAction(barcode);
-
-    if (!product.data) {
-      throw new Error("Product not found");
-    }
-
-    return product.data;
+  async findByBarcode(
+    barcode: string
+  ): Promise<CommonResponse<ProductEntity | null>> {
+    return await findProductAction(barcode);
   }
 
-  async editProduct(product: ProductEntity): Promise<ProductEntity | null> {
-    const updatedProduct = await editProductAction(
-      ProductMapper.domainToEditDto(product)
-    );
-
-    if (!updatedProduct.data) return null;
-
-    return updatedProduct.data;
+  async editProduct(
+    product: ProductEntity
+  ): Promise<CommonResponse<ProductEntity | null>> {
+    return await editProductAction(ProductMapper.domainToEditDto(product));
   }
 
-  async deleteProduct(id: number): Promise<ProductEntity | null> {
-    const deletedProduct = await deleteProductAction(id);
-
-    if (!deletedProduct.data) return null;
-
-    return deletedProduct.data;
+  async deleteProduct(
+    id: number
+  ): Promise<CommonResponse<ProductEntity | null>> {
+    return await deleteProductAction(id);
   }
 }
 

@@ -14,14 +14,25 @@ interface Params {
 async function deleteTicketFn({ ticketId, clientId }: Params) {
   const deletTicketUseCase = TicketUseCaseFactory.createDeleteTicket();
 
-  await deletTicketUseCase.execute(ticketId, clientId);
+  return await deletTicketUseCase.execute(ticketId, clientId);
 }
 
 const useDeleteTicket = ({ ticketId, clientId, ccNumber }: Params) => {
   const queryClient = useQueryClient();
+
   const deleteTicketMutation = useMutation({
     mutationFn: () => deleteTicketFn({ ticketId, clientId, ccNumber }),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: TICKET_MESSAGE.DELETE_ERROR_TITLE,
+          description: response.error,
+        });
+
+        return;
+      }
+
       queryClient.removeQueries({
         queryKey: ["products-sale", clientId, ticketId],
       });
@@ -30,6 +41,13 @@ const useDeleteTicket = ({ ticketId, clientId, ccNumber }: Params) => {
       });
       toast({
         title: TICKET_MESSAGE.DELETE_SUCCESS,
+      });
+    },
+
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: TICKET_MESSAGE.DELETE_ERROR_TITLE,
       });
     },
   });

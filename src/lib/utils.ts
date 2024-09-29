@@ -26,33 +26,3 @@ export function formatCurrency(
     amount
   );
 }
-
-export function validateCatchError(error: any): CommonResponse<null> {
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    const prismaError = PRISMACODES.ERRORS.find(
-      (err) => err.code === error.code
-    );
-
-    if (prismaError) {
-      return {
-        statusCode: 400,
-        data: undefined,
-        error: prismaError.message,
-      };
-    }
-  }
-
-  if (error.cause) {
-    return {
-      statusCode: 400,
-      data: undefined,
-      error: error.cause,
-    };
-  }
-
-  return {
-    statusCode: 500,
-    data: undefined,
-    error: FORM_MESSAGES.UNKNOWN_ERROR,
-  };
-}

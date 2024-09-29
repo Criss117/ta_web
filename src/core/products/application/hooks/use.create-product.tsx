@@ -27,7 +27,16 @@ const useCreateProduct = () => {
 
   const createProductMutation = useMutation({
     mutationFn: createProduct,
-    onSuccess: () => {
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: CLIENT_FORM_MESSAGES.ERROR_TITLE,
+          description: response.error || "Error al crear el producto",
+        });
+        return;
+      }
+
       toast({
         title: PRODUCT_FORM_MESSAGES.SUCCESS,
       });

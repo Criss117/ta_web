@@ -1,4 +1,3 @@
-import DebtPaymentEntity from "../entitites/debt-payment.entity";
 import DebtPaysRepository from "../repositories/debt-pays.repository";
 
 class CreateDebtPaymentUseCase {
@@ -17,10 +16,7 @@ class CreateDebtPaymentUseCase {
     return this.instance;
   }
 
-  public async execute(
-    clientId: number,
-    amount: number
-  ): Promise<DebtPaymentEntity> {
+  public async execute(clientId: number, amount: number) {
     return this.debtPaysRepository.createDebtPayment(clientId, amount);
   }
 }

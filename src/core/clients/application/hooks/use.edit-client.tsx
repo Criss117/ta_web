@@ -24,13 +24,23 @@ const useEditClient = () => {
 
   const editClientMutation = useMutation({
     mutationFn: editClient,
-    onSuccess: async (res) => {
+    onSuccess: async (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: CLIENT_FORM_MESSAGES.ERROR_TITLE,
+          description: response.error,
+        });
+
+        return;
+      }
+
       toast({
         title: CLIENT_FORM_MESSAGES.SUCCESS,
       });
 
       await queryClient.invalidateQueries({
-        queryKey: ["client", res?.ccNumber],
+        queryKey: ["client", response.data?.ccNumber],
       });
 
       router.push(ROUTES.CLIENTS);

@@ -25,19 +25,22 @@ const useCreateClient = () => {
 
   const createClientMutation = useMutation({
     mutationFn: createClient,
-    onSuccess: () => {
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: CLIENT_FORM_MESSAGES.ERROR_TITLE,
+          description: response.error || "Error al crear el cliente",
+        });
+
+        return;
+      }
+
       toast({
         title: CLIENT_FORM_MESSAGES.SUCCESS,
       });
 
       router.push(ROUTES.CLIENTS);
-    },
-    onError: (error) => {
-      toast({
-        variant: "destructive",
-        title: CLIENT_FORM_MESSAGES.ERROR_TITLE,
-        description: "Error al crear el cliente",
-      });
     },
   });
 

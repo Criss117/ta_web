@@ -11,14 +11,17 @@ interface Props {
 }
 
 const ProductsSaleTable = ({ clientId, ticketId }: Props) => {
-  const { useFindTicketQuery } = useFindByTicket({ clientId, ticketId });
+  const { data, isFetching } = useFindByTicket({
+    clientId,
+    ticketId,
+  });
 
   return (
     <ScrollArea className="min-h-[80%] h-[80%] max-h-[80%]">
       <TableComponent
-        data={useFindTicketQuery.data || []}
-        offset={useFindTicketQuery.data?.length || 5}
-        isFetching={useFindTicketQuery.isFetching}
+        data={data || []}
+        offset={data?.length || 5}
+        isFetching={isFetching}
         columns={productsSaleColumns}
       />
     </ScrollArea>

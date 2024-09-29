@@ -1,3 +1,4 @@
+import { CommonResponse } from "@/core/common/models/types";
 import ProductEntity from "../entities/product.entity";
 import ProductRepository from "../repositories/product.repository";
 
@@ -15,7 +16,9 @@ class EditProductUseCase {
     return this.instance;
   }
 
-  public async execute(product: ProductEntity): Promise<ProductEntity | null> {
+  public async execute(
+    product: ProductEntity
+  ): Promise<CommonResponse<ProductEntity | null>> {
     return await this.productRepository.editProduct(product);
   }
 }

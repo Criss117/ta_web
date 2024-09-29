@@ -5,9 +5,9 @@ import { DefaultArgs } from "@prisma/client/runtime/library";
 
 import prisma from "@/lib/prisma";
 
-import { BadRequestException } from "@Core/common/errors/expetions";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 import { CommonResponse } from "@Core/common/models/types";
+import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
+import validateError from "@/core/common/lib/validate-errors";
 
 export async function countClientsAction(
   query?: string
@@ -41,7 +41,9 @@ export async function countClientsAction(
       where: { ...queryOptions.where },
     });
 
-    if (!total) throw new BadRequestException("Total not found");
+    if (!total) {
+      return BadRequestException.exeption("No se encontro el cliente");
+    }
 
     return {
       message: "Total found",
@@ -49,6 +51,6 @@ export async function countClientsAction(
       data: total,
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }

@@ -29,28 +29,26 @@ const SearchBarQuery = ({ label, searchByQueryFn }: Props) => {
   };
 
   return (
-    <>
-      <div className="grid w-full max-w-xl items-center gap-1.5 relative">
-        <Label htmlFor="query">{label}</Label>
-        <Input
-          type="text"
-          id="query"
-          placeholder={label}
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value.trim());
-          }}
-        />
-        <Button
-          variant="ghost"
-          className="absolute right-0 bottom-0 bg-transparent hover:bg-transparent"
-          aria-label="Clear query"
-          onClick={clearQuery}
-        >
-          <X />
-        </Button>
-      </div>
-    </>
+    <div className="grid w-full max-w-xl items-center gap-1.5 relative">
+      <Label htmlFor="query">{label}</Label>
+      <Input
+        type="text"
+        id="query"
+        placeholder={label}
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value.trim());
+        }}
+      />
+      <Button
+        variant="ghost"
+        className="absolute right-0 bottom-0 bg-transparent hover:bg-transparent"
+        aria-label="Clear query"
+        onClick={clearQuery}
+      >
+        <X />
+      </Button>
+    </div>
   );
 };
 

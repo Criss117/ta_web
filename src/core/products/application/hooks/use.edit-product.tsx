@@ -24,13 +24,23 @@ const useEditProduct = () => {
 
   const editProductMutation = useMutation({
     mutationFn: editProduct,
-    onSuccess: async (data) => {
+    onSuccess: async (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: PRODUCT_FORM_MESSAGES.ERROR_TITLE,
+          description: response.error || "Error al editar el producto",
+        });
+
+        return;
+      }
+
       toast({
         title: PRODUCT_FORM_MESSAGES.SUCCESS,
       });
 
       await queryClient.invalidateQueries({
-        queryKey: ["product", data?.barcode],
+        queryKey: ["product", response.data?.barcode],
       });
 
       router.push(ROUTES.PRODUCTS);

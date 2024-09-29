@@ -16,13 +16,23 @@ const useSettleDebt = () => {
 
   const settleDebtMutation = useMutation({
     mutationFn: settleDebt,
-    onSuccess: (data) => {
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: SETTLE_DEBT_MESSAGE.ERROR_TITLE,
+          description: response.error,
+        });
+
+        return;
+      }
+
       toast({
         title: SETTLE_DEBT_MESSAGE.SUCCESS,
       });
 
       queryClient.refetchQueries({
-        queryKey: ["client", data?.ccNumber],
+        queryKey: ["client", response?.data?.ccNumber],
       });
     },
   });

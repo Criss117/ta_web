@@ -1,4 +1,3 @@
-import DebtPaymentEntity from "../entitites/debt-payment.entity";
 import DebtPaysRepository from "../repositories/debt-pays.repository";
 
 class DeleteDebtPayUseCase {
@@ -17,7 +16,7 @@ class DeleteDebtPayUseCase {
     return this.instance;
   }
 
-  async execute(id: number, clientId: number): Promise<DebtPaymentEntity> {
+  async execute(id: number, clientId: number) {
     return await this.debtPaysRepository.deleteDebtPayment(id, clientId);
   }
 }

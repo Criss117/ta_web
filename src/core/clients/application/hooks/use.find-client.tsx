@@ -22,7 +22,15 @@ const useFindClient = (ccNumber: string, obtainTickets = false) => {
     findOneClientQuery.refetch();
   };
 
-  return { findOneClientQuery, executeQuery };
+  return {
+    error: findOneClientQuery.error,
+    isError: findOneClientQuery.isError,
+    isPending: findOneClientQuery.isPending,
+    isSuccess: findOneClientQuery.isSuccess,
+    data: findOneClientQuery.data?.data,
+    findOneClientQuery,
+    executeQuery,
+  };
 };
 
 export default useFindClient;

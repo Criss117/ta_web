@@ -3,15 +3,15 @@
 import prisma from "@/lib/prisma";
 
 import { CommonResponse } from "@Core/common/models/types";
-import { BadRequestException } from "@Core/common/errors/expetions";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 
 import DebtPaymentWithClient from "../dto/debt-payment-with-client";
+import validateError from "@/core/common/lib/validate-errors";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 async function deleteDebtPaymentAction(
   id: number,
   clientId: number
-): Promise<CommonResponse<DebtPaymentWithClient>> {
+): Promise<CommonResponse<DebtPaymentWithClient | null>> {
   try {
     const res = await prisma.$transaction(async (tx) => {
       const deletedDebtPayment = await tx.debtPayment.update({
@@ -27,10 +27,6 @@ async function deleteDebtPaymentAction(
         },
       });
 
-      if (!deletedDebtPayment) {
-        throw new BadRequestException("Payment not found");
-      }
-
       const updatedClient = await tx.client.update({
         where: {
           id: clientId,
@@ -42,19 +38,15 @@ async function deleteDebtPaymentAction(
         },
       });
 
-      if (!updatedClient) {
-        throw new BadRequestException("Payment not found");
-      }
-
       return { ...deletedDebtPayment, client: updatedClient };
     });
 
     return {
-      statusCode: 201,
+      statusCode: HttpStatusCodes.OK.code,
       data: res,
     };
   } catch (error) {
-    throw validateCatchError(error);
+    throw validateError(error);
   }
 }
 

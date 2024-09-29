@@ -4,20 +4,20 @@ import prisma from "@/lib/prisma";
 
 import { FindClientDto } from "../dto/find-client.dto";
 import { DefaultArgs } from "@prisma/client/runtime/library";
-import {
-  BadRequestException,
-  NotFoundException,
-} from "@Core/common/errors/expetions";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 import { CommonResponse } from "@Core/common/models/types";
 import ClientEntity from "../../domain/entitites/client.entity";
 import { TicketStateEnum } from "@Core/tickets/domain/enums/ticket-state.enum";
+import validateError from "@/core/common/lib/validate-errors";
+import {
+  BadRequestException,
+  NotFoundException,
+} from "@/core/common/lib/errors/exeptions-handler";
 
 export async function findByIdOrCcNumber(
   findClientDto: FindClientDto
-): Promise<CommonResponse<ClientEntity>> {
+): Promise<CommonResponse<ClientEntity | null>> {
   if (!findClientDto.id && !findClientDto.ccNumber) {
-    throw new BadRequestException();
+    return BadRequestException.exeption("No id or ccNumber provided");
   }
 
   const queryOptions: Prisma.ClientFindFirstArgs<DefaultArgs> = {
@@ -74,7 +74,7 @@ export async function findByIdOrCcNumber(
     });
 
     if (!client) {
-      throw new NotFoundException();
+      return NotFoundException.exeption("El cliente no existe");
     }
 
     return {
@@ -94,6 +94,6 @@ export async function findByIdOrCcNumber(
       },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }

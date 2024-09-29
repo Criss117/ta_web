@@ -9,11 +9,7 @@ interface Props {
   clientId: number;
 }
 
-async function findByTicketAction(findByTicket: FindByTicketDto) {
-  if (findByTicket.clientId === -1) {
-    return [];
-  }
-
+async function findByTicket(findByTicket: FindByTicketDto) {
   const findByTicketUseCase =
     ProductsSaleUseCasesFactory.createFindByTicketUseCase();
 
@@ -23,10 +19,17 @@ async function findByTicketAction(findByTicket: FindByTicketDto) {
 const useFindByTicket = ({ clientId, ticketId }: Props) => {
   const useFindTicketQuery = useQuery({
     queryKey: ["products-sale", clientId, ticketId],
-    queryFn: () => findByTicketAction({ clientId, ticketId }),
+    queryFn: () => findByTicket({ clientId, ticketId }),
   });
 
-  return { useFindTicketQuery };
+  return {
+    data: useFindTicketQuery.data?.data,
+    isFetching: useFindTicketQuery.isFetching,
+    isSuccess: useFindTicketQuery.isSuccess,
+    isPending: useFindTicketQuery.isPending,
+    error: useFindTicketQuery.error,
+    useFindTicketQuery,
+  };
 };
 
 export default useFindByTicket;

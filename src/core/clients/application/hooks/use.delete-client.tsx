@@ -22,16 +22,19 @@ async function deleteClient({
 const useDeleteClient = () => {
   const deleteClientMutation = useMutation({
     mutationFn: deleteClient,
-    onSuccess: () => {
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: CLIENT_FORM_MESSAGES.DELETE_ERROR,
+          description: response.error,
+        });
+
+        return;
+      }
+
       toast({
         title: CLIENT_FORM_MESSAGES.DELETE_SUCCESS,
-      });
-    },
-    onError: (error) => {
-      toast({
-        variant: "destructive",
-        title: CLIENT_FORM_MESSAGES.ERROR_TITLE,
-        description: errorMessage(error.message),
       });
     },
   });

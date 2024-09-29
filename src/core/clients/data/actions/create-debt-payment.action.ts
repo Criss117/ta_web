@@ -3,15 +3,15 @@
 import prisma from "@/lib/prisma";
 
 import { CommonResponse } from "@Core/common/models/types";
-import { BadRequestException } from "@Core/common/errors/expetions";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 
 import DebtPaymentWithClient from "../dto/debt-payment-with-client";
+import validateError from "@/core/common/lib/validate-errors";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 async function createDebtPaymentAction(
   clientId: number,
   amount: number
-): Promise<CommonResponse<DebtPaymentWithClient>> {
+): Promise<CommonResponse<DebtPaymentWithClient | null>> {
   try {
     const res = await prisma.$transaction(async (tx) => {
       const client = await tx.client.findUnique({
@@ -20,10 +20,6 @@ async function createDebtPaymentAction(
           isActive: true,
         },
       });
-
-      if (!client || client.balance < amount) {
-        throw new BadRequestException("Client not found");
-      }
 
       const newDebtPayment = await tx.debtPayment.create({
         data: {
@@ -35,10 +31,6 @@ async function createDebtPaymentAction(
           },
         },
       });
-
-      if (!newDebtPayment) {
-        throw new BadRequestException("Payment not created");
-      }
 
       const updatedClient = await tx.client.update({
         where: {
@@ -55,11 +47,11 @@ async function createDebtPaymentAction(
     });
 
     return {
-      statusCode: 201,
+      statusCode: HttpStatusCodes.CREATED.code,
       data: res,
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

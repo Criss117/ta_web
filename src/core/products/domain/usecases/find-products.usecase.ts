@@ -1,9 +1,11 @@
 import type { Filters } from "@Core/common/models/types";
-import { BadRequestException } from "@Core/common/errors/expetions";
 
 import ProductRepository from "../repositories/product.repository";
 import ProductEntity from "../entities/product.entity";
 import { PaginationDto } from "../../../common/dto/pagination.dto";
+import { CommonResponse } from "../../../common/models/types";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
 
 class FindProductsUseCase {
   private static instance: FindProductsUseCase;
@@ -23,7 +25,7 @@ class FindProductsUseCase {
     offSet: number,
     page: number,
     filters?: Filters
-  ): Promise<PaginationDto<ProductEntity>> {
+  ): Promise<CommonResponse<PaginationDto<ProductEntity> | null>> {
     const products = await this.productRepository.findManyProducts(
       offSet,
       page,
@@ -34,18 +36,21 @@ class FindProductsUseCase {
       filters?.query
     );
 
-    if (totalItems === 0) {
-      throw new BadRequestException("No clients found");
+    if (!products.data || !totalItems.data) {
+      return BadRequestException.exeption("No se encontraron productos");
     }
 
-    const totalPage = Math.ceil(totalItems / offSet);
+    const totalPage = Math.ceil(totalItems.data / offSet);
 
     return {
-      items: products,
-      total: totalItems,
-      offset: offSet,
-      page,
-      totalPage,
+      statusCode: HttpStatusCodes.OK.code,
+      data: {
+        items: products.data,
+        total: totalItems.data,
+        offset: offSet,
+        page,
+        totalPage,
+      },
     };
   }
 }

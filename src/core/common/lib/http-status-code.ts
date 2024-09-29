@@ -1,34 +1,3 @@
-export class HttpError extends Error {
-  constructor(message: string | number) {
-    if (typeof message === "number") {
-      message = message.toString();
-    }
-    super(message);
-    this.name = "HttpError";
-  }
-}
-
-export class NotFoundException extends HttpError {
-  constructor(code?: string | number) {
-    super(code ? code : HttpStatusCodes.NOT_FOUND.toString());
-    this.name = "NotFoundException";
-  }
-}
-
-export class BadRequestException extends HttpError {
-  constructor(code?: string | number) {
-    super(code ? code : HttpStatusCodes.BAD_REQUEST.toString());
-    this.name = "BadRequestException";
-  }
-}
-
-export class InternalServerError extends HttpError {
-  constructor(code?: string | number) {
-    super(code ? code : HttpStatusCodes.INTERNAL_SERVER_ERROR.toString());
-    this.name = "InternalServerError";
-  }
-}
-
 const HttpStatusCodes = {
   CONTINUE: { code: 100, description: "Continue" },
   SWITCHING_PROTOCOLS: { code: 101, description: "Switching Protocols" },
@@ -117,23 +86,6 @@ const HttpStatusCodes = {
     code: 511,
     description: "Network Authentication Required",
   },
-} as const;
-
-export const PRISMA_CODES = {
-  ERRORS: [
-    {
-      code: "P2002",
-      message: "El registro ya existe",
-    },
-    {
-      code: "P2003",
-      message: "Hubo un error al insertar el registro",
-    },
-    {
-      code: "P2025",
-      message: "El registro no existe",
-    },
-  ],
 } as const;
 
 export default HttpStatusCodes;

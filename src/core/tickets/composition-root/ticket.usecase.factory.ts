@@ -6,7 +6,7 @@ class TicketUseCaseFactory {
   private static ticketRepository = TicketsRepositoryImpl.getInstance();
 
   static createDeleteTicket() {
-    return new DeleteTicketUseCase(this.ticketRepository);
+    return DeleteTicketUseCase.getInstance(this.ticketRepository);
   }
 
   static createMakePayment() {

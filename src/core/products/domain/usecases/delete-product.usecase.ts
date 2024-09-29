@@ -1,3 +1,4 @@
+import { CommonResponse } from "@/core/common/models/types";
 import ProductEntity from "../entities/product.entity";
 import ProductRepository from "../repositories/product.repository";
 
@@ -14,7 +15,9 @@ class DeleteProductUseCase {
     return this.instance;
   }
 
-  public async execute(id: number): Promise<ProductEntity | null> {
+  public async execute(
+    id: number
+  ): Promise<CommonResponse<ProductEntity | null>> {
     return await this.productRepository.deleteProduct(id);
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 import BackButton from "@/components/ui/back-button";
 import useFindClient from "../../application/hooks/use.find-client";
@@ -14,10 +14,10 @@ interface Props {
 
 const EditClientScreen = ({ ccNumber }: Props) => {
   const [editing, setEditing] = useState(false);
-  const { findOneClientQuery } = useFindClient(ccNumber);
+  const { data, findOneClientQuery } = useFindClient(ccNumber);
   const { mutate, editClientMutation } = useEditClient();
 
-  if (!findOneClientQuery.data) {
+  if (!data) {
     return (
       <div className="mx-2 md:w-2/3 md:mx-auto lg:w-3/5 xl:w-1/3 m-auto mt-10">
         <p>cargando...</p>
@@ -27,12 +27,12 @@ const EditClientScreen = ({ ccNumber }: Props) => {
 
   return (
     <>
-      <BackButton />
       <div className="mx-2 md:w-2/3 md:mx-auto lg:w-3/5 xl:w-1/3 m-auto mt-10">
+        <BackButton />
         <ClientForm
-          data={ClientDtoMapper.toDto(findOneClientQuery.data)}
+          data={ClientDtoMapper.toDto(data)}
           mutateFn={(client) => {
-            if (!findOneClientQuery.data.id) {
+            if (!data.id) {
               return;
             }
             setEditing(true);

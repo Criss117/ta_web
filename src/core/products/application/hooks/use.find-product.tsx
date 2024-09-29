@@ -25,7 +25,7 @@ const useFindProduct = (barcode: string) => {
     isFetching: findProductQuery.isFetching,
     isPending: findProductQuery.isPending,
     error: findProductQuery.error,
-    data: findProductQuery.data,
+    data: findProductQuery.data?.data,
   };
 };
 

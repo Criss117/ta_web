@@ -1,10 +1,19 @@
 import { TicketsRepository } from "../repositories/tickets.repository";
 
 class DeleteTicketUseCase {
-  constructor(private ticketsRepository: TicketsRepository) {}
+  private static instance: DeleteTicketUseCase;
+
+  private constructor(private ticketsRepository: TicketsRepository) {}
+
+  static getInstance(ticketsRepository: TicketsRepository) {
+    if (!this.instance) {
+      this.instance = new this(ticketsRepository);
+    }
+    return this.instance;
+  }
 
   async execute(ticketId: number, clientId: number) {
-    await this.ticketsRepository.deleteTicket(ticketId, clientId);
+    return await this.ticketsRepository.deleteTicket(ticketId, clientId);
   }
 }
 

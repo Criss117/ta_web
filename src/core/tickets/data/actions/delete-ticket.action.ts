@@ -1,16 +1,17 @@
 "use server";
 
+import ClientEntity from "@/core/clients/domain/entitites/client.entity";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import validateError from "@/core/common/lib/validate-errors";
 import prisma from "@/lib/prisma";
 import { CommonResponse } from "@Core/common/models/types";
-import { BadRequestException } from "@Core/common/errors/expetions";
-import { validateCatchError } from "@/lib/utils";
 
 async function deleteTicketAction(
   ticketId: number,
   userId: number
-): Promise<CommonResponse<null>> {
+): Promise<CommonResponse<ClientEntity | null>> {
   try {
-    await prisma.$transaction(async (tx) => {
+    const res = await prisma.$transaction(async (tx) => {
       const client = await tx.client.findUnique({
         where: {
           id: userId,
@@ -19,7 +20,9 @@ async function deleteTicketAction(
       });
 
       if (!client) {
-        throw new BadRequestException("Client not found");
+        throw new Error("No se encontro el cliente", {
+          cause: "No se encontro el cliente",
+        });
       }
 
       const deletedTicket = await tx.ticket.update({
@@ -36,10 +39,6 @@ async function deleteTicketAction(
         },
       });
 
-      if (!deletedTicket) {
-        throw new BadRequestException("Ticket not found");
-      }
-
       const clientUpdated = await tx.client.update({
         where: {
           id: userId,
@@ -53,17 +52,18 @@ async function deleteTicketAction(
         },
       });
 
-      if (!clientUpdated) {
-        throw new BadRequestException("Client not found");
-      }
+      return clientUpdated;
     });
 
     return {
-      statusCode: 201,
-      message: "Ticket deleted successfully",
+      statusCode: HttpStatusCodes.OK.code,
+      data: {
+        ...res,
+        tickets: null,
+      },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

@@ -1,8 +1,9 @@
+import { CommonResponse } from "@/core/common/models/types";
 import DebtPaymentEntity from "../../domain/entitites/debt-payment.entity";
 import DebtPaysRepository from "../../domain/repositories/debt-pays.repository";
 import createDebtPaymentAction from "../actions/create-debt-payment.action";
 import deleteDebtPaymentAction from "../actions/delete-debt-payment.action";
-import findDebtPayByClientIdAction from "../actions/find-debt-pay-by-clietn-id.action";
+import findDebtPayByClientIdAction from "../actions/find-debt-pay-by-client-id.action";
 import DebtPayMapper from "../mappers/debt-pay.mapper";
 
 class DebtPaysRepositoryImpl implements DebtPaysRepository {
@@ -17,16 +18,16 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
     return DebtPaysRepositoryImpl.instance;
   }
 
-  async findByClientId(clientId: number): Promise<DebtPaymentEntity[]> {
-    const debtPays = await findDebtPayByClientIdAction(clientId);
-
-    return debtPays.map(DebtPayMapper.toDomain);
+  async findByClientId(
+    clientId: number
+  ): Promise<CommonResponse<DebtPaymentEntity[] | null>> {
+    return await findDebtPayByClientIdAction(clientId);
   }
 
   async deleteDebtPayment(
     id: number,
     clientId: number
-  ): Promise<DebtPaymentEntity> {
+  ): Promise<CommonResponse<DebtPaymentEntity | null>> {
     const deletedDebtPayment = await deleteDebtPaymentAction(id, clientId);
 
     if (!deletedDebtPayment.data) {
@@ -35,13 +36,16 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
       });
     }
 
-    return DebtPayMapper.toDomainWithClient(deletedDebtPayment.data);
+    return {
+      statusCode: deletedDebtPayment.statusCode,
+      data: DebtPayMapper.toDomainWithClient(deletedDebtPayment.data),
+    };
   }
 
   async createDebtPayment(
     clientId: number,
     amount: number
-  ): Promise<DebtPaymentEntity> {
+  ): Promise<CommonResponse<DebtPaymentEntity | null>> {
     const createdDebtPayment = await createDebtPaymentAction(clientId, amount);
 
     if (!createdDebtPayment.data) {
@@ -50,7 +54,10 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
       });
     }
 
-    return DebtPayMapper.toDomainWithClient(createdDebtPayment.data);
+    return {
+      statusCode: createdDebtPayment.statusCode,
+      data: DebtPayMapper.toDomainWithClient(createdDebtPayment.data),
+    };
   }
 }
 

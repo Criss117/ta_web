@@ -5,15 +5,16 @@ import { Prisma } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
 
 import { CommonResponse, FindEntities } from "@Core/common/models/types";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 
 import ProductEntity from "../../domain/entities/product.entity";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import validateError from "@/core/common/lib/validate-errors";
 
 async function findProductsAction({
   offset = 10,
   page = 0,
   filters,
-}: FindEntities): Promise<CommonResponse<ProductEntity[]>> {
+}: FindEntities): Promise<CommonResponse<ProductEntity[] | null>> {
   console.log({ offset, page, filters });
 
   try {
@@ -54,7 +55,7 @@ async function findProductsAction({
     });
 
     return {
-      statusCode: 200,
+      statusCode: HttpStatusCodes.OK.code,
       data: products.map((p) => {
         return {
           ...p,
@@ -63,7 +64,7 @@ async function findProductsAction({
       }),
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

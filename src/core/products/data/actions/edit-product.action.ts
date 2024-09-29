@@ -3,14 +3,15 @@
 import prisma from "@/lib/prisma";
 
 import { CommonResponse } from "@Core/common/models/types";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 
 import EditProductDto from "../dto/edit-product.dto";
 import ProductEntity from "../../domain/entities/product.entity";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import validateError from "@/core/common/lib/validate-errors";
 
 async function editProductAction(
   product: EditProductDto
-): Promise<CommonResponse<ProductEntity>> {
+): Promise<CommonResponse<ProductEntity | null>> {
   try {
     const updatedProduct = await prisma.product.update({
       where: {
@@ -28,15 +29,14 @@ async function editProductAction(
     });
 
     return {
-      statusCode: 201,
-      message: "Client updated successfully",
+      statusCode: HttpStatusCodes.OK.code,
       data: {
         ...updatedProduct,
         productSale: [],
       },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

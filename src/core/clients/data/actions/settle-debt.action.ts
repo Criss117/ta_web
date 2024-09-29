@@ -2,15 +2,17 @@
 
 import { CommonResponse } from "@Core/common/models/types";
 import ClientEntity from "../../domain/entitites/client.entity";
-import { validateCatchError } from "@/lib/utils";
 import prisma from "@/lib/prisma";
+import validateError from "@/core/common/lib/validate-errors";
+import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 async function settleDebtAction(
   clientId: number
-): Promise<CommonResponse<ClientEntity>> {
+): Promise<CommonResponse<ClientEntity | null>> {
   try {
     const res = await prisma.$transaction(async (tx) => {
-      const updatedTickets = await tx.ticket.updateMany({
+      await tx.ticket.updateMany({
         where: {
           clientId,
           state: "PENDING",
@@ -21,12 +23,6 @@ async function settleDebtAction(
         },
       });
 
-      if (!updatedTickets.count) {
-        throw new Error("No se encontraron tickets pendientes", {
-          cause: "No se encontraron tickets pendientes",
-        });
-      }
-
       const updatedClient = await tx.client.update({
         where: {
           id: clientId,
@@ -36,24 +32,22 @@ async function settleDebtAction(
         },
       });
 
-      if (!updatedClient) {
-        throw new Error("No se pudo liquidar el abono", {
-          cause: "No se pudo liquidar el abono",
-        });
-      }
-
       return updatedClient;
     });
 
+    if (!res) {
+      return BadRequestException.exeption("No se encontro el cliente");
+    }
+
     return {
-      statusCode: 201,
+      statusCode: HttpStatusCodes.OK.code,
       data: {
         ...res,
         tickets: null,
       },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

@@ -2,14 +2,15 @@
 
 import prisma from "@/lib/prisma";
 import { CommonResponse } from "@Core/common/models/types";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 
 import type CreateProductDto from "../dto/create-product.dto";
 import ProductEntity from "../../domain/entities/product.entity";
+import validateError from "@/core/common/lib/validate-errors";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 async function createProductAction(
   product: CreateProductDto
-): Promise<CommonResponse<ProductEntity>> {
+): Promise<CommonResponse<ProductEntity | null>> {
   try {
     const createdProduct = await prisma.product.create({
       data: {
@@ -24,15 +25,14 @@ async function createProductAction(
     });
 
     return {
-      statusCode: 201,
-      message: "Client created successfully",
+      statusCode: HttpStatusCodes.CREATED.code,
       data: {
         ...createdProduct,
         productSale: [],
       },
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

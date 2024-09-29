@@ -6,11 +6,11 @@ import { ClientFormSchema, EditClientFormSchema } from "../models/schemas";
 import { ClientFormDto } from "../models/type";
 
 const defaultValues: ClientFormDto = {
-  fullName: "Juliana Ruiz 2",
-  ccNumber: "1004676134",
-  address: "cualquiera",
-  creditLimit: 10000000,
-  phone: "3201231213",
+  fullName: "",
+  ccNumber: "",
+  address: "",
+  creditLimit: 0,
+  phone: "",
 };
 
 const useClientForm = (data?: ClientFormDto) => {

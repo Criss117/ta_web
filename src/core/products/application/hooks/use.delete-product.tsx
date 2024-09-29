@@ -19,8 +19,17 @@ const useDeleteProduct = () => {
 
   const mutation = useMutation({
     mutationFn: deleteProduct,
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: PRODUCT_FORM_MESSAGES.ERROR_TITLE,
+          description: response.error || "Error al eliminar el producto",
+        });
 
-    onSuccess: () => {
+        return;
+      }
+
       toast({
         title: PRODUCT_FORM_MESSAGES.DELETED_SUCCESS,
       });

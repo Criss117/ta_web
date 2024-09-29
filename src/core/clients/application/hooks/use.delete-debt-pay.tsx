@@ -22,14 +22,24 @@ const useDeleteDebtPay = ({ id, clientId }: Params) => {
   const deleteDebtPayMutation = useMutation({
     mutationFn: () => deleteDebtPayment({ id, clientId }),
 
-    onSuccess: (data) => {
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: DEBT_PAYMENT_MESSAGES.DELETE_ERROR,
+          description: response.error,
+        });
+
+        return;
+      }
+
       queryClient.refetchQueries({
         queryKey: ["client-debt-payments", clientId],
       });
 
-      if (data && data.client) {
+      if (response && response.data?.client) {
         queryClient.refetchQueries({
-          queryKey: ["client", data.client.ccNumber],
+          queryKey: ["client", response.data.client.ccNumber],
         });
       }
 

@@ -1,4 +1,3 @@
-import DebtPaymentEntity from "../entitites/debt-payment.entity";
 import DebtPaysRepository from "../repositories/debt-pays.repository";
 
 class FindDebtPayUseCase {
@@ -17,7 +16,7 @@ class FindDebtPayUseCase {
     return this.instance;
   }
 
-  async execute(clientId: number): Promise<Array<DebtPaymentEntity>> {
+  async execute(clientId: number) {
     return await this.debtPaysRepository.findByClientId(clientId);
   }
 }

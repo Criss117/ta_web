@@ -6,16 +6,18 @@ import { Ticket } from "@prisma/client";
 import type { CommonResponse } from "@Core/common/models/types";
 import updateClientBalanceAction from "@Core/clients/data/actions/update-balance.action";
 import createProductsSaleAction from "@Core/products-sale/data/actions/create-products-sale.action";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 
 import MakePaymentDto from "../dto/make-payment.dto";
 import createTicketAction from "./create-ticket.action";
 import verifyStockAndDecrement from "@Core/products/data/actions/verify-stock-and-decrement.action";
 import type TicketCreatedDto from "../dto/ticket-created.dto";
+import validateError from "@/core/common/lib/validate-errors";
+import { NotFoundException } from "@/core/common/lib/errors/exeptions-handler";
+import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 async function makePaymentAction(
   makePaymentDto: MakePaymentDto
-): Promise<CommonResponse<TicketCreatedDto>> {
+): Promise<CommonResponse<TicketCreatedDto | null>> {
   const { clientId, ccNumber, total, productsSale } = makePaymentDto;
 
   if (!productsSale || productsSale.length === 0) {
@@ -43,7 +45,9 @@ async function makePaymentAction(
       });
 
       if (!newTicket) {
-        throw new Error("No se pudo crear el ticket");
+        throw new Error("No se pudo crear el ticket", {
+          cause: "No se pudo crear el ticket",
+        });
       }
 
       const newProductsSale = await createProductsSaleAction({
@@ -55,7 +59,9 @@ async function makePaymentAction(
       });
 
       if (!newProductsSale) {
-        throw new Error("No se pudo crear la venta de los productos");
+        throw new Error("No se pudo crear la venta de los productos", {
+          cause: "No se pudo crear la venta de los productos",
+        });
       }
 
       const promises = newProductsSale.map((p) => {
@@ -77,15 +83,15 @@ async function makePaymentAction(
     });
 
     if (!ticket) {
-      throw new Error("No se pudo crear el ticket");
+      return NotFoundException.exeption("No se pudo crear el ticket");
     }
 
     return {
-      statusCode: 201,
+      statusCode: HttpStatusCodes.OK.code,
       data: ticket,
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }
 

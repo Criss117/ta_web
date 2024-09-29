@@ -27,7 +27,7 @@ const useClientsTable = ({ page = 1, offset = 10, filters }: Props) => {
     findClientsQuery.refetch();
   };
 
-  return { data: findClientsQuery.data, findClientsQuery, refetch };
+  return { data: findClientsQuery.data?.data, findClientsQuery, refetch };
 };
 
 export default useClientsTable;

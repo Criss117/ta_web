@@ -1,5 +1,6 @@
 import ProductRepository from "../repositories/product.repository";
 import ProductEntity from "../entities/product.entity";
+import { CommonResponse } from "@/core/common/models/types";
 
 class FindProductByBarCodeUseCase {
   private static instance: FindProductByBarCodeUseCase;
@@ -15,7 +16,9 @@ class FindProductByBarCodeUseCase {
     return this.instance;
   }
 
-  public async execute(barcode: string): Promise<ProductEntity> {
+  public async execute(
+    barcode: string
+  ): Promise<CommonResponse<ProductEntity | null>> {
     return await this.productRepository.findByBarcode(barcode);
   }
 }

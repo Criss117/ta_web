@@ -28,7 +28,7 @@ const DebtPaymentList = ({ clientId }: Props) => {
   const [selectedDebtPay, setSelectedDebtPay] =
     useState<DebtPaymentSummaryDto | null>(null);
 
-  const { findDebtPaysQuery, onFindDebtPays } = useFindDebtPays(clientId);
+  const { data, onFindDebtPays } = useFindDebtPays(clientId);
   const { deleteDebtPayMutation, mutate } = useDeleteDebtPay({
     clientId: selectedDebtPay?.clientId || -1,
     id: selectedDebtPay?.id || -1,
@@ -73,7 +73,7 @@ const DebtPaymentList = ({ clientId }: Props) => {
           <DialogDescription>Lista de abonos</DialogDescription>
         </DialogHeader>
         <DebtPaymentTable
-          data={findDebtPaysQuery.data || []}
+          data={data || []}
           selectedDebtPayment={selectedDebtPay}
           setSelectedDebtPayment={setSelectedDebtPay}
         />

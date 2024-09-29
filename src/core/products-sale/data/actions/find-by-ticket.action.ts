@@ -3,12 +3,12 @@
 import prisma from "@/lib/prisma";
 import { CommonResponse } from "@Core/common/models/types";
 import { FindByTicketDto } from "../dto/find-by-ticket.dto";
-import { validateCatchError } from "@Core/common/lib/validate-catch-error";
 import { ProductSaleSummaryDto } from "../dto/product-sale-summary.dto";
+import validateError from "@/core/common/lib/validate-errors";
 
 export async function findByTicketAction(
   findByTicket: FindByTicketDto
-): Promise<CommonResponse<Array<ProductSaleSummaryDto>>> {
+): Promise<CommonResponse<Array<ProductSaleSummaryDto> | null>> {
   try {
     const productsSale = await prisma.productSale.findMany({
       where: {
@@ -41,6 +41,6 @@ export async function findByTicketAction(
       data: productsSale,
     };
   } catch (error) {
-    throw validateCatchError(error);
+    return validateError(error);
   }
 }

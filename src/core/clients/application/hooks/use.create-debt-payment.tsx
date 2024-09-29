@@ -22,9 +22,19 @@ const useCreateDebtPayment = () => {
 
   const createDebtPaymentMutation = useMutation({
     mutationFn: createDebtPayment,
-    onSuccess: (data) => {
+    onSuccess: (response) => {
+      if (!response || response.error) {
+        toast({
+          variant: "destructive",
+          title: DEBT_PAYMENT_MESSAGES.ERROR_TITLE,
+          description: response.error,
+        });
+
+        return;
+      }
+
       queryClient.refetchQueries({
-        queryKey: ["client", data?.client?.ccNumber],
+        queryKey: ["client", response?.data?.client?.ccNumber],
       });
 
       toast({

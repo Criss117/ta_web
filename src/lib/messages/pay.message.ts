@@ -17,4 +17,5 @@ export const DEBT_PAYMENT_MESSAGES = {
   PRODUCT_NOT_EXIST: "El producto no existe",
   SUCCESS: "Abono guardado exitosamente",
   DELETE_SUCCESS: "Abono eliminado exitosamente",
+  DELETE_ERROR: "Error al eliminar el abono",
 } as const;

@@ -19,7 +19,6 @@ const EditProductScreen = ({ barcode }: Props) => {
     isPending: isEditPending,
     error: editError,
     isError: isEditError,
-    editProductMutation,
     mutate,
   } = useEditProduct();
 
