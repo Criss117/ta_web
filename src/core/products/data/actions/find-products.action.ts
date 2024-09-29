@@ -15,8 +15,6 @@ async function findProductsAction({
   page = 0,
   filters,
 }: FindEntities): Promise<CommonResponse<ProductEntity[] | null>> {
-  console.log({ offset, page, filters });
-
   try {
     const queryOptions: Prisma.ProductFindManyArgs<DefaultArgs> = {
       skip: page * offset,

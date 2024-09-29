@@ -6,6 +6,12 @@ import prisma from "@/lib/prisma";
 import validateError from "@/core/common/lib/validate-errors";
 import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import createManySyncAction from "@/core/sync-remote/data/actions/create-many-sync.action";
+import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function settleDebtAction(
   clientId: number
@@ -31,6 +37,15 @@ async function settleDebtAction(
           balance: 0,
         },
       });
+
+      await createSyncAction(
+        {
+          operation: SyncOperationEnum.SETTLE_DEBT,
+          recordId: clientId,
+          tableName: SyncTableEnum.Client,
+        },
+        tx
+      );
 
       return updatedClient;
     });

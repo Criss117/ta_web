@@ -87,3 +87,17 @@ model ProductSale {
   productId Int
   product Product @relation(fields: [productId], references: [id])
 }
+
+model SyncRemote {
+  id Int @id @default(autoincrement())
+  tableName String // Product, Client, Ticket, ProductSale, DebtPayment
+  state String // "PENDING" | "SUCCESS" | "FAILED"
+  error String?
+  lastSync DateTime?
+  recordId Int
+  operation String // "CREATE" | "UPDATE" | "DELETE"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isActive Boolean @default(true)
+}

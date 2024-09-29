@@ -7,6 +7,12 @@ import { CommonResponse } from "@Core/common/models/types";
 import DebtPaymentWithClient from "../dto/debt-payment-with-client";
 import validateError from "@/core/common/lib/validate-errors";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
+import createManySyncAction from "@/core/sync-remote/data/actions/create-many-sync.action";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function createDebtPaymentAction(
   clientId: number,
@@ -21,14 +27,16 @@ async function createDebtPaymentAction(
         },
       });
 
+      if (!client) {
+        throw new Error("No se encontro el cliente", {
+          cause: "No se encontro el cliente",
+        });
+      }
+
       const newDebtPayment = await tx.debtPayment.create({
         data: {
           amount,
-          client: {
-            connect: {
-              id: clientId,
-            },
-          },
+          clientId,
         },
       });
 
@@ -42,6 +50,22 @@ async function createDebtPaymentAction(
           },
         },
       });
+
+      await createManySyncAction(
+        [
+          {
+            tableName: SyncTableEnum.DebtPayment,
+            operation: SyncOperationEnum.CREATE,
+            recordId: newDebtPayment.id,
+          },
+          {
+            tableName: SyncTableEnum.Client,
+            operation: SyncOperationEnum.UPDATE,
+            recordId: updatedClient.id,
+          },
+        ],
+        tx
+      );
 
       return { ...newDebtPayment, client: updatedClient };
     });

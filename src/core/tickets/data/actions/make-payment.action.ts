@@ -33,8 +33,6 @@ async function makePaymentAction(
           clientId,
           ccNumber,
         });
-
-        console.log("client updated");
       }
 
       const newTicket = await createTicketAction({

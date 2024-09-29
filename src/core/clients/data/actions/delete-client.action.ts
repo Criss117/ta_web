@@ -5,21 +5,39 @@ import { DeleteClientDto } from "../dto/delete-client.dto";
 import { CommonResponse } from "@Core/common/models/types";
 import ClientEntity from "../../domain/entitites/client.entity";
 import validateError from "@/core/common/lib/validate-errors";
+import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 export async function deleteClientAction({
   ccNumber,
   id,
 }: DeleteClientDto): Promise<CommonResponse<ClientEntity | null>> {
   try {
-    const res = await prisma.client.update({
-      where: {
-        ccNumber: "11",
-        id: 11,
-      },
-      data: {
-        deletedAt: new Date(),
-        isActive: false,
-      },
+    const res = await prisma.$transaction(async (tx) => {
+      const res = await tx.client.update({
+        where: {
+          ccNumber,
+          id,
+        },
+        data: {
+          deletedAt: new Date(),
+          isActive: false,
+        },
+      });
+
+      await createSyncAction(
+        {
+          operation: SyncOperationEnum.DELETE,
+          recordId: res.id,
+          tableName: SyncTableEnum.Client,
+        },
+        tx
+      );
+
+      return res;
     });
 
     return {

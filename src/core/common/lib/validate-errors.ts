@@ -12,8 +12,6 @@ function validateError(error: any): CommonResponse {
       (err) => err.code === error.code
     );
 
-    console.log({ prismaError });
-
     if (prismaError) {
       return BadRequestException.exeption(prismaError.message);
     }
