@@ -1,26 +1,25 @@
-import { z } from "zod";
-import {
-  CountEnititesParamas,
-  FiltersSchema,
-  FindEntitiesSchema,
-} from "./schema";
-import { ActionState } from "@/lib/create-safe-action";
-
-export type Filters = z.infer<typeof FiltersSchema>;
-export type FindEntitesInputType = z.infer<typeof FindEntitiesSchema>;
-export type CountEntitiesInputType = z.infer<typeof CountEnititesParamas>;
-
-export type FindEntitiesReturnType<T> = ActionState<FindEntitesInputType, T>;
-
-export type StatusType<T> = {
-  isError: boolean;
-  isLoading: boolean;
-  response?: T;
-};
+import { Prisma, PrismaClient } from "@prisma/client";
+import { DefaultArgs, Omit } from "@prisma/client/runtime/library";
 
 export interface CommonResponse<T = null> {
   statusCode: number;
-  message: string;
+  message?: string;
   data?: T;
   error?: string;
 }
+
+export type FindEntities = {
+  filters?: Filters;
+  offset: number;
+  page: number;
+};
+
+export type Filters = {
+  minStock?: boolean | undefined;
+  query?: string | undefined;
+};
+
+export type PrismaTx = Omit<
+  PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>,
+  "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
+>;

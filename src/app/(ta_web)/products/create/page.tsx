@@ -1,7 +1,7 @@
-import MutateProductContainer from "@/core/products/modules/mutate-product/mutate-product.container";
+import CreateProductScreen from "@Core/products/presentation/screen/create-product.screen";
 
 const CreateProductPage = () => {
-  return <MutateProductContainer action="create" />;
+  return <CreateProductScreen />;
 };
 
 export default CreateProductPage;

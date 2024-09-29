@@ -1,4 +1,4 @@
-import MutateProductContainer from "@/core/products/modules/mutate-product/mutate-product.container";
+import EditProductScreen from "@Core/products/presentation/screen/edit-product.screen";
 
 interface Props {
   params: {
@@ -11,7 +11,7 @@ const EditProductPage = ({ params }: Props) => {
 
   const barcodeDecode = decodeURIComponent(barcode);
 
-  return <MutateProductContainer barcode={barcodeDecode} action="edit" />;
+  return <EditProductScreen barcode={barcodeDecode} />;
 };
 
 export default EditProductPage;

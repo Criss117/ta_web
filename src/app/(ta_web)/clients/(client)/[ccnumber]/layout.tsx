@@ -1,10 +1,10 @@
 import { PropsWithChildren } from "react";
-import { ROUTES } from "@/lib/constants/nav";
 import { redirect } from "next/navigation";
 
+import { ROUTES } from "@/lib/constants/nav";
 import { TITLES } from "@/lib/constants/metadata";
 import SectionHeader from "@/components/ui/section-header";
-import { findClientFullnameAction } from "@/core/clients/actions/find-client-fullname.action";
+// import { findClientFullnameAction } from "@/core/clients/actions/find-client-fullname.action";
 
 interface MetadataProps {
   params: {
@@ -18,31 +18,26 @@ interface Props extends PropsWithChildren {
   };
 }
 
-export async function generateMetadata({ params }: MetadataProps) {
-  const { ccnumber } = params;
+// export async function generateMetadata({ params }: MetadataProps) {
+//   const { ccnumber } = params;
 
-  const fullName = await findClientFullnameAction(ccnumber);
+//   const fullName = await findClientFullnameAction(ccnumber);
 
-  return {
-    title: fullName,
-  };
-}
+//   return {
+//     title: fullName,
+//   };
+// }
 
 const ClientLayout = async ({ children, params }: Props) => {
   const { ccnumber } = params;
 
-  const fullName = await findClientFullnameAction(ccnumber);
+  // const fullName = await findClientFullnameAction(ccnumber);
 
-  if (!fullName) {
-    redirect(ROUTES.CLIENTS);
-  }
+  // if (!fullName) {
+  //   redirect(ROUTES.CLIENTS);
+  // }
 
-  return (
-    <>
-      <SectionHeader title={TITLES.MANAGE_CLIENT + ": " + fullName} />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };
 
 export default ClientLayout;

@@ -22,8 +22,6 @@ const SearchBarQuery = ({ label, searchByQueryFn }: Props) => {
       searchByQueryFn(queryDebaunce);
       return;
     }
-
-    searchByQueryFn("");
   }, [queryDebaunce]);
 
   const clearQuery = () => {

@@ -19,7 +19,7 @@ export function formatCurrency(
   currency: Intl.NumberFormatOptions["currency"] = "COP"
 ): string {
   if (isNaN(amount)) {
-    throw new Error("Invalid amount");
+    return "";
   }
 
   return new Intl.NumberFormat(locale, { style: "currency", currency }).format(

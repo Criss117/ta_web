@@ -10,7 +10,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <TansTackProvider>
       <NavBar />
-      <main className="mt-20 flex-grow flex flex-col">{children}</main>
+      <main className="mt-28 flex-grow flex flex-col">{children}</main>
       <Toaster />
     </TansTackProvider>
   );

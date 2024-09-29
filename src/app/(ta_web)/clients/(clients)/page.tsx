@@ -1,6 +1,7 @@
+import { redirect } from "next/navigation";
+
 import { ROUTES } from "@/lib/constants/nav";
 import ClientsTableScreen from "@Core/clients/presentation/screens/clients-table.screen";
-import { redirect } from "next/navigation";
 
 interface Props {
   searchParams?: {

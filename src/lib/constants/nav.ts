@@ -11,6 +11,7 @@ import {
 import { NavItem } from "../models";
 
 export const ROUTES = {
+  TICKETS: "/tickets",
   SALES: "/sales",
   CLIENT: "/clients",
   CLIENTS: "/clients?page=1&offset=10",
@@ -27,7 +28,7 @@ export const ROUTES = {
 export const NAVITEMS: NavItem[] = [
   {
     name: "Ventas",
-    href: ROUTES.SALES,
+    href: ROUTES.TICKETS,
     icon: BadgeDollarSign,
   },
   {

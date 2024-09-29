@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import ProductContainer from "@/core/products/products.container";
 import { ROUTES } from "@/lib/constants/nav";
+import ProductsTableScreen from "@Core/products/presentation/screen/products-table.screen";
 
 interface Props {
   searchParams?: {
@@ -30,11 +30,7 @@ const ProductPage = ({ searchParams }: Props) => {
     redirect(ROUTES.PRODUCTS);
   }
 
-  return (
-    <>
-      <ProductContainer page={pageNumber} offset={offsetNumber} />
-    </>
-  );
+  return <ProductsTableScreen page={pageNumber} offset={offsetNumber} />;
 };
 
 export default ProductPage;
