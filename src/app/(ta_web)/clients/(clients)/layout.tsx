@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import { Metadata } from "next";
 
 import SectionHeader from "@/components/ui/section-header";

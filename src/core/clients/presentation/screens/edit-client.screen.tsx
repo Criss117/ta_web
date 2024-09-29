@@ -26,32 +26,30 @@ const EditClientScreen = ({ ccNumber }: Props) => {
   }
 
   return (
-    <>
-      <div className="mx-2 md:w-2/3 md:mx-auto lg:w-3/5 xl:w-1/3 m-auto mt-10">
-        <BackButton />
-        <ClientForm
-          data={ClientDtoMapper.toDto(data)}
-          mutateFn={(client) => {
-            if (!data.id) {
-              return;
-            }
-            setEditing(true);
-            mutate(client);
-          }}
-          status={{
-            isError: editing
-              ? editClientMutation.isError
-              : findOneClientQuery.isError,
-            isLoading: editing
-              ? editClientMutation.isPending
-              : findOneClientQuery.isPending,
-            error: editing
-              ? editClientMutation.error?.message || ""
-              : findOneClientQuery.error?.message || "",
-          }}
-        />
-      </div>
-    </>
+    <div className="mx-2 md:w-2/3 md:mx-auto lg:w-3/5 xl:w-1/3 m-auto mt-10">
+      <BackButton />
+      <ClientForm
+        data={ClientDtoMapper.toDto(data)}
+        mutateFn={(client) => {
+          if (!data.id) {
+            return;
+          }
+          setEditing(true);
+          mutate(client);
+        }}
+        status={{
+          isError: editing
+            ? editClientMutation.isError
+            : findOneClientQuery.isError,
+          isLoading: editing
+            ? editClientMutation.isPending
+            : findOneClientQuery.isPending,
+          error: editing
+            ? editClientMutation.error?.message || ""
+            : findOneClientQuery.error?.message || "",
+        }}
+      />
+    </div>
   );
 };
 

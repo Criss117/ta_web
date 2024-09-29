@@ -1,3 +1,5 @@
+import React from "react";
+
 interface Props {
   isError?: boolean;
   error?: string | null;

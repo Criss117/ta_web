@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import TicketEntity from "@Core/tickets/domain/entities/ticket.entity";
 import useDeleteTicket from "@Core/tickets/application/hooks/use.delete-ticket";

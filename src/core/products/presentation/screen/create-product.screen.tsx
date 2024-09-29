@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import BackButton from "@/components/ui/back-button";
 import useCreateProduct from "../../application/hooks/use.create-product";
 import ProductForm from "../components/form/product-form";

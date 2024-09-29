@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";

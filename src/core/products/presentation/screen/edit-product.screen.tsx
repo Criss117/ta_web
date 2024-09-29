@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import useFindProduct from "../../application/hooks/use.find-product";
 import BackButton from "@/components/ui/back-button";
 import ProductForm from "../components/form/product-form";

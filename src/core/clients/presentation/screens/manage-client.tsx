@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import BackButton from "@/components/ui/back-button";
 import useFindClient from "../../application/hooks/use.find-client";
 import ManageClientSkeleton from "../components/manage-client/manage-client-skeleton";

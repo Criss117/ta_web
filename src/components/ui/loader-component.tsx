@@ -6,7 +6,7 @@ interface Props {
 }
 
 const LoaderComponent = ({ title, isLoading }: Props) => {
-  if (!isLoading) return <>{title}</>;
+  if (!isLoading) return <p>{title}</p>;
 
   return <Loader2 className="w-5 h-5 animate-spin" />;
 };

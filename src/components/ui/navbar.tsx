@@ -48,36 +48,34 @@ const NavBar = ({ variant = "primary" }: Props) => {
   }, [pathname]);
 
   return (
-    <>
-      <nav className="pt-2 flex flex-col px-10 z-50 bg-lightbg-200 fixed top-0 w-full h-24 justify-between">
-        <h1 className="text-3xl font-bold text-lighttext-100">
-          Tienda Andres - Web App
-        </h1>
-        <div className="flex justify-between">
-          <ul className="flex gap-5">
-            {navItems.map(({ name, href, icon: Icon, current }) => (
-              <li key={href}>
-                <Button
-                  variant="outline"
-                  className={cn("gap-2", {
-                    "border-black": current,
-                  })}
-                  asChild
-                >
-                  <Link href={href}>
-                    <span>
-                      <Icon size={20} />
-                    </span>
-                    {name}
-                  </Link>
-                </Button>
-              </li>
-            ))}
-          </ul>
-          <Clock />
-        </div>
-      </nav>
-    </>
+    <nav className="pt-2 flex flex-col px-10 z-50 bg-lightbg-200 fixed top-0 w-full h-24 justify-between">
+      <h1 className="text-3xl font-bold text-lighttext-100">
+        Tienda Andres - Web App
+      </h1>
+      <div className="flex justify-between">
+        <ul className="flex gap-5">
+          {navItems.map(({ name, href, icon: Icon, current }) => (
+            <li key={href}>
+              <Button
+                variant="outline"
+                className={cn("gap-2", {
+                  "border-black": current,
+                })}
+                asChild
+              >
+                <Link href={href}>
+                  <span>
+                    <Icon size={20} />
+                  </span>
+                  {name}
+                </Link>
+              </Button>
+            </li>
+          ))}
+        </ul>
+        <Clock />
+      </div>
+    </nav>
   );
 };
 
