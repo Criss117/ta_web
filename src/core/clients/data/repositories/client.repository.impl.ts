@@ -30,7 +30,7 @@ class ClientRepositoryImlp implements ClientRepository {
     offset: number,
     page: number,
     filters?: Filters
-  ): Promise<CommonResponse<ClientEntity[] | []>> {
+  ): Promise<CommonResponse<ClientEntity[] | null>> {
     const clientsFind = await findClientsAction({
       offset,
       page,
@@ -38,10 +38,7 @@ class ClientRepositoryImlp implements ClientRepository {
     });
 
     if (!clientsFind.data) {
-      return {
-        statusCode: clientsFind.statusCode,
-        data: [],
-      };
+      return NotFoundException.exeption(clientsFind.error);
     }
 
     return {
@@ -66,26 +63,20 @@ class ClientRepositoryImlp implements ClientRepository {
   async createClient(
     newClient: ClientEntity
   ): Promise<CommonResponse<ClientEntity | null>> {
-    const createdClient = await createClientAction({
+    return await createClientAction({
       ccNumber: newClient.ccNumber,
       fullName: newClient.fullName,
       address: newClient.address,
       phone: newClient.phone,
       creditLimit: newClient.creditLimit,
     });
-    return createdClient || null;
   }
 
   async deleteClient(
     id: number,
     ccNumber: string
   ): Promise<CommonResponse<ClientEntity | null>> {
-    const deletedClient = await deleteClientAction({ ccNumber, id });
-
-    return {
-      statusCode: deletedClient.statusCode,
-      data: deletedClient.data || null,
-    };
+    return await deleteClientAction({ ccNumber, id });
   }
 
   async findByIdOrCcNumber(

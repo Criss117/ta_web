@@ -10,7 +10,7 @@ export interface ClientRepository {
     offSet: number,
     page: number,
     filters?: Filters
-  ) => Promise<CommonResponse<ClientEntity[] | []>>;
+  ) => Promise<CommonResponse<ClientEntity[] | null>>;
 
   createClient: (
     newClient: ClientEntity

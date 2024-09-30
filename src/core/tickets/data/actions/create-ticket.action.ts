@@ -1,8 +1,11 @@
 "use server";
 
-import { CommonResponse } from "@/core/common/models/types";
 import CreateTicketDto from "../dto/create-ticket.dto";
-import TicketEntity from "../../domain/entities/ticket.entity";
+import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function createTicketAction(createTicketDto: CreateTicketDto) {
   const { tx, state, total, clientId } = createTicketDto;
@@ -11,13 +14,24 @@ async function createTicketAction(createTicketDto: CreateTicketDto) {
     throw new Error("No se puede crear un ticket sin transacción");
   }
 
-  return await tx.ticket.create({
+  const createdTicket = await tx.ticket.create({
     data: {
       state,
       total,
       clientId,
     },
   });
+
+  await createSyncAction(
+    {
+      operation: SyncOperationEnum.CREATE,
+      recordId: createdTicket.id,
+      tableName: SyncTableEnum.Ticket,
+    },
+    tx
+  );
+
+  return createdTicket;
 }
 
 export default createTicketAction;

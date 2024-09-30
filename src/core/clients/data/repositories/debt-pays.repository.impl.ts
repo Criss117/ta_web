@@ -5,6 +5,7 @@ import createDebtPaymentAction from "../actions/create-debt-payment.action";
 import deleteDebtPaymentAction from "../actions/delete-debt-payment.action";
 import findDebtPayByClientIdAction from "../actions/find-debt-pay-by-client-id.action";
 import DebtPayMapper from "../mappers/debt-pay.mapper";
+import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
 
 class DebtPaysRepositoryImpl implements DebtPaysRepository {
   private static instance: DebtPaysRepositoryImpl;
@@ -31,9 +32,7 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
     const deletedDebtPayment = await deleteDebtPaymentAction(id, clientId);
 
     if (!deletedDebtPayment.data) {
-      throw new Error("No se pudo eliminar el abono", {
-        cause: "No se pudo eliminar el abono",
-      });
+      return BadRequestException.exeption(deletedDebtPayment.error);
     }
 
     return {
@@ -49,9 +48,7 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
     const createdDebtPayment = await createDebtPaymentAction(clientId, amount);
 
     if (!createdDebtPayment.data) {
-      throw new Error("No se pudo crear el abono", {
-        cause: "No se pudo crear el abono",
-      });
+      return BadRequestException.exeption(createdDebtPayment.error);
     }
 
     return {

@@ -12,7 +12,10 @@ import createTicketAction from "./create-ticket.action";
 import verifyStockAndDecrement from "@Core/products/data/actions/verify-stock-and-decrement.action";
 import type TicketCreatedDto from "../dto/ticket-created.dto";
 import validateError from "@/core/common/lib/validate-errors";
-import { NotFoundException } from "@/core/common/lib/errors/exeptions-handler";
+import {
+  BadRequestException,
+  NotFoundException,
+} from "@/core/common/lib/errors/exeptions-handler";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 async function makePaymentAction(
@@ -21,18 +24,24 @@ async function makePaymentAction(
   const { clientId, ccNumber, total, productsSale } = makePaymentDto;
 
   if (!productsSale || productsSale.length === 0) {
-    throw new Error("No se puede crear un ticket sin productos");
+    return BadRequestException.exeption("No hay productos en la venta");
   }
 
   try {
     const ticket = await prisma.$transaction(async (tx) => {
       if (ccNumber && clientId) {
-        await updateClientBalanceAction({
+        const newUser = await updateClientBalanceAction({
           tx,
           total,
           clientId,
           ccNumber,
         });
+
+        if (!newUser) {
+          throw new Error("No se pudo actualizar el balance del cliente", {
+            cause: "No se pudo actualizar el balance del cliente",
+          });
+        }
       }
 
       const newTicket = await createTicketAction({
@@ -89,6 +98,7 @@ async function makePaymentAction(
       data: ticket,
     };
   } catch (error) {
+    console.log(validateError(error));
     return validateError(error);
   }
 }

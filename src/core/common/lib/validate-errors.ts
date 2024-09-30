@@ -5,6 +5,7 @@ import {
   ExeptionHandler,
 } from "./errors/exeptions-handler";
 import { PRISMA_CODES } from "./errors/prisma-codes";
+import HttpStatusCodes from "./http-status-code";
 
 function validateError(error: any): CommonResponse {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -18,7 +19,10 @@ function validateError(error: any): CommonResponse {
   }
 
   if (error.cause) {
-    return ExeptionHandler.customException(error.code, error.cause);
+    return ExeptionHandler.customException(
+      HttpStatusCodes.BAD_REQUEST.code,
+      error.cause
+    );
   }
 
   return ExeptionHandler.exeption();

@@ -52,7 +52,7 @@ class TicketsRepositoryImpl implements TicketsRepository {
     });
 
     if (!ticketCreated.data) {
-      throw new Error("No se pudo crear el ticket");
+      return NotFoundException.exeption(ticketCreated.error);
     }
 
     return {

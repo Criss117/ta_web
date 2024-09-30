@@ -22,7 +22,7 @@ class ProductsSaleRepositoryImpl implements ProductsSaleRepository {
     const products = await findByTicketAction(findByTicket);
 
     if (!products || !products.data) {
-      return NotFoundException.exeption("No se encontro el Ticket");
+      return NotFoundException.exeption(products.error);
     }
 
     return {

@@ -3,6 +3,11 @@
 import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
 import validateError from "@/core/common/lib/validate-errors";
+import createManySyncAction from "@/core/sync-remote/data/actions/create-many-sync.action";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
 import prisma from "@/lib/prisma";
 import { CommonResponse } from "@Core/common/models/types";
 
@@ -51,6 +56,22 @@ async function deleteTicketAction(
               : client.balance - deletedTicket.total,
         },
       });
+
+      await createManySyncAction(
+        [
+          {
+            operation: SyncOperationEnum.DELETE,
+            recordId: deletedTicket.id,
+            tableName: SyncTableEnum.Ticket,
+          },
+          {
+            operation: SyncOperationEnum.UPDATE,
+            recordId: clientUpdated.id,
+            tableName: SyncTableEnum.Client,
+          },
+        ],
+        tx
+      );
 
       return clientUpdated;
     });

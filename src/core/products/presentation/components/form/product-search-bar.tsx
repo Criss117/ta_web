@@ -47,7 +47,7 @@ const ProductSearchBar = ({ onSearch }: Props) => {
       setBarCode("");
       return;
     }
-    if (!isSuccess && data == null && barCode != "") {
+    if (!isSuccess && data === null && barCode !== "") {
       toast({
         title: "Error",
         description: "No se encontro el producto",

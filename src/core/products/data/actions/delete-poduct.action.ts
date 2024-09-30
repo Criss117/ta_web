@@ -5,28 +5,41 @@ import { CommonResponse } from "@Core/common/models/types";
 
 import ProductEntity from "../../domain/entities/product.entity";
 import validateError from "@/core/common/lib/validate-errors";
-import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
+import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function deleteProductAction(
   id: number
 ): Promise<CommonResponse<ProductEntity | null>> {
   try {
-    const deletedProduct = await prisma.product.update({
-      where: {
-        id,
-        isActive: true,
-      },
-      data: {
-        barcode: "",
-        isActive: false,
-        deletedAt: new Date(),
-      },
-    });
+    const deletedProduct = await prisma.$transaction(async (tx) => {
+      const deletedProduct = await tx.product.update({
+        where: {
+          id,
+          isActive: true,
+        },
+        data: {
+          barcode: "",
+          isActive: false,
+          deletedAt: new Date(),
+        },
+      });
 
-    if (!deletedProduct) {
-      return BadRequestException.exeption("No se pudo eliminar el producto");
-    }
+      await createSyncAction(
+        {
+          operation: SyncOperationEnum.DELETE,
+          recordId: deletedProduct.id,
+          tableName: SyncTableEnum.Product,
+        },
+        tx
+      );
+
+      return deletedProduct;
+    });
 
     return {
       statusCode: HttpStatusCodes.OK.code,

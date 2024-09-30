@@ -1,5 +1,10 @@
 "use server";
 
+import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
 import { PrismaTx } from "@Core/common/models/types";
 
 interface UpdateBalanceDto {
@@ -31,10 +36,12 @@ async function updateClientBalanceAction(updateBalance: UpdateBalanceDto) {
   const newBalance = credit.balance + total;
 
   if (newBalance > credit.creditLimit) {
-    throw new Error("Limite de credito excedido");
+    throw new Error("Limite de credito excedido", {
+      cause: "Limite de credito excedido",
+    });
   }
 
-  return await tx.client.update({
+  const updatedClient = await tx.client.update({
     where: {
       ccNumber: ccNumber,
       id: clientId,
@@ -44,6 +51,17 @@ async function updateClientBalanceAction(updateBalance: UpdateBalanceDto) {
       balance: newBalance,
     },
   });
+
+  await createSyncAction(
+    {
+      operation: SyncOperationEnum.UPDATE,
+      tableName: SyncTableEnum.Client,
+      recordId: clientId,
+    },
+    tx
+  );
+
+  return updatedClient;
 }
 
 export default updateClientBalanceAction;

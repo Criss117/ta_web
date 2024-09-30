@@ -58,6 +58,8 @@ const PayModal = ({ currentTicket }: Props) => {
     }));
   };
 
+  useEffect(() => setTicket(currentTicket), [currentTicket]);
+
   return (
     <Dialog open={inProgress} onOpenChange={setInProgress}>
       <DialogTrigger>

@@ -27,10 +27,13 @@ const useMakePayment = () => {
   const makePaymentMutation = useMutation({
     mutationFn: makePayment,
     onSuccess: (response) => {
+      console.log({ response });
+
       if (!response || response.error) {
         toast({
           variant: "destructive",
           title: response.error || "Error al crear el ticket",
+          description: response.error || "Error al crear el ticket",
         });
 
         return;

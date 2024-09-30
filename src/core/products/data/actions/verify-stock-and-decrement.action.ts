@@ -1,6 +1,11 @@
 "use server";
 
 import type VerifyStockDto from "../dto/verify-stock.dto";
+import {
+  SyncOperationEnum,
+  SyncTableEnum,
+} from "@/core/sync-remote/domain/interfaces/sync-remote";
+import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
 
 async function verifyStockAndDecrement(verifyStock: VerifyStockDto) {
   const { tx, productId, quantity } = verifyStock;
@@ -33,6 +38,15 @@ async function verifyStockAndDecrement(verifyStock: VerifyStockDto) {
       },
     },
   });
+
+  await createSyncAction(
+    {
+      operation: SyncOperationEnum.UPDATE,
+      tableName: SyncTableEnum.Product,
+      recordId: productId,
+    },
+    tx
+  );
 }
 
 export default verifyStockAndDecrement;
