@@ -7,7 +7,10 @@ import type { CommonResponse, PrismaTx } from "@/core/common/models/types";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
 import type CreateSyncDto from "../dto/create-sync.dto";
-import { SyncStateEnum } from "../../domain/interfaces/sync-remote";
+import {
+  SyncOperationEnum,
+  SyncStateEnum,
+} from "../../domain/interfaces/sync-remote";
 import validateError from "@/core/common/lib/validate-errors";
 
 async function createSyncAction(
@@ -17,6 +20,32 @@ async function createSyncAction(
   const { tableName, operation, recordId } = createSyncDto;
 
   const prismToUse = tx || prisma;
+
+  if (createSyncDto.operation === SyncOperationEnum.DELETE) {
+    const existsSync = await prismToUse.syncRemote.findMany({
+      where: {
+        tableName: tableName,
+        recordId: recordId,
+        operation: {
+          not: SyncOperationEnum.DELETE,
+        },
+        isActive: true,
+      },
+    });
+
+    existsSync.forEach(async (sync) => {
+      console.log({ sync });
+      await prismToUse.syncRemote.update({
+        where: {
+          id: sync.id,
+        },
+        data: {
+          isActive: false,
+          state: SyncStateEnum.SUCCESS,
+        },
+      });
+    });
+  }
 
   const existsSync = await prismToUse.syncRemote.findFirst({
     where: {

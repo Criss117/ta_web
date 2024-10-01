@@ -10,7 +10,6 @@ import ProductsSaleRepositoryImpl from "@/core/products-sale/data/repositories/p
 import DebtPaysRepositoryImpl from "@/core/clients/data/repositories/debt-pays.repository.impl";
 
 class SyncRemoteUseCasesFactory {
-  private static clientRepósitory = ClientRepositoryImlp.getInstance();
   private static syncRemoteRepository = SyncRemoteRepositoryImpl.getInstance();
   private static clientRepository = ClientRepositoryImlp.getInstance();
   private static productRepository = ProductRepositoryImpl.getInstance();
@@ -33,7 +32,7 @@ class SyncRemoteUseCasesFactory {
 
   static createService() {
     return SyncRemoteService.getInstance(
-      this.clientRepósitory,
+      this.clientRepository,
       this.productRepository,
       this.ticketsRepository,
       this.productsSaleRepository,

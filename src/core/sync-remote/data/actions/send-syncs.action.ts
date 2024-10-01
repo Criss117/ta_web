@@ -26,7 +26,9 @@ async function sendSyncsAction(
 
   const syncRemoteAction = SyncRemoteUseCasesFactory.createService();
 
-  await syncRemoteAction.synchronize(syncsEntity);
+  const res = await syncRemoteAction.synchronize(syncsEntity);
+
+  console.log(JSON.stringify(res, null, 2));
 
   return {
     statusCode: HttpStatusCodes.OK.code,

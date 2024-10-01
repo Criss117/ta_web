@@ -54,6 +54,7 @@ async function editProductAction(
       },
     };
   } catch (error) {
+    console.log({ error });
     return validateError(error);
   }
 }

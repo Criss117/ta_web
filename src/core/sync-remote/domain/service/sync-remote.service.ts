@@ -12,6 +12,29 @@ import { TicketsRepository } from "../../../tickets/domain/repositories/tickets.
 import { ProductsSaleRepository } from "../../../products-sale/domain/repositories/products-sale.repository";
 import DebtPaysRepository from "../../../clients/domain/repositories/debt-pays.repository";
 
+const syncsObject: Record<TableName, SyncToSend> = {
+  Product: {
+    toDelete: [],
+    toCreateOrUpdate: [],
+  },
+  Client: {
+    toDelete: [],
+    toCreateOrUpdate: [],
+  },
+  DebtPayment: {
+    toDelete: [],
+    toCreateOrUpdate: [],
+  },
+  Ticket: {
+    toDelete: [],
+    toCreateOrUpdate: [],
+  },
+  ProductSale: {
+    toDelete: [],
+    toCreateOrUpdate: [],
+  },
+};
+
 class SyncRemoteService {
   private static instance: SyncRemoteService;
 
@@ -45,24 +68,24 @@ class SyncRemoteService {
   async synchronize(syncsRemote: SyncRemoteEntity[]) {
     const syncsRecord = this.separateSyncs(syncsRemote);
 
-    const syncss: SyncToSend[] = [];
+    const toSend = syncsObject;
 
     if (syncsRecord.Client.length > 0) {
       const syncsClient = await this.prepareClients(syncsRecord.Client);
 
-      syncss.push(syncsClient);
+      toSend.Client = syncsClient;
     }
 
     if (syncsRecord.Product.length > 0) {
       const syncsProduct = await this.prepareProducs(syncsRecord.Product);
 
-      syncss.push(syncsProduct);
+      toSend.Product = syncsProduct;
     }
 
     if (syncsRecord.Ticket.length > 0) {
       const syncsTicket = await this.prepareTickets(syncsRecord.Ticket);
 
-      syncss.push(syncsTicket);
+      toSend.Ticket = syncsTicket;
     }
 
     if (syncsRecord.ProductSale.length > 0) {
@@ -70,18 +93,16 @@ class SyncRemoteService {
         syncsRecord.ProductSale
       );
 
-      syncss.push(syncsProductSale);
+      toSend.ProductSale = syncsProductSale;
     }
 
     if (syncsRecord.DebtPayment.length > 0) {
       const syncsDebtPays = await this.prepareDebtPays(syncsRecord.DebtPayment);
 
-      syncss.push(syncsDebtPays);
+      toSend.DebtPayment = syncsDebtPays;
     }
 
-    console.log({ syncss });
-
-    return syncss;
+    return toSend;
   }
 
   async prepareClients(syncsClient: SyncRemoteEntity[]) {
@@ -147,14 +168,21 @@ class SyncRemoteService {
   }
 
   separateSyncs(syncsRemote: SyncRemoteEntity[]) {
-    return syncsRemote.reduce((acc, sync) => {
-      if (sync.tableName && !acc[sync.tableName]) {
-        acc[sync.tableName] = [];
-      }
+    const syncsRemoteRecord: Record<TableName, SyncRemoteEntity[]> = {
+      Product: [],
+      Client: [],
+      DebtPayment: [],
+      Ticket: [],
+      ProductSale: [],
+    };
 
-      acc[sync.tableName!].push(sync);
-      return acc;
-    }, {} as Record<TableName, SyncRemoteEntity[]>);
+    syncsRemote.forEach((s) => {
+      if (!s.tableName) return;
+
+      syncsRemoteRecord[s.tableName].push(s);
+    });
+
+    return syncsRemoteRecord;
   }
 }
 

@@ -23,7 +23,7 @@ async function deleteProductAction(
           isActive: true,
         },
         data: {
-          barcode: "",
+          barcode: "deleted" + id,
           isActive: false,
           deletedAt: new Date(),
         },
@@ -46,6 +46,7 @@ async function deleteProductAction(
       data: { ...deletedProduct, productSale: [] },
     };
   } catch (error) {
+    console.log(error);
     return validateError(error);
   }
 }
