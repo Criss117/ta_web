@@ -1,6 +1,7 @@
 import ProductEntity from "@Core/products/domain/entities/product.entity";
 import ProductSaleEntity from "../../domain/entities/product-sale.entity";
 import { ProductSaleSummaryDto } from "../dto/product-sale-summary.dto";
+import { ProductSale } from "@prisma/client";
 
 class ProductsSaleMapper {
   static summaryToDomain(
@@ -22,6 +23,20 @@ class ProductsSaleMapper {
         .product(product.build())
         .build();
     });
+  }
+
+  static prismaToDomain(productsSale: ProductSale): ProductSaleEntity {
+    return ProductSaleEntity.builder()
+      .id(productsSale.id)
+      .salePrice(productsSale.salePrice)
+      .quantity(productsSale.quantity)
+      .subTotal(productsSale.subTotal)
+      .productId(productsSale.productId)
+      .createdAt(productsSale.createdAt)
+      .updatedAt(productsSale.updatedAt)
+      .deletedAt(productsSale.deletedAt)
+      .isActive(productsSale.isActive)
+      .build();
   }
 }
 

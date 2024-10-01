@@ -14,4 +14,6 @@ export interface TicketsRepository {
     clientId?: number,
     ccNumber?: string
   ) => Promise<CommonResponse<TicketEntity | null>>;
+
+  findByid(id: number): Promise<CommonResponse<TicketEntity | null>>;
 }

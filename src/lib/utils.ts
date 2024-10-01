@@ -1,9 +1,6 @@
-import { Prisma } from "@prisma/client";
+import SyncRemoteEntity from "@/core/sync-remote/domain/entities/sync-remote.entity";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { PRISMACODES } from "./constants/prisma-codes";
-import { FORM_MESSAGES } from "./messages/product.messages";
-import { CommonResponse } from "@Core/common/models/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -24,5 +21,16 @@ export function formatCurrency(
 
   return new Intl.NumberFormat(locale, { style: "currency", currency }).format(
     amount
+  );
+}
+
+export function syncsRemoteReduced(syncsClient: SyncRemoteEntity[]) {
+  return Array.from(
+    syncsClient
+      .reduce((map, record) => {
+        map.set(record.recordId, record); // Sobrescribe el registro con el mismo recordId
+        return map;
+      }, new Map<number, SyncRemoteEntity>())
+      .values()
   );
 }

@@ -6,6 +6,7 @@ import deleteDebtPaymentAction from "../actions/delete-debt-payment.action";
 import findDebtPayByClientIdAction from "../actions/find-debt-pay-by-client-id.action";
 import DebtPayMapper from "../mappers/debt-pay.mapper";
 import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
+import findDebtPaymentbyIdAction from "../actions/find-dp-by-id.action";
 
 class DebtPaysRepositoryImpl implements DebtPaysRepository {
   private static instance: DebtPaysRepositoryImpl;
@@ -54,6 +55,21 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
     return {
       statusCode: createdDebtPayment.statusCode,
       data: DebtPayMapper.toDomainWithClient(createdDebtPayment.data),
+    };
+  }
+
+  async findById(
+    id: number
+  ): Promise<CommonResponse<DebtPaymentEntity | null>> {
+    const dp = await findDebtPaymentbyIdAction(id);
+
+    if (!dp.data) {
+      return BadRequestException.exeption(dp.error);
+    }
+
+    return {
+      statusCode: dp.statusCode,
+      data: DebtPayMapper.toDomain(dp.data),
     };
   }
 }

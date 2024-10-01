@@ -1,7 +1,7 @@
 import type SyncRemoteRepository from "../repositories/sync-remote.repository";
 
-class FindALlSyncUsecase {
-  private static instance: FindALlSyncUsecase;
+class CountSyncUseCase {
+  private static instance: CountSyncUseCase;
 
   private constructor(
     private readonly syncRemoteRepository: SyncRemoteRepository
@@ -9,14 +9,14 @@ class FindALlSyncUsecase {
 
   static getInstance(syncRemoteRepository: SyncRemoteRepository) {
     if (!this.instance) {
-      this.instance = new FindALlSyncUsecase(syncRemoteRepository);
+      this.instance = new CountSyncUseCase(syncRemoteRepository);
     }
     return this.instance;
   }
 
   execute() {
-    return this.syncRemoteRepository.findALl();
+    return this.syncRemoteRepository.countAll();
   }
 }
 
-export default FindALlSyncUsecase;
+export default CountSyncUseCase;

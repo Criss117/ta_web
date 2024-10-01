@@ -47,7 +47,7 @@ class ProductRepositoryImpl implements ProductRepository {
   async findByBarcode(
     barcode: string
   ): Promise<CommonResponse<ProductEntity | null>> {
-    return await findProductAction(barcode);
+    return await findProductAction({ barcode });
   }
 
   async editProduct(
@@ -60,6 +60,10 @@ class ProductRepositoryImpl implements ProductRepository {
     id: number
   ): Promise<CommonResponse<ProductEntity | null>> {
     return await deleteProductAction(id);
+  }
+
+  async findById(id: number): Promise<CommonResponse<ProductEntity | null>> {
+    return await findProductAction({ id });
   }
 }
 

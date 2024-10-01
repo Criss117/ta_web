@@ -15,7 +15,7 @@ class CreateSyncUseCase {
     return this.instance;
   }
 
-  create(syncRemote: SyncRemoteEntity) {
+  execute(syncRemote: SyncRemoteEntity) {
     return this.syncRemoteRepository.create(syncRemote);
   }
 }

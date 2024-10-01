@@ -1,3 +1,5 @@
+"use client";
+
 import { format } from "@formkit/tempo";
 import { useEffect, useRef, useState } from "react";
 
@@ -7,15 +9,15 @@ const Clock = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setDate(new Date());
-    }, 1000 * 60);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div>
-      <p className="text-xl font-semibold">{format(date, { time: "short" })}</p>
-    </div>
+    <p className="text-xl font-semibold text-end ">
+      {format(date, { time: "medium" })}
+    </p>
   );
 };
 

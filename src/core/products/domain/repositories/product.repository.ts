@@ -16,6 +16,8 @@ interface ProductRepository {
     barcode: string
   ) => Promise<CommonResponse<ProductEntity | null>>;
 
+  findById: (id: number) => Promise<CommonResponse<ProductEntity | null>>;
+
   editProduct: (
     product: ProductEntity
   ) => Promise<CommonResponse<ProductEntity | null>>;

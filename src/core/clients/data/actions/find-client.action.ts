@@ -39,20 +39,6 @@ export async function findByIdOrCcNumber(
     };
   }
 
-  if (findClientDto.obtainTickets) {
-    queryOptions.include = {
-      tickets: {
-        where: {
-          state: "PENDING",
-          isActive: true,
-        },
-        orderBy: {
-          createdAt: "asc",
-        },
-      },
-    };
-  }
-
   try {
     const client = await prisma.client.findFirst({
       where: {
@@ -63,7 +49,7 @@ export async function findByIdOrCcNumber(
       include: {
         tickets: {
           where: {
-            state: "PENDING",
+            state: findClientDto.obtainTickets ? "PENDING" : "NOT",
             isActive: true,
           },
           orderBy: {

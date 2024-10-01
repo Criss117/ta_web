@@ -7,6 +7,7 @@ import makePaymentAction from "../actions/make-payment.action";
 import TicketMapper from "../mappers/ticket.mapper";
 import { CommonResponse } from "@/core/common/models/types";
 import ClientEntity from "@/core/clients/domain/entitites/client.entity";
+import findTicketByIdAction from "../actions/find-ticket-by-id.action";
 
 class TicketsRepositoryImpl implements TicketsRepository {
   private static instance: TicketsRepositoryImpl;
@@ -58,6 +59,19 @@ class TicketsRepositoryImpl implements TicketsRepository {
     return {
       statusCode: ticketCreated.statusCode,
       data: TicketMapper.toDomain(ticketCreated.data),
+    };
+  }
+
+  async findByid(id: number): Promise<CommonResponse<TicketEntity | null>> {
+    const ticket = await findTicketByIdAction(id);
+
+    if (!ticket.data) {
+      return NotFoundException.exeption(ticket.error);
+    }
+
+    return {
+      statusCode: ticket.statusCode,
+      data: TicketMapper.prismaToDomain(ticket.data),
     };
   }
 }

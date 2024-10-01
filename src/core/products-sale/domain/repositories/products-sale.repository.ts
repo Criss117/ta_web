@@ -6,4 +6,6 @@ export interface ProductsSaleRepository {
   findByTicketId: (
     findByTicket: FindByTicket
   ) => Promise<CommonResponse<Array<ProductSaleEntity> | null>>;
+
+  findById: (id: number) => Promise<CommonResponse<ProductSaleEntity | null>>;
 }

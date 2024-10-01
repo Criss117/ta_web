@@ -5,17 +5,46 @@ import { CommonResponse } from "@Core/common/models/types";
 import ProductEntity from "../../domain/entities/product.entity";
 import validateError from "@/core/common/lib/validate-errors";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
-import { NotFoundException } from "@/core/common/lib/errors/exeptions-handler";
+import {
+  BadRequestException,
+  NotFoundException,
+} from "@/core/common/lib/errors/exeptions-handler";
+import { Prisma } from "@prisma/client";
 
-async function findProductAction(
-  barcode: string
-): Promise<CommonResponse<ProductEntity | null>> {
+interface Args {
+  barcode?: string;
+  id?: number;
+}
+
+async function findProductAction({
+  barcode,
+  id,
+}: Args): Promise<CommonResponse<ProductEntity | null>> {
+  if (!barcode && !id) {
+    return BadRequestException.exeption("No se encontro el producto");
+  }
+
+  const queryOptions: Prisma.ProductFindManyArgs = {
+    where: {
+      isActive: true,
+    },
+  };
+
+  if (id) {
+    queryOptions.where = {
+      ...queryOptions.where,
+      id,
+    };
+  }
+  if (barcode) {
+    queryOptions.where = {
+      ...queryOptions.where,
+      barcode,
+    };
+  }
+
   try {
-    const product = await prisma.product.findFirst({
-      where: {
-        barcode,
-      },
-    });
+    const product = await prisma.product.findFirst(queryOptions);
 
     if (!product) {
       return NotFoundException.exeption("No se encontro el producto");
