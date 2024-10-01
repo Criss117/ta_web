@@ -50,16 +50,16 @@ export const ClientFormSchema = z.object({
 });
 
 export const EditClientFormSchema = ClientFormSchema.extend({
-  id: z.number().min(1),
+  id: z.string(),
 });
 
 export const DeleteClientSchema = z.object({
-  id: z.number().min(1),
+  id: z.string(),
   ccNumber: z.string(),
 });
 
 export const CreateDebtPaymentSchema = z.object({
-  clientId: z.number().min(1),
+  clientId: z.string(),
   amount: z.preprocess(
     (value) => Number(value) || 0,
     z

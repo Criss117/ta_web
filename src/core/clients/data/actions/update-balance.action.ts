@@ -9,7 +9,7 @@ import { PrismaTx } from "@Core/common/models/types";
 
 interface UpdateBalanceDto {
   tx?: PrismaTx;
-  clientId: number;
+  clientId: string;
   ccNumber: string;
   total: number;
 }

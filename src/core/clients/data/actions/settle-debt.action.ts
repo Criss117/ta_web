@@ -14,7 +14,7 @@ import {
 } from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function settleDebtAction(
-  clientId: number
+  clientId: string
 ): Promise<CommonResponse<ClientEntity | null>> {
   try {
     const res = await prisma.$transaction(async (tx) => {

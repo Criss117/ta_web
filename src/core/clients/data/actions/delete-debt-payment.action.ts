@@ -14,8 +14,8 @@ import {
 } from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function deleteDebtPaymentAction(
-  id: number,
-  clientId: number
+  id: string,
+  clientId: string
 ): Promise<CommonResponse<DebtPaymentWithClient | null>> {
   try {
     const res = await prisma.$transaction(async (tx) => {

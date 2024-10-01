@@ -7,7 +7,7 @@ import type { DebtPaymentForm } from "../models/type";
 import { CreateDebtPaymentSchema } from "../models/schemas";
 import useCreateDebtPayment from "./use.create-debt-payment";
 
-const useDebtPaymentForm = ({ clientId }: { clientId: number }) => {
+const useDebtPaymentForm = ({ clientId }: { clientId: string }) => {
   const {
     isPending,
     isSuccess,

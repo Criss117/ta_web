@@ -16,7 +16,7 @@ class DeleteDebtPayUseCase {
     return this.instance;
   }
 
-  async execute(id: number, clientId: number) {
+  async execute(id: string, clientId: string) {
     return await this.debtPaysRepository.deleteDebtPayment(id, clientId);
   }
 }

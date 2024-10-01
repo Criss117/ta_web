@@ -3,20 +3,20 @@ import { CommonResponse } from "../../../common/models/types";
 
 interface DebtPaysRepository {
   createDebtPayment(
-    clientId: number,
+    clientId: string,
     amount: number
   ): Promise<CommonResponse<DebtPaymentEntity | null>>;
 
   findByClientId(
-    clientId: number
+    clientId: string
   ): Promise<CommonResponse<DebtPaymentEntity[] | null>>;
 
   deleteDebtPayment(
-    id: number,
-    clientId: number
+    id: string,
+    clientId: string
   ): Promise<CommonResponse<DebtPaymentEntity | null>>;
 
-  findById(id: number): Promise<CommonResponse<DebtPaymentEntity | null>>;
+  findById(id: string): Promise<CommonResponse<DebtPaymentEntity | null>>;
 }
 
 export default DebtPaysRepository;

@@ -4,7 +4,7 @@ import { ClientFormDto } from "../models/type";
 class ClientDtoMapper {
   static toDomain(dto: ClientFormDto): ClientEntity {
     return ClientEntity.builder()
-      .id(dto.id || -1)
+      .id(dto.id || "")
       .ccNumber(dto.ccNumber)
       .fullName(dto.fullName)
       .address(dto.address || null)

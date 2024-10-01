@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { ProductSale } from "@prisma/client";
 
 async function findByIdAction(
-  id: number
+  id: string
 ): Promise<CommonResponse<ProductSale | null>> {
   const productSale = await prisma.productSale.findUnique({
     where: {

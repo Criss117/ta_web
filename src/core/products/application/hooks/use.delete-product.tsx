@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/use-toast";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
 import usePageableState from "@Core/common/state/pageable.state";
 
-async function deleteProduct(id: number) {
+async function deleteProduct(id: string) {
   const deleteProductUseCase = ProductsUseCasesfactory.createDeleteProduct();
 
   return await deleteProductUseCase.execute(id);
@@ -47,7 +47,7 @@ const useDeleteProduct = () => {
     },
   });
 
-  const mutate = (id: number) => {
+  const mutate = (id: string) => {
     mutation.mutate(id);
   };
 

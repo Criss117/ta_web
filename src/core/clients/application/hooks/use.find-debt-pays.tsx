@@ -3,13 +3,13 @@
 import { useQuery } from "@tanstack/react-query";
 import DebtPaysUseCasesFactory from "../../composition-root/debt-pay.usecases.factory";
 
-async function findDebtPays(clientId: number) {
+async function findDebtPays(clientId: string) {
   const findDebtPaysUseCase = DebtPaysUseCasesFactory.createFindByClientId();
 
   return await findDebtPaysUseCase.execute(clientId);
 }
 
-const useFindDebtPays = (clientId: number) => {
+const useFindDebtPays = (clientId: string) => {
   const findDebtPaysQuery = useQuery({
     queryFn: () => findDebtPays(clientId),
     queryKey: ["client-debt-payments", clientId],

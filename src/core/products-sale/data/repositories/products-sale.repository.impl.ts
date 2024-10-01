@@ -33,7 +33,7 @@ class ProductsSaleRepositoryImpl implements ProductsSaleRepository {
   }
 
   async findById(
-    id: number
+    id: string
   ): Promise<CommonResponse<ProductSaleEntity | null>> {
     const product = await findByIdAction(id);
 

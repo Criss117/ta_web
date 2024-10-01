@@ -1,7 +1,7 @@
 import TicketEntity from "@Core/tickets/domain/entities/ticket.entity";
 
 class ClientEntity {
-  public id: number = -1;
+  public id: string = "";
   public ccNumber: string = "";
   public fullName: string = "";
   public address: string | null = null;
@@ -22,7 +22,7 @@ class ClientEntity {
 class ClientEntityBuilder {
   private clientEntity = new ClientEntity();
 
-  id(id: number) {
+  id(id: string) {
     this.clientEntity.id = id;
     return this;
   }

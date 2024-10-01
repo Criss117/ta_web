@@ -30,7 +30,7 @@ export function syncsRemoteReduced(syncsClient: SyncRemoteEntity[]) {
       .reduce((map, record) => {
         map.set(record.recordId, record); // Sobrescribe el registro con el mismo recordId
         return map;
-      }, new Map<number, SyncRemoteEntity>())
+      }, new Map<string, SyncRemoteEntity>())
       .values()
   );
 }

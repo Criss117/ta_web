@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Product {
-  id    Int @id @default(autoincrement())
+  id    String @id @default(uuid())
   barcode String @unique
   description  String
   costPrice Int
@@ -28,7 +28,7 @@ model Product {
 }
 
 model Client {
-  id    Int @id @default(autoincrement())
+  id    String @id @default(uuid())
   ccNumber String @unique
   fullName  String
   address String?
@@ -45,19 +45,19 @@ model Client {
 }
 
 model DebtPayment {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   amount Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   isActive Boolean @default(true)
 
-  clientId Int
+  clientId String
   client Client @relation(fields: [clientId], references: [id])
 }
 
 model Ticket{
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   total Int
   state String 
   createdAt DateTime @default(now())
@@ -65,14 +65,14 @@ model Ticket{
   deletedAt DateTime?
   isActive Boolean @default(true)
   
-  clientId Int?
+  clientId String?
   client Client? @relation(fields: [clientId], references: [id])
 
   productSales ProductSale[]
 }
 
 model ProductSale {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   salePrice Int
   quantity Int
   subTotal Int
@@ -81,20 +81,20 @@ model ProductSale {
   deletedAt DateTime?
   isActive Boolean @default(true)
 
-  ticketId Int
+  ticketId String
   ticket Ticket @relation(fields: [ticketId], references: [id])
 
-  productId Int
+  productId String
   product Product @relation(fields: [productId], references: [id])
 }
 
 model SyncRemote {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   tableName String // Product, Client, Ticket, ProductSale, DebtPayment
   state String // "PENDING" | "SUCCESS" | "FAILED"
   error String?
   lastSync DateTime?
-  recordId Int
+  recordId String
   operation String // "CREATE" | "UPDATE" | "DELETE"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

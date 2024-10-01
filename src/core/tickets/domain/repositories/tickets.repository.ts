@@ -5,15 +5,15 @@ import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 
 export interface TicketsRepository {
   deleteTicket: (
-    ticketId: number,
-    userId: number
+    ticketId: string,
+    userId: string
   ) => Promise<CommonResponse<ClientEntity | null>>;
 
   makePayment: (
     newTicket: TicketToSaleEntity,
-    clientId?: number,
+    clientId?: string,
     ccNumber?: string
   ) => Promise<CommonResponse<TicketEntity | null>>;
 
-  findByid(id: number): Promise<CommonResponse<TicketEntity | null>>;
+  findByid(id: string): Promise<CommonResponse<TicketEntity | null>>;
 }

@@ -11,7 +11,7 @@ export type CreateClientInputType = z.infer<typeof ClientFormSchema>;
 export type EditClientDto = z.infer<typeof EditClientFormSchema>;
 
 export type ClientFormDto = z.infer<typeof ClientFormSchema> & {
-  id?: number;
+  id?: string;
 };
 
 export type DebtPaymentForm = z.infer<typeof CreateDebtPaymentSchema>;

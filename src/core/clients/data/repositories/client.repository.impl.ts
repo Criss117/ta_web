@@ -73,7 +73,7 @@ class ClientRepositoryImlp implements ClientRepository {
   }
 
   async deleteClient(
-    id: number,
+    id: string,
     ccNumber: string
   ): Promise<CommonResponse<ClientEntity | null>> {
     return await deleteClientAction({ ccNumber, id });
@@ -103,7 +103,7 @@ class ClientRepositoryImlp implements ClientRepository {
   }
 
   async settleDebt(
-    clientId: number
+    clientId: string
   ): Promise<CommonResponse<ClientEntity | null>> {
     const res = await settleDebtAction(clientId);
 

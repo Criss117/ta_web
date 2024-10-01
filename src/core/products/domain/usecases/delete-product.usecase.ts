@@ -16,7 +16,7 @@ class DeleteProductUseCase {
   }
 
   public async execute(
-    id: number
+    id: string
   ): Promise<CommonResponse<ProductEntity | null>> {
     return await this.productRepository.deleteProduct(id);
   }

@@ -34,7 +34,6 @@ async function createSyncAction(
     });
 
     existsSync.forEach(async (sync) => {
-      console.log({ sync });
       await prismToUse.syncRemote.update({
         where: {
           id: sync.id,

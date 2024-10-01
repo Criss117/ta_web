@@ -3,14 +3,14 @@ import { TicketStateEnum } from "../enums/ticket-state.enum";
 import ProductSaleEntity from "@Core/products-sale/domain/entities/product-sale.entity";
 
 class TicketEntity {
-  public id: number = -1;
+  public id: string = "";
   public total: number = -1;
   public state: TicketStateEnum = TicketStateEnum.PENDING;
   public createdAt: Date | null = null;
   public updatedAt: Date | null = null;
   public deletedAt: Date | null = null;
   public isActive: boolean = false;
-  public clientId: number = -1;
+  public clientId: string = "";
   public client: ClientEntity | null = null;
   public productSales: Array<ProductSaleEntity> | null = null;
 
@@ -22,7 +22,7 @@ class TicketEntity {
 class TicketEntityBuilder {
   private ticketEntity = new TicketEntity();
 
-  id(id: number) {
+  id(id: string) {
     this.ticketEntity.id = id;
     return this;
   }
@@ -57,7 +57,7 @@ class TicketEntityBuilder {
     return this;
   }
 
-  clientId(clientId: number) {
+  clientId(clientId: string) {
     this.ticketEntity.clientId = clientId;
     return this;
   }

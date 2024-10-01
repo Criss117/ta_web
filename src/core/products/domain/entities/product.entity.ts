@@ -1,7 +1,7 @@
 import ProductSaleEntity from "@Core/products-sale/domain/entities/product-sale.entity";
 
 class ProductEntity {
-  public id: number = -1;
+  public id: string = "";
   public barcode: string = "";
   public description: string = "";
   public costPrice: number = -1;
@@ -23,7 +23,7 @@ class ProductEntity {
 export class ProductEntityBuilder {
   private productEntity = new ProductEntity();
 
-  public id(id: number) {
+  public id(id: string) {
     this.productEntity.id = id;
     return this;
   }

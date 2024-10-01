@@ -57,12 +57,12 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   async deleteProduct(
-    id: number
+    id: string
   ): Promise<CommonResponse<ProductEntity | null>> {
     return await deleteProductAction(id);
   }
 
-  async findById(id: number): Promise<CommonResponse<ProductEntity | null>> {
+  async findById(id: string): Promise<CommonResponse<ProductEntity | null>> {
     return await findProductAction({ id });
   }
 }

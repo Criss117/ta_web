@@ -6,8 +6,8 @@ import { productsSaleColumns } from "./products-sale-columns";
 import TableComponent from "@Core/table/components/table-component";
 
 interface Props {
-  ticketId: number;
-  clientId: number;
+  ticketId: string;
+  clientId: string;
 }
 
 const ProductsSaleTable = ({ clientId, ticketId }: Props) => {

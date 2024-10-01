@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { DebtPayment } from "@prisma/client";
 
 async function findDebtPaymentbyIdAction(
-  id: number
+  id: string
 ): Promise<CommonResponse<DebtPayment | null>> {
   const debtPayment = await prisma.debtPayment.findUnique({
     where: {

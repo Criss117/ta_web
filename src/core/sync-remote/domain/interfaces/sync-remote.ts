@@ -37,7 +37,7 @@ export const SyncTableEnum = {
 } as const;
 
 export interface SyncToSend {
-  toDelete: number[];
+  toDelete: string[];
   toCreateOrUpdate: (
     | ClientEntity
     | ProductEntity

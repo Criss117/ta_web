@@ -34,7 +34,7 @@ class TicketMapper {
       .updatedAt(ticket.updatedAt)
       .deletedAt(ticket.deletedAt)
       .isActive(ticket.isActive)
-      .clientId(ticket.clientId as number)
+      .clientId(ticket.clientId as string)
       .build();
   }
 }

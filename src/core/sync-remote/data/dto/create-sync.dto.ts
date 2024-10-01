@@ -6,7 +6,7 @@ import type {
 interface CreateSyncDto {
   tableName: TableName;
   operation: SyncOperation;
-  recordId: number;
+  recordId: string;
 }
 
 export default CreateSyncDto;

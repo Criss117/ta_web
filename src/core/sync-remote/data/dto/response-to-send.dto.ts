@@ -1,7 +1,7 @@
 import { SyncState } from "../../domain/interfaces/sync-remote";
 
 interface ResponseToSendDto {
-  syncId: number;
+  syncId: string;
   state: SyncState;
   error: string | null;
 }

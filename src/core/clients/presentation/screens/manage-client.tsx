@@ -46,7 +46,7 @@ const ManageClient = ({ ccNumber }: Props) => {
         <ActionsNav clientId={data?.id} />
         <TicketsProductsList
           ccNumber={ccNumber}
-          clientId={data?.id || -1}
+          clientId={data?.id || ""}
           tickets={data?.tickets || []}
         />
       </section>

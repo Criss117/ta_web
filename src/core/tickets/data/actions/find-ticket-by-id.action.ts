@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { Ticket } from "@prisma/client";
 
 async function findTicketByIdAction(
-  ticketId: number
+  ticketId: string
 ): Promise<CommonResponse<Ticket | null>> {
   const ticket = await prisma.ticket.findUnique({
     where: {

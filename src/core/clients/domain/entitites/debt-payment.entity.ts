@@ -1,9 +1,9 @@
 import ClientEntity from "./client.entity";
 
 class DebtPaymentEntity {
-  public id: number = -1;
+  public id: string = "";
   public amount: number = -1;
-  public clientId: number = -1;
+  public clientId: string = "";
   public client: ClientEntity | null = null;
   public createdAt: Date | null = null;
   public updatedAt: Date | null = null;
@@ -18,7 +18,7 @@ class DebtPaymentEntity {
 class DebtPaymentEntityBuilder {
   private debtPaymentEntity = new DebtPaymentEntity();
 
-  public id(id: number) {
+  public id(id: string) {
     this.debtPaymentEntity.id = id;
     return this;
   }
@@ -28,7 +28,7 @@ class DebtPaymentEntityBuilder {
     return this;
   }
 
-  public clientId(clientId: number) {
+  public clientId(clientId: string) {
     this.debtPaymentEntity.clientId = clientId;
     return this;
   }

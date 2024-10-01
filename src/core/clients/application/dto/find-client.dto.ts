@@ -1,5 +1,5 @@
 export interface FindClientDto {
   ccNumber?: string;
-  id?: number;
+  id?: string;
   obtainTickets: boolean;
 }

@@ -12,7 +12,7 @@ class DeleteTicketUseCase {
     return this.instance;
   }
 
-  async execute(ticketId: number, clientId: number) {
+  async execute(ticketId: string, clientId: string) {
     return await this.ticketsRepository.deleteTicket(ticketId, clientId);
   }
 }

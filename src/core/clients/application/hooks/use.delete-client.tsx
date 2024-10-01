@@ -12,7 +12,7 @@ async function deleteClient({
   id,
 }: {
   ccNumber: string;
-  id: number;
+  id: string;
 }) {
   const DeleteClientUseCase = ClientUseCasesFactory.createDeleteClient();
 

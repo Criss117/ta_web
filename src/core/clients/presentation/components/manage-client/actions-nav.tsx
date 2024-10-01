@@ -41,7 +41,7 @@ const ActionsNavList = [
 
 interface Props {
   disabled?: boolean;
-  clientId?: number;
+  clientId?: string;
 }
 
 const ActionsNav = ({ disabled = false, clientId }: Props) => {

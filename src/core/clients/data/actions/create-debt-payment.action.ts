@@ -7,7 +7,6 @@ import { CommonResponse } from "@Core/common/models/types";
 import DebtPaymentWithClient from "../dto/debt-payment-with-client";
 import validateError from "@/core/common/lib/validate-errors";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
-import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
 import createManySyncAction from "@/core/sync-remote/data/actions/create-many-sync.action";
 import {
   SyncOperationEnum,
@@ -15,7 +14,7 @@ import {
 } from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function createDebtPaymentAction(
-  clientId: number,
+  clientId: string,
   amount: number
 ): Promise<CommonResponse<DebtPaymentWithClient | null>> {
   try {

@@ -6,7 +6,7 @@ import DebtPaymentEntity from "../../domain/entitites/debt-payment.entity";
 import { NotFoundException } from "@/core/common/lib/errors/exeptions-handler";
 
 async function findDebtPayByClientIdAction(
-  clientId: number
+  clientId: string
 ): Promise<CommonResponse<DebtPaymentEntity[] | null>> {
   const debtpayment = await prisma.debtPayment.findMany({
     where: {

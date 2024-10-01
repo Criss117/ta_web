@@ -9,7 +9,7 @@ import useCurrentTicketState from "@Core/tickets/application/state/current-ticke
 
 interface Props {
   tickets: Array<TicketEntity>;
-  onSetCurrentTicketId: (ticketId: number) => void;
+  onSetCurrentTicketId: (ticketId: string) => void;
 }
 
 const TicketsList = ({ tickets, onSetCurrentTicketId }: Props) => {

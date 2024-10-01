@@ -6,8 +6,8 @@ import { DEBT_PAYMENT_MESSAGES } from "@/lib/messages/pay.message";
 import { toast } from "@/components/ui/use-toast";
 
 interface Params {
-  id: number;
-  clientId: number;
+  id: string;
+  clientId: string;
 }
 
 async function deleteDebtPayment({ clientId, id }: Params) {
@@ -50,7 +50,7 @@ const useDeleteDebtPay = ({ id, clientId }: Params) => {
   });
 
   const mutate = () => {
-    if (clientId < 0 || id < 0) return;
+    if (clientId.length <= 0 || id.length <= 0) return;
     deleteDebtPayMutation.mutate();
   };
 

@@ -13,7 +13,7 @@ import { Prisma } from "@prisma/client";
 
 interface Args {
   barcode?: string;
-  id?: number;
+  id?: string;
 }
 
 async function findProductAction({

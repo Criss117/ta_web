@@ -1,7 +1,7 @@
 import CreateProductDto from "./create-product.dto";
 
 interface EditProductDto extends CreateProductDto {
-  id: number;
+  id: string;
 }
 
 export default EditProductDto;

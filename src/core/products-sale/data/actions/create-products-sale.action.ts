@@ -10,7 +10,7 @@ import {
 
 interface CreateProductsSaleDto {
   tx: PrismaTx;
-  products: Array<CreateProductSaleDto & { ticketId: number }>;
+  products: Array<CreateProductSaleDto & { ticketId: string }>;
 }
 async function createProductsSaleAction(
   createProductsSaleDto: CreateProductsSaleDto

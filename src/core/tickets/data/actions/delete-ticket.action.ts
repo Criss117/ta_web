@@ -12,8 +12,8 @@ import prisma from "@/lib/prisma";
 import { CommonResponse } from "@Core/common/models/types";
 
 async function deleteTicketAction(
-  ticketId: number,
-  userId: number
+  ticketId: string,
+  userId: string
 ): Promise<CommonResponse<ClientEntity | null>> {
   try {
     const res = await prisma.$transaction(async (tx) => {

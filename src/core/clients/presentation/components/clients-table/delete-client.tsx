@@ -4,7 +4,7 @@ import useDeleteClient from "@Core/clients/application/hooks/use.delete-client";
 import DeleteAlertDialog from "@Core/common/components/delete-alert-dialog";
 
 interface Props {
-  id: number;
+  id: string;
   ccNumber: string;
 }
 

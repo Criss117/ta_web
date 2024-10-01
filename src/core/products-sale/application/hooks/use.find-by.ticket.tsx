@@ -5,8 +5,8 @@ import { FindByTicketDto } from "../dto/find-by-ticket.dto";
 import ProductsSaleUseCasesFactory from "../../composition-root/products-sale-usecase.factory";
 
 interface Props {
-  ticketId: number;
-  clientId: number;
+  ticketId: string;
+  clientId: string;
 }
 
 async function findByTicket(findByTicket: FindByTicketDto) {

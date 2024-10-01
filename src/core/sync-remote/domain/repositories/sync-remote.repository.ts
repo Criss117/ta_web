@@ -4,7 +4,7 @@ import type { SyncState } from "../interfaces/sync-remote";
 
 interface SyncRemoteRepository {
   changeSyncState(
-    syncId: number,
+    syncId: string,
     state: SyncState
   ): Promise<CommonResponse<SyncRemoteEntity | null>>;
   syncRemote(): Promise<CommonResponse>;

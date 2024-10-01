@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/use-toast";
 import { DEBT_PAYMENT_MESSAGES } from "@/lib/messages/pay.message";
 
 interface Params {
-  clientId: number;
+  clientId: string;
   amount: number;
 }
 
@@ -43,7 +43,7 @@ const useCreateDebtPayment = () => {
     },
   });
 
-  const onCreateDebtPay = (amount: number, clientId: number) => {
+  const onCreateDebtPay = (amount: number, clientId: string) => {
     createDebtPaymentMutation.mutate({ amount, clientId });
   };
 

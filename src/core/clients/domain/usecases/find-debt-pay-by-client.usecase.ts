@@ -16,7 +16,7 @@ class FindDebtPayUseCase {
     return this.instance;
   }
 
-  async execute(clientId: number) {
+  async execute(clientId: string) {
     return await this.debtPaysRepository.findByClientId(clientId);
   }
 }

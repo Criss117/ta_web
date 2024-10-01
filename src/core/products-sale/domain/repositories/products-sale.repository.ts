@@ -7,5 +7,5 @@ export interface ProductsSaleRepository {
     findByTicket: FindByTicket
   ) => Promise<CommonResponse<Array<ProductSaleEntity> | null>>;
 
-  findById: (id: number) => Promise<CommonResponse<ProductSaleEntity | null>>;
+  findById: (id: string) => Promise<CommonResponse<ProductSaleEntity | null>>;
 }

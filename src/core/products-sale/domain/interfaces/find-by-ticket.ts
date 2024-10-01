@@ -1,4 +1,4 @@
 export interface FindByTicket {
-  ticketId: number;
-  clientId: number;
+  ticketId: string;
+  clientId: string;
 }

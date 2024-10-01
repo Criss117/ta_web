@@ -13,7 +13,7 @@ import {
 } from "@/core/sync-remote/domain/interfaces/sync-remote";
 
 async function deleteProductAction(
-  id: number
+  id: string
 ): Promise<CommonResponse<ProductEntity | null>> {
   try {
     const deletedProduct = await prisma.$transaction(async (tx) => {

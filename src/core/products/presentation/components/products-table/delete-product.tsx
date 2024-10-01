@@ -4,7 +4,7 @@ import useDeleteProduct from "@Core/products/application/hooks/use.delete-produc
 import DeleteAlertDialog from "@Core/common/components/delete-alert-dialog";
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 const DeleteProduct = ({ id }: Props) => {

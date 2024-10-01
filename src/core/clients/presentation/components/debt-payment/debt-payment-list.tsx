@@ -20,7 +20,7 @@ import useDeleteDebtPay from "@Core/clients/application/hooks/use.delete-debt-pa
 import DebtPaymentTable from "./debt-payment-table";
 
 interface Props {
-  clientId: number;
+  clientId: string;
 }
 
 const DebtPaymentList = ({ clientId }: Props) => {
@@ -30,8 +30,8 @@ const DebtPaymentList = ({ clientId }: Props) => {
 
   const { data, onFindDebtPays } = useFindDebtPays(clientId);
   const { deleteDebtPayMutation, mutate } = useDeleteDebtPay({
-    clientId: selectedDebtPay?.clientId || -1,
-    id: selectedDebtPay?.id || -1,
+    clientId: selectedDebtPay?.clientId || "",
+    id: selectedDebtPay?.id || "",
   });
 
   useEffect(() => {

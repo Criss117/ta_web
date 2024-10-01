@@ -16,7 +16,7 @@ class CreateDebtPaymentUseCase {
     return this.instance;
   }
 
-  public async execute(clientId: number, amount: number) {
+  public async execute(clientId: string, amount: number) {
     return this.debtPaysRepository.createDebtPayment(clientId, amount);
   }
 }

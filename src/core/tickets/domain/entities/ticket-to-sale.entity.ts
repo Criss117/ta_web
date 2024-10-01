@@ -4,7 +4,7 @@ class TicketToSaleEntity {
   public id: number = -1;
   public label: string = "";
   public total: number = -1;
-  public clientId?: number;
+  public clientId?: string;
   public ccNumber?: string;
   public clientName?: string;
   public productsTickets: Array<ProductTicketEntity> = [];
@@ -37,7 +37,7 @@ class TicketToSaleEntityBuilder {
     return this;
   }
 
-  public clientId(clientId: number) {
+  public clientId(clientId: string) {
     this.ticketToSaleEntity.clientId = clientId;
     return this;
   }

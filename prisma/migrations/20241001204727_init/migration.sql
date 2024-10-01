@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Product" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "barcode" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "costPrice" INTEGER NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE "Product" (
 
 -- CreateTable
 CREATE TABLE "Client" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "ccNumber" TEXT NOT NULL,
     "fullName" TEXT NOT NULL,
     "address" TEXT,
@@ -31,32 +31,32 @@ CREATE TABLE "Client" (
 
 -- CreateTable
 CREATE TABLE "DebtPayment" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "amount" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     "deletedAt" DATETIME,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "clientId" INTEGER NOT NULL,
+    "clientId" TEXT NOT NULL,
     CONSTRAINT "DebtPayment_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "Ticket" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "total" INTEGER NOT NULL,
     "state" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     "deletedAt" DATETIME,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "clientId" INTEGER,
+    "clientId" TEXT,
     CONSTRAINT "Ticket_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
 CREATE TABLE "ProductSale" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "salePrice" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "subTotal" INTEGER NOT NULL,
@@ -64,10 +64,25 @@ CREATE TABLE "ProductSale" (
     "updatedAt" DATETIME NOT NULL,
     "deletedAt" DATETIME,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "ticketId" INTEGER NOT NULL,
-    "productId" INTEGER NOT NULL,
+    "ticketId" TEXT NOT NULL,
+    "productId" TEXT NOT NULL,
     CONSTRAINT "ProductSale_ticketId_fkey" FOREIGN KEY ("ticketId") REFERENCES "Ticket" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "ProductSale_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "SyncRemote" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "tableName" TEXT NOT NULL,
+    "state" TEXT NOT NULL,
+    "error" TEXT,
+    "lastSync" DATETIME,
+    "recordId" INTEGER NOT NULL,
+    "operation" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "deletedAt" DATETIME,
+    "isActive" BOOLEAN NOT NULL DEFAULT true
 );
 
 -- CreateIndex

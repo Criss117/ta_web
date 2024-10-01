@@ -1,5 +1,5 @@
 interface ClientPay {
-  id: number;
+  id: string;
   ccNumber: string;
   fullName: string;
 }

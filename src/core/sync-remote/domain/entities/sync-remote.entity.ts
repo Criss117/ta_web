@@ -5,12 +5,12 @@ import type {
 } from "../interfaces/sync-remote";
 
 class SyncRemoteEntity {
-  id: number = -1;
+  id: string = "";
   tableName: TableName | null = null;
   state: SyncState | null = null;
   error: string | null = null;
   lastSync: Date | null = null;
-  recordId: number = -1;
+  recordId: string = "";
   operation: SyncOperation | null = null;
   createdAt: Date | null = null;
   updatedAt: Date | null = null;
@@ -27,7 +27,7 @@ class SyncRemoteEntity {
 class SyncRemoteEntityBuilder {
   private syncRemoteEntity = new SyncRemoteEntity();
 
-  id(id: number) {
+  id(id: string) {
     this.syncRemoteEntity.id = id;
     return this;
   }
@@ -52,7 +52,7 @@ class SyncRemoteEntityBuilder {
     return this;
   }
 
-  recorId(recordId: number) {
+  recorId(recordId: string) {
     this.syncRemoteEntity.recordId = recordId;
     return this;
   }

@@ -58,7 +58,7 @@ class SyncRemoteRepositoryImpl implements SyncRemoteRepository {
   }
 
   async changeSyncState(
-    syncId: number,
+    syncId: string,
     state: SyncState
   ): Promise<CommonResponse<SyncRemoteEntity | null>> {
     throw new Error("Method not implemented.");

@@ -5,7 +5,7 @@ import ClientUseCasesFactory from "../../composition-root/client-usecases.factor
 import { toast } from "@/components/ui/use-toast";
 import { SETTLE_DEBT_MESSAGE } from "@/lib/messages/ticket.message";
 
-async function settleDebt(clientId: number) {
+async function settleDebt(clientId: string) {
   const settleDebtUseCase = ClientUseCasesFactory.createSettleDebt();
 
   return settleDebtUseCase.execute(clientId);
@@ -37,7 +37,7 @@ const useSettleDebt = () => {
     },
   });
 
-  const onSettleDebt = (clientId: number) => {
+  const onSettleDebt = (clientId: string) => {
     settleDebtMutation.mutate(clientId);
   };
 

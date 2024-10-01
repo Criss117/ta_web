@@ -1,7 +1,7 @@
 class ProductTicketEntity {
-  public id: number = -1;
+  public id: string = "";
   public barcode: string = "";
-  public productId: number = -1;
+  public productId: string = "";
   public description: string = "";
   public originalSalePrice: number = -1;
   public salePrice: number = -1;
@@ -19,7 +19,7 @@ class ProductTicketEntity {
 class ProductTicketEntityBuilder {
   private productTicketEntity = new ProductTicketEntity();
 
-  public id(id: number) {
+  public id(id: string) {
     this.productTicketEntity.id = id;
     return this;
   }
@@ -69,7 +69,7 @@ class ProductTicketEntityBuilder {
     return this;
   }
 
-  public productId(productId: number) {
+  public productId(productId: string) {
     this.productTicketEntity.productId = productId;
     return this;
   }

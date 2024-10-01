@@ -2,13 +2,13 @@ import ProductEntity from "@Core/products/domain/entities/product.entity";
 import TicketEntity from "@Core/tickets/domain/entities/ticket.entity";
 
 class ProductSaleEntity {
-  public id: number = -1;
+  public id: string = "";
   public salePrice: number = -1;
   public quantity: number = -1;
   public subTotal: number = -1;
-  public ticketId: number = -1;
+  public ticketId: string = "";
   public ticket: TicketEntity | null = null;
-  public productId: number = -1;
+  public productId: string = "";
   public product: ProductEntity | null = null;
   public createdAt: Date | null = null;
   public updatedAt: Date | null = null;
@@ -23,7 +23,7 @@ class ProductSaleEntity {
 class ProductSaleEntityBuilder {
   private productSaleEntity = new ProductSaleEntity();
 
-  public id(id: number) {
+  public id(id: string) {
     this.productSaleEntity.id = id;
     return this;
   }
@@ -43,7 +43,7 @@ class ProductSaleEntityBuilder {
     return this;
   }
 
-  public ticketId(ticketId: number) {
+  public ticketId(ticketId: string) {
     this.productSaleEntity.ticketId = ticketId;
     return this;
   }
@@ -53,7 +53,7 @@ class ProductSaleEntityBuilder {
     return this;
   }
 
-  public productId(productId: number) {
+  public productId(productId: string) {
     this.productSaleEntity.productId = productId;
     return this;
   }

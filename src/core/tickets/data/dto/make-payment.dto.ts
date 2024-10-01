@@ -3,7 +3,7 @@ import CreateProductSaleDto from "@Core/products-sale/data/dto/create-product-sa
 interface MakePaymentDto {
   total: number;
   ccNumber?: string;
-  clientId?: number;
+  clientId?: string;
   productsSale: Array<CreateProductSaleDto>;
 }
 

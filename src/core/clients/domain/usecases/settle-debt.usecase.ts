@@ -12,7 +12,7 @@ class SettleDebtUseCase {
     return this.instance;
   }
 
-  async execute(clientId: number) {
+  async execute(clientId: string) {
     return await this.clientRepository.settleDebt(clientId);
   }
 }

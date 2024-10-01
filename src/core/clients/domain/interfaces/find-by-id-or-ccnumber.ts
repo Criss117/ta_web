@@ -1,5 +1,5 @@
 export interface FindByIdOrCcNumber {
-  id?: number;
+  id?: string;
   ccNumber?: string;
   obtainTickets: boolean;
 }

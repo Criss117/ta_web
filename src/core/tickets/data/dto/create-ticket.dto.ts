@@ -4,7 +4,7 @@ interface CreateTicketDto {
   tx: PrismaTx;
   state: "PENDING" | "PAID";
   total: number;
-  clientId?: number;
+  clientId?: string;
 }
 
 export default CreateTicketDto;

@@ -140,9 +140,9 @@ class SyncRemoteService {
 
   async prepareSync<T>(
     syncsRemote: SyncRemoteEntity[],
-    callback: (id: number) => Promise<CommonResponse<T | null>>
+    callback: (id: string) => Promise<CommonResponse<T | null>>
   ) {
-    const toDelete: number[] = [];
+    const toDelete: string[] = [];
 
     const promises: Promise<CommonResponse<T | null>>[] = [];
 

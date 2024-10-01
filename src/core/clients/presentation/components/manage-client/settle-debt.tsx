@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import useSettleDebt from "@Core/clients/application/hooks/use.settle-debt";
 
 interface Props {
-  clientId: number;
+  clientId: string;
 }
 
 const SettleDebt = ({ clientId }: Props) => {

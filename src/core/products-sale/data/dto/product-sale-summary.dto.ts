@@ -1,10 +1,10 @@
 export interface ProductSaleSummaryDto {
-  id: number;
+  id: string;
   salePrice: number;
   quantity: number;
   subTotal: number;
   product: {
-    id: number;
+    id: string;
     description: string;
   };
 }

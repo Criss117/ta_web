@@ -21,14 +21,14 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
   }
 
   async findByClientId(
-    clientId: number
+    clientId: string
   ): Promise<CommonResponse<DebtPaymentEntity[] | null>> {
     return await findDebtPayByClientIdAction(clientId);
   }
 
   async deleteDebtPayment(
-    id: number,
-    clientId: number
+    id: string,
+    clientId: string
   ): Promise<CommonResponse<DebtPaymentEntity | null>> {
     const deletedDebtPayment = await deleteDebtPaymentAction(id, clientId);
 
@@ -43,7 +43,7 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
   }
 
   async createDebtPayment(
-    clientId: number,
+    clientId: string,
     amount: number
   ): Promise<CommonResponse<DebtPaymentEntity | null>> {
     const createdDebtPayment = await createDebtPaymentAction(clientId, amount);
@@ -59,7 +59,7 @@ class DebtPaysRepositoryImpl implements DebtPaysRepository {
   }
 
   async findById(
-    id: number
+    id: string
   ): Promise<CommonResponse<DebtPaymentEntity | null>> {
     const dp = await findDebtPaymentbyIdAction(id);
 

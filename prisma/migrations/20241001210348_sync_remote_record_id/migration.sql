@@ -2,12 +2,12 @@
 PRAGMA defer_foreign_keys=ON;
 PRAGMA foreign_keys=OFF;
 CREATE TABLE "new_SyncRemote" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" TEXT NOT NULL PRIMARY KEY,
     "tableName" TEXT NOT NULL,
     "state" TEXT NOT NULL,
     "error" TEXT,
     "lastSync" DATETIME,
-    "recordId" INTEGER NOT NULL,
+    "recordId" TEXT NOT NULL,
     "operation" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,

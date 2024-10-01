@@ -7,8 +7,8 @@ import { toast } from "@/components/ui/use-toast";
 
 interface Params {
   ccNumber: string;
-  ticketId: number;
-  clientId: number;
+  ticketId: string;
+  clientId: string;
 }
 
 async function deleteTicketFn({ ticketId, clientId }: Params) {

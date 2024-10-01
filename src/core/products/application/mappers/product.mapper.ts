@@ -4,7 +4,7 @@ import type { ProductFormDto } from "../models/type";
 class ProductMapper {
   public static toDomain(product: ProductFormDto): ProductEntity {
     return ProductEntity.builder()
-      .id(product.id || -1)
+      .id(product.id || "")
       .barcode(product.barcode)
       .description(product.description)
       .costPrice(product.costPrice)

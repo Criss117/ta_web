@@ -22,8 +22,8 @@ class TicketsRepositoryImpl implements TicketsRepository {
   }
 
   async deleteTicket(
-    ticketId: number,
-    userId: number
+    ticketId: string,
+    userId: string
   ): Promise<CommonResponse<ClientEntity | null>> {
     const deletedTicket = await deleteTicketAction(ticketId, userId);
 
@@ -62,7 +62,7 @@ class TicketsRepositoryImpl implements TicketsRepository {
     };
   }
 
-  async findByid(id: number): Promise<CommonResponse<TicketEntity | null>> {
+  async findByid(id: string): Promise<CommonResponse<TicketEntity | null>> {
     const ticket = await findTicketByIdAction(id);
 
     if (!ticket.data) {

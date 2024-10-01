@@ -19,7 +19,7 @@ import LoaderComponent from "@/components/ui/loader-component";
 import useDebtPaymentForm from "@Core/clients/application/hooks/use.debt-payment.form";
 
 interface Props {
-  clientId: number;
+  clientId: string;
   disabled?: boolean;
 }
 

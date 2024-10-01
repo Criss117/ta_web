@@ -10,7 +10,7 @@ import useTicketsSaleState from "../state/use.tickets-sale.state";
 
 interface Props {
   newTicket: TicketToSaleEntity;
-  userId?: number;
+  userId?: string;
   ccNumber?: string;
 }
 

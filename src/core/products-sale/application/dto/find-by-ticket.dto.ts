@@ -1,4 +1,4 @@
 export interface FindByTicketDto {
-  ticketId: number;
-  clientId: number;
+  ticketId: string;
+  clientId: string;
 }

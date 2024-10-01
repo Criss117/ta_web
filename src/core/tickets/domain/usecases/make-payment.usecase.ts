@@ -16,7 +16,7 @@ class MakePaymentUseCase {
 
   async execute(
     newTicket: TicketToSaleEntity,
-    userId?: number,
+    userId?: string,
     ccNumber?: string
   ) {
     return await this.ticketsRepository.makePayment(

@@ -13,12 +13,12 @@ import { Button } from "@/components/ui/button";
 
 interface Props {
   ccNumber: string;
-  clientId: number;
+  clientId: string;
   tickets: Array<TicketEntity>;
 }
 
 const TicketsProductsList = ({ clientId, tickets, ccNumber }: Props) => {
-  const [currentTicketId, setCurrentTicketId] = useState(-1);
+  const [currentTicketId, setCurrentTicketId] = useState("");
   const { isPending, isSuccess, deleteTicket } = useDeleteTicket({
     clientId,
     ticketId: currentTicketId,
@@ -26,23 +26,23 @@ const TicketsProductsList = ({ clientId, tickets, ccNumber }: Props) => {
   });
 
   const currentTicket = useMemo(() => {
-    if (currentTicketId <= 0) return undefined;
+    if (currentTicketId.length <= 0) return undefined;
     return tickets.find((ticket) => ticket.id === currentTicketId);
   }, [currentTicketId, tickets]);
 
   const handleDelete = useCallback(() => {
-    if (currentTicketId <= 0) return;
+    if (currentTicketId.length <= 0) return;
     deleteTicket();
   }, [currentTicketId]);
 
   useEffect(() => {
     if (!isSuccess) return;
 
-    if (currentTicketId > 0) {
-      setCurrentTicketId(-1);
+    if (currentTicketId.length > 0) {
+      setCurrentTicketId("");
     }
 
-    return () => setCurrentTicketId(-1);
+    return () => setCurrentTicketId("");
   }, [isSuccess]);
 
   return (
@@ -64,7 +64,7 @@ const TicketsProductsList = ({ clientId, tickets, ccNumber }: Props) => {
           </p>
           <Separator orientation="vertical" />
           <div className="my-auto mx-10 space-x-5">
-            {currentTicketId <= 0 ? (
+            {currentTicketId.length <= 0 ? (
               <>
                 <Button disabled>Imprimir</Button>
                 <Button variant="destructive" disabled>

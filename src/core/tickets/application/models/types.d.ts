@@ -7,7 +7,7 @@ export type TicketMonth = {
 };
 
 export type TicketList = {
-  id: number;
+  id: string;
   total: number;
   day: number;
   dayId: number;

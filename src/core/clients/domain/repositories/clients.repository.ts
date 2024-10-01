@@ -17,7 +17,7 @@ export interface ClientRepository {
   ) => Promise<CommonResponse<ClientEntity | null>>;
 
   deleteClient: (
-    id: number,
+    id: string,
     ccNumber: string
   ) => Promise<CommonResponse<ClientEntity | null>>;
 
@@ -30,6 +30,6 @@ export interface ClientRepository {
   ): Promise<CommonResponse<ClientEntity | null>>;
 
   settleDebt: (
-    clientId: number
+    clientId: string
   ) => Promise<CommonResponse<ClientEntity | null>>;
 }
