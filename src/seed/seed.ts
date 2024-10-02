@@ -6,11 +6,13 @@ async function main() {
 
   console.log("Seeding...");
 
-  // await prisma.debtPayment.deleteMany().catch((e) => console.log(e));
+  await prisma.syncRemote.deleteMany().catch((e) => console.log(e));
 
-  // await prisma.productSale.deleteMany().catch((e) => console.log(e));
+  await prisma.debtPayment.deleteMany().catch((e) => console.log(e));
 
-  // await prisma.ticket.deleteMany().catch((e) => console.log(e));
+  await prisma.productSale.deleteMany().catch((e) => console.log(e));
+
+  await prisma.ticket.deleteMany().catch((e) => console.log(e));
 
   await prisma.product
     .deleteMany()

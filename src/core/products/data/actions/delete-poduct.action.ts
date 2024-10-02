@@ -46,7 +46,6 @@ async function deleteProductAction(
       data: { ...deletedProduct, productSale: [] },
     };
   } catch (error) {
-    console.log(error);
     return validateError(error);
   }
 }

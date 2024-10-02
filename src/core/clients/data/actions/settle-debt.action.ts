@@ -6,7 +6,6 @@ import prisma from "@/lib/prisma";
 import validateError from "@/core/common/lib/validate-errors";
 import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
-import createManySyncAction from "@/core/sync-remote/data/actions/create-many-sync.action";
 import createSyncAction from "@/core/sync-remote/data/actions/create-sync.action";
 import {
   SyncOperationEnum,

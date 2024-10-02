@@ -27,8 +27,6 @@ const useMakePayment = () => {
   const makePaymentMutation = useMutation({
     mutationFn: makePayment,
     onSuccess: (response) => {
-      console.log({ response });
-
       if (!response || response.error) {
         toast({
           variant: "destructive",

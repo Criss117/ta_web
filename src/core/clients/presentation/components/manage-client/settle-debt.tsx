@@ -15,12 +15,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import useSettleDebt from "@Core/clients/application/hooks/use.settle-debt";
+import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 
 interface Props {
-  clientId: string;
+  client: ClientEntity;
 }
 
-const SettleDebt = ({ clientId }: Props) => {
+const SettleDebt = ({ client }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { isPending, isSuccess, onSettleDebt } = useSettleDebt();
 
@@ -31,7 +32,7 @@ const SettleDebt = ({ clientId }: Props) => {
   }, [isSuccess]);
 
   const handleClick = () => {
-    onSettleDebt(clientId);
+    onSettleDebt(client.id);
   };
 
   return (

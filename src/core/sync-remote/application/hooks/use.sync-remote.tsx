@@ -1,8 +1,9 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SyncRemoteUseCasesFactory from "../../composition-root/sync-remote-usecases.factory";
 import { toast } from "@/components/ui/use-toast";
+import { axiosInstance } from "@/core/common/lib/networking";
 
 async function syncRemote() {
   const syncRemoteUseCase = SyncRemoteUseCasesFactory.createSyncRemote();
@@ -11,6 +12,8 @@ async function syncRemote() {
 }
 
 const useSyncRemote = () => {
+  const queryClient = useQueryClient();
+
   const syncRemoteMutation = useMutation({
     mutationFn: syncRemote,
     onSuccess: (response) => {
@@ -24,6 +27,10 @@ const useSyncRemote = () => {
         return;
       }
 
+      queryClient.refetchQueries({
+        queryKey: ["sync-remote"],
+      });
+
       toast({
         title: "Sincronización exitosa",
         description: "Se ha sincronizado correctamente",
@@ -31,7 +38,7 @@ const useSyncRemote = () => {
     },
   });
 
-  const synchronize = () => {
+  const synchronize = async () => {
     syncRemoteMutation.mutate();
   };
 

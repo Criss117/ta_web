@@ -17,9 +17,10 @@ import FormItemInput from "@/components/form/form-item-input";
 import { Separator } from "@/components/ui/separator";
 import LoaderComponent from "@/components/ui/loader-component";
 import useDebtPaymentForm from "@Core/clients/application/hooks/use.debt-payment.form";
+import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 
 interface Props {
-  clientId: string;
+  client: ClientEntity;
   disabled?: boolean;
 }
 
@@ -41,7 +42,7 @@ const formItemsNumber = [
   },
 ] as const;
 
-const CreateDebtPayment = ({ clientId }: Props) => {
+const CreateDebtPayment = ({ client }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     debtPaymentForm,
@@ -50,7 +51,7 @@ const CreateDebtPayment = ({ clientId }: Props) => {
     onCreateDebtPayment,
     clearForm,
   } = useDebtPaymentForm({
-    clientId,
+    client,
   });
 
   useEffect(() => {

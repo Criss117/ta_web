@@ -18,7 +18,7 @@ interface Props {
 const ManageClient = ({ ccNumber }: Props) => {
   const { data, isPending } = useFindClient(ccNumber, true);
 
-  if (isPending) {
+  if (isPending || !data) {
     return <ManageClientSkeleton />;
   }
 
@@ -43,7 +43,7 @@ const ManageClient = ({ ccNumber }: Props) => {
             </p>
           </div>
         </header>
-        <ActionsNav clientId={data?.id} />
+        <ActionsNav client={data} />
         <TicketsProductsList
           ccNumber={ccNumber}
           clientId={data?.id || ""}

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import SettleDebt from "./settle-debt";
 import DebtPaymentList from "../debt-payment/debt-payment-list";
 import CreateDebtPayment from "../debt-payment/create-debt-payment";
+import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 
 const ActionsNavList = [
   {
@@ -41,16 +42,16 @@ const ActionsNavList = [
 
 interface Props {
   disabled?: boolean;
-  clientId?: string;
+  client?: ClientEntity;
 }
 
-const ActionsNav = ({ disabled = false, clientId }: Props) => {
+const ActionsNav = ({ disabled = false, client }: Props) => {
   return (
     <nav className="mt-5 space-x-5">
       {ActionsNavList.map(({ title, icon: Icon, cmp: Cmp }, index) => {
-        if (Cmp && !disabled && clientId) {
+        if (Cmp && !disabled && client) {
           return (
-            <Cmp key={title + index} clientId={clientId} disabled={disabled} />
+            <Cmp key={title + index} client={client} disabled={disabled} />
           );
         }
 

@@ -50,6 +50,9 @@ async function createSyncAction(
     where: {
       tableName: tableName,
       operation: operation,
+      state: {
+        not: SyncStateEnum.SUCCESS,
+      },
       recordId: recordId,
       isActive: true,
     },

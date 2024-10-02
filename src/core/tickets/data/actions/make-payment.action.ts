@@ -98,7 +98,6 @@ async function makePaymentAction(
       data: ticket,
     };
   } catch (error) {
-    console.log(validateError(error));
     return validateError(error);
   }
 }

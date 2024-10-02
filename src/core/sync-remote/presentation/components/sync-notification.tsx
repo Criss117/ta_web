@@ -13,10 +13,10 @@ import useSyncRemote from "../../application/hooks/use.sync-remote";
 import { cn } from "@/lib/utils";
 
 const SyncNotification = () => {
-  const { data } = useCountSync();
+  const { data, isPending: countPending } = useCountSync();
   const { synchronize, isPending } = useSyncRemote();
 
-  if (data === 0) {
+  if (data === 0 || countPending) {
     return <Button disabled>Datos sincronizados</Button>;
   }
 

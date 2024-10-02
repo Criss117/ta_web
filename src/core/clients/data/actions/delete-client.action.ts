@@ -10,6 +10,7 @@ import {
   SyncOperationEnum,
   SyncTableEnum,
 } from "@/core/sync-remote/domain/interfaces/sync-remote";
+import deleteTicketsAction from "@/core/tickets/data/actions/delete-tickets.action";
 
 export async function deleteClientAction({
   ccNumber,
@@ -36,6 +37,8 @@ export async function deleteClientAction({
         },
         tx
       );
+
+      await deleteTicketsAction(res.id, tx);
 
       return res;
     });

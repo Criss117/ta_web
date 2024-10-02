@@ -18,17 +18,18 @@ import DebtPaymentSummaryDto from "@Core/clients/application/dto/debt-payment-su
 import useDeleteDebtPay from "@Core/clients/application/hooks/use.delete-debt-pay";
 
 import DebtPaymentTable from "./debt-payment-table";
+import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 
 interface Props {
-  clientId: string;
+  client: ClientEntity;
 }
 
-const DebtPaymentList = ({ clientId }: Props) => {
+const DebtPaymentList = ({ client }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDebtPay, setSelectedDebtPay] =
     useState<DebtPaymentSummaryDto | null>(null);
 
-  const { data, onFindDebtPays } = useFindDebtPays(clientId);
+  const { data, onFindDebtPays } = useFindDebtPays(client.id);
   const { deleteDebtPayMutation, mutate } = useDeleteDebtPay({
     clientId: selectedDebtPay?.clientId || "",
     id: selectedDebtPay?.id || "",

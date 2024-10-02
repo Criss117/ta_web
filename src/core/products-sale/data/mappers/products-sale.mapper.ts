@@ -32,6 +32,7 @@ class ProductsSaleMapper {
       .quantity(productsSale.quantity)
       .subTotal(productsSale.subTotal)
       .productId(productsSale.productId)
+      .ticketId(productsSale.ticketId)
       .createdAt(productsSale.createdAt)
       .updatedAt(productsSale.updatedAt)
       .deletedAt(productsSale.deletedAt)

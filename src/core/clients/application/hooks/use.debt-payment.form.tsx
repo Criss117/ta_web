@@ -6,8 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { DebtPaymentForm } from "../models/type";
 import { CreateDebtPaymentSchema } from "../models/schemas";
 import useCreateDebtPayment from "./use.create-debt-payment";
+import ClientEntity from "../../domain/entitites/client.entity";
 
-const useDebtPaymentForm = ({ clientId }: { clientId: string }) => {
+const useDebtPaymentForm = ({ client }: { client: ClientEntity }) => {
   const {
     isPending,
     isSuccess,
@@ -18,13 +19,22 @@ const useDebtPaymentForm = ({ clientId }: { clientId: string }) => {
     resolver: zodResolver(CreateDebtPaymentSchema),
     defaultValues: {
       amount: 0,
-      clientId,
+      clientId: client.id,
     },
   });
 
   const onCreateDebtPayment = debtPaymentForm.handleSubmit(
     (data: DebtPaymentForm) => {
-      onMutate(data.amount, clientId);
+      if (data.amount <= 0 || data.amount > client.balance) {
+        debtPaymentForm.setError("amount", {
+          type: "custom",
+          message: "El monto no puede ser negativo o mayor al saldo disponible",
+        });
+
+        return;
+      }
+
+      onMutate(data.amount, client.id);
     }
   );
 
