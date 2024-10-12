@@ -1,3 +1,5 @@
+/** @format */
+
 export const PRISMA_CODES = {
   ERRORS: [
     {
@@ -14,3 +16,10 @@ export const PRISMA_CODES = {
     },
   ],
 };
+
+export const AXIOS_ERROR_CODES = {
+  ECONNREFUSED: {
+    message: "Error de conexión",
+    code: "ECONNREFUSED",
+  },
+} as const;

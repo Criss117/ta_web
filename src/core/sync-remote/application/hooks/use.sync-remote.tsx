@@ -1,3 +1,5 @@
+/** @format */
+
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -28,7 +30,7 @@ const useSyncRemote = () => {
       }
 
       queryClient.refetchQueries({
-        queryKey: ["sync-remote"],
+        queryKey: ["count-sync"],
       });
 
       toast({
