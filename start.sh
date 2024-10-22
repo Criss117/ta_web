@@ -5,6 +5,6 @@ export NVM_DIR="$HOME/.nvm"
 nvm use default  # O la versión específica de Node.js que estés usando
 
 cd /home/cristian/Desktop/projects/tienda_andres/code/ta_web
+/home/cristian/.local/share/pnpm/pnpm build
 /home/cristian/.local/share/pnpm/pnpm dev
-touch something.txt
 read -p "Presiona Enter para cerrar..."

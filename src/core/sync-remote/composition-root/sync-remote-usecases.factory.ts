@@ -1,3 +1,5 @@
+/** @format */
+
 import ClientRepositoryImlp from "@/core/clients/data/repositories/client.repository.impl";
 import SyncRemoteRepositoryImpl from "../data/repositories/sync-remote.repository.impl";
 import SyncRemoteService from "../domain/service/sync-remote.service";
@@ -8,6 +10,7 @@ import ProductRepositoryImpl from "@/core/products/data/repositories/product.rep
 import TicketsRepositoryImpl from "@/core/tickets/data/repositories/tickets.repository.impl";
 import ProductsSaleRepositoryImpl from "@/core/products-sale/data/repositories/products-sale.repository.impl";
 import DebtPaysRepositoryImpl from "@/core/clients/data/repositories/debt-pays.repository.impl";
+import CheckSyncUseCase from "../domain/usecases/check-sync.usecase";
 
 class SyncRemoteUseCasesFactory {
   private static syncRemoteRepository = SyncRemoteRepositoryImpl.getInstance();
@@ -37,6 +40,13 @@ class SyncRemoteUseCasesFactory {
       this.ticketsRepository,
       this.productsSaleRepository,
       this.debtPaysRepository
+    );
+  }
+
+  static createCheckSync() {
+    return CheckSyncUseCase.getInstance(
+      this.syncRemoteRepository,
+      this.createSyncRemote()
     );
   }
 }

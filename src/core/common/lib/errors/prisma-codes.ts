@@ -19,7 +19,7 @@ export const PRISMA_CODES = {
 
 export const AXIOS_ERROR_CODES = {
   ECONNREFUSED: {
-    message: "Error de conexión",
+    message: "Error de conexión, el servidor no respondio",
     code: "ECONNREFUSED",
   },
 } as const;
