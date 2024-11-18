@@ -1,7 +1,3 @@
-/** @format */
-
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import SyncRemoteUseCasesFactory from "../../composition-root/sync-remote-usecases.factory";
 

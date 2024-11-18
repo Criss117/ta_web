@@ -1,11 +1,6 @@
-/** @format */
-
-"use client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import SyncRemoteUseCasesFactory from "../../composition-root/sync-remote-usecases.factory";
 import { toast } from "@/components/ui/use-toast";
-import { axiosInstance } from "@/core/common/lib/networking";
 
 async function syncRemote() {
   const syncRemoteUseCase = SyncRemoteUseCasesFactory.createSyncRemote();

@@ -1,5 +1,3 @@
-"use client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import DebtPaysUseCasesFactory from "../../composition-root/debt-pay.usecases.factory";
 import { DEBT_PAYMENT_MESSAGES } from "@/lib/messages/pay.message";

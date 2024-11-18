@@ -1,5 +1,3 @@
-"use client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TicketUseCaseFactory from "../../composition-root/ticket.usecase.factory";
 import { TICKET_MESSAGE } from "@/lib/messages/ticket.message";

@@ -1,5 +1,3 @@
-"use client";
-
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/components/ui/use-toast";
 import { CLIENT_FORM_MESSAGES } from "@/lib/messages/product.messages";

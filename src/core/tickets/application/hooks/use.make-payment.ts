@@ -1,12 +1,11 @@
-"use client";
-
 import { useMutation } from "@tanstack/react-query";
-import TicketUseCaseFactory from "../../composition-root/ticket.usecase.factory";
-import TicketToSaleEntity from "../../domain/entities/ticket-to-sale.entity";
+
 import { toast } from "@/components/ui/use-toast";
-import { isErrored } from "stream";
+
 import usePaymentState from "../state/payment.state";
 import useTicketsSaleState from "../state/use.tickets-sale.state";
+import TicketToSaleEntity from "../../domain/entities/ticket-to-sale.entity";
+import TicketUseCaseFactory from "../../composition-root/ticket.usecase.factory";
 
 interface Props {
   newTicket: TicketToSaleEntity;

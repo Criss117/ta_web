@@ -1,5 +1,3 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import DebtPaysUseCasesFactory from "../../composition-root/debt-pay.usecases.factory";
 

@@ -1,9 +1,9 @@
-"use client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import ClientUseCasesFactory from "../../composition-root/client-usecases.factory";
+
 import { toast } from "@/components/ui/use-toast";
 import { SETTLE_DEBT_MESSAGE } from "@/lib/messages/ticket.message";
+
+import ClientUseCasesFactory from "../../composition-root/client-usecases.factory";
 
 async function settleDebt(clientId: string) {
   const settleDebtUseCase = ClientUseCasesFactory.createSettleDebt();

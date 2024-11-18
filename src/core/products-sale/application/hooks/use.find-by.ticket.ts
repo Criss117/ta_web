@@ -1,5 +1,3 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import { FindByTicketDto } from "../dto/find-by-ticket.dto";
 import ProductsSaleUseCasesFactory from "../../composition-root/products-sale-usecase.factory";
