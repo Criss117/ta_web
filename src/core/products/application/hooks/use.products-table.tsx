@@ -10,12 +10,14 @@ interface Props {
   offset?: number;
   filters?: Filters;
 }
+
 async function findProducts(page: number, offset: number, filters?: Filters) {
   if (page < 0) return;
   const findProductsUseCase = ProductsUseCasesfactory.createFindManyUseCase();
 
   return await findProductsUseCase.execute(offset, page, filters);
 }
+
 const useProductsTable = ({ page = 1, offset = 10, filters }: Props) => {
   const findProductsQuery = useQuery({
     queryKey: [

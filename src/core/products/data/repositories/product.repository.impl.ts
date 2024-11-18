@@ -1,21 +1,21 @@
 import { CommonResponse, Filters } from "@Core/common/models/types";
 
 import ProductMapper from "../mappers/product.mapper";
+import ProductEntity from "../../domain/entities/product.entity";
+import ProductRepository from "../../domain/repositories/product.repository";
 import findProductAction from "../actions/find-product.action";
 import editProductAction from "../actions/edit-product.action";
-import ProductEntity from "../../domain/entities/product.entity";
 import findProductsAction from "../actions/find-products.action";
 import createProductAction from "../actions/create-product.action";
-import { countProductsAction } from "../actions/count-products.action";
-import ProductRepository from "../../domain/repositories/product.repository";
+import countProductsAction from "../actions/count-products.action";
 import deleteProductAction from "../actions/delete-poduct.action";
 
 class ProductRepositoryImpl implements ProductRepository {
-  private static instance: ProductRepositoryImpl;
+  private static instance: ProductRepository;
 
   private constructor() {}
 
-  public static getInstance(): ProductRepositoryImpl {
+  public static getInstance(): ProductRepository {
     if (!this.instance) {
       this.instance = new ProductRepositoryImpl();
     }

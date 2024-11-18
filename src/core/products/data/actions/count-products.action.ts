@@ -10,7 +10,7 @@ import validateError from "@/core/common/lib/validate-errors";
 import { BadRequestException } from "@/core/common/lib/errors/exeptions-handler";
 import HttpStatusCodes from "@/core/common/lib/http-status-code";
 
-export async function countProductsAction(
+async function countProductsAction(
   query?: string
 ): Promise<CommonResponse<number | null>> {
   try {
@@ -52,3 +52,5 @@ export async function countProductsAction(
     return validateError(error);
   }
 }
+
+export default countProductsAction;
