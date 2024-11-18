@@ -1,5 +1,3 @@
-"use client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ProductsUseCasesfactory from "../../composition-root/products.usecases.factory";
 import { toast } from "@/components/ui/use-toast";

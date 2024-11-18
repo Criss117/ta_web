@@ -7,7 +7,7 @@ import { ROUTES } from "@/lib/constants/nav";
 import SearchBarQuery from "@/components/form/search-bar-query";
 import { buttonVariants } from "@/components/ui/button";
 
-import ProductsTable from "../components/products-table/products-table";
+import ProductsTable from "../components/products-table";
 import usePageableState, { OffSet } from "@Core/common/state/pageable.state";
 
 interface Props {

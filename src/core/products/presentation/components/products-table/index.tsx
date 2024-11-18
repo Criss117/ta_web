@@ -1,11 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import useProductsTable from "@Core/products/application/hooks/use.products-table";
 import { useEffect } from "react";
+
+import useProductsTable from "@Core/products/application/hooks/use.products-table";
 import TablePag from "@/components/table/table-pag";
-import { productsColumns } from "./products-column";
 import TableComponent from "@Core/table/components/table-component";
+
+import { productsColumns } from "./products-column";
 
 interface Props {
   page: number;
