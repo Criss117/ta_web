@@ -1,11 +1,12 @@
 import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { ROUTES } from "@/lib/constants/nav";
 import { toast } from "@/components/ui/use-toast";
 import { errorMessage } from "@Core/common/lib/error-message";
 import { PRODUCT_FORM_MESSAGES } from "@/lib/messages/product.messages";
 
+import useProductsQuery from "./use.products-query";
 import type { ProductFormDto } from "../models/type";
 import ProductMapper from "../mappers/product.mapper";
 import ProductsUseCasesfactory from "../../composition-root/products.usecases.factory";
@@ -18,7 +19,7 @@ async function editProduct(product: ProductFormDto) {
 
 const useEditProduct = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const { editProduct: editFromCache } = useProductsQuery();
 
   const editProductMutation = useMutation({
     mutationFn: editProduct,
@@ -37,9 +38,7 @@ const useEditProduct = () => {
         title: PRODUCT_FORM_MESSAGES.SUCCESS,
       });
 
-      await queryClient.invalidateQueries({
-        queryKey: ["product", response.data?.barcode],
-      });
+      editFromCache(response);
 
       router.push(ROUTES.PRODUCTS);
     },

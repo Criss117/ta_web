@@ -21,6 +21,8 @@ async function createProductsSaleAction(
     throw new Error("No se puede crear un ticket sin transacción");
   }
 
+  console.log(products);
+
   const createdProducts = await tx.productSale.createManyAndReturn({
     data: products,
   });

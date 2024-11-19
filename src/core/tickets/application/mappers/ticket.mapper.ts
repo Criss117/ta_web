@@ -1,5 +1,6 @@
+import ProductEntity from "@/core/products/domain/entities/product.entity";
 import TicketEntity from "../../domain/entities/ticket.entity";
-import { TicketYear } from "../models/types";
+import { CommonArtDto, TicketYear } from "../models/types";
 
 class TicketMapper {
   static domainToTicketYear(tickets: Array<TicketEntity>): TicketYear {
@@ -27,6 +28,18 @@ class TicketMapper {
 
       return acc;
     }, {});
+  }
+  static commonArtToProductTicket(commonArt: CommonArtDto): ProductEntity {
+    return ProductEntity.builder()
+      .barcode(commonArt.barcode)
+      .description(commonArt.description)
+      .salePrice(commonArt.salePrice)
+      .costPrice(commonArt.salePrice)
+      .wholesalePrice(commonArt.salePrice)
+      .stock(commonArt.quantity)
+      .minStock(commonArt.quantity)
+      .isActive(true)
+      .build();
   }
 }
 

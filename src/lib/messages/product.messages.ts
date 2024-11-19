@@ -38,6 +38,11 @@ export const PRODUCT_FORM_MESSAGES = {
     MIN: "El stock minimo debe ser mayor a 0",
     MAX_STOCK: "El stock minimo debe ser menor o igual al stock",
   },
+  QUANTITY: {
+    REQUIRED: "La cantidad es requerida",
+    MIN: "La cantidad debe ser mayor a 0",
+    MAX_STOCK: "La cantidad debe ser menor o igual al stock",
+  },
   DELETED_SUCCESS: "Producto eliminado exitosamente",
   DELETED_ERROR: "Error al eliminar el producto",
   SUCCESS: "Producto guardado exitosamente",

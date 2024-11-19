@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { CommonArtSchema } from "./schemas";
+
 export type TicketYear = {
   [x: number]: Record<number, TicketList[]>;
 };
@@ -12,3 +15,5 @@ export type TicketList = {
   day: number;
   dayId: number;
 };
+
+export type CommonArtDto = z.infer<typeof CommonArtSchema>;

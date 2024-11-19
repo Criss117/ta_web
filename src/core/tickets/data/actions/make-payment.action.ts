@@ -74,7 +74,7 @@ async function makePaymentAction(
       const promises = newProductsSale.map((p) => {
         return verifyStockAndDecrement({
           tx,
-          productId: p.productId,
+          productId: p.productId || "",
           quantity: p.quantity,
         });
       });

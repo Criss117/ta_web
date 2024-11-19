@@ -18,6 +18,8 @@ const TicketsScreen = () => {
 
   const currentTicket = getCurrentTicket();
 
+  console.log({ currentTicket });
+
   useEffect(() => {
     getStateFromLS();
   }, []);

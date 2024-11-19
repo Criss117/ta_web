@@ -1,12 +1,13 @@
 import { create } from "zustand";
 
+import ProductEntity from "@/core/products/domain/entities/product.entity";
+
 import TicketToSaleEntity from "../../domain/entities/ticket-to-sale.entity";
 import type {
   ChangeSalePriceOrQuantity,
   TicketTSList,
 } from "../../domain/interfaces/ticket-to-sale.service";
 import TicketServiceFactory from "../../composition-root/ticket.service.factory";
-import ProductEntity from "@Core/products/domain/entities/product.entity";
 import LocalStorageService from "../services/tickets-sale-ls.service";
 
 interface TicketsSaleState {
@@ -15,7 +16,6 @@ interface TicketsSaleState {
   // setInitialState: (tickets: TicketTSList, currentTicketId: number) => void;
   getStateFromLS: () => void;
   changeCurrentTicketId: (id: number) => void;
-
   clearTickets(): void;
   setNewTicket(): void;
   deleteTicket(ticketId: number): void;

@@ -25,6 +25,7 @@ model Product {
   isActive Boolean @default(true)
 
   productSales ProductSale[]
+
 }
 
 model Client {
@@ -84,8 +85,8 @@ model ProductSale {
   ticketId String
   ticket Ticket @relation(fields: [ticketId], references: [id])
 
-  productId String
-  product Product @relation(fields: [productId], references: [id])
+  productId String?
+  product Product? @relation(fields: [productId], references: [id])
 }
 
 model SyncRemote {
