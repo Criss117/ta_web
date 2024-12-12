@@ -6,5 +6,5 @@ export interface ProductSaleSummaryDto {
   product: {
     id: string;
     description: string;
-  };
+  } | null;
 }

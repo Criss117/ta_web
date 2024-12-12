@@ -19,7 +19,7 @@ class ProductsSaleMapper {
         .salePrice(productSale.salePrice)
         .quantity(productSale.quantity)
         .subTotal(productSale.subTotal)
-        .productId(productSale.product.id)
+        .productId(productSale.product?.id ?? "")
         .product(product.build())
         .build();
     });
@@ -31,7 +31,7 @@ class ProductsSaleMapper {
       .salePrice(productsSale.salePrice)
       .quantity(productsSale.quantity)
       .subTotal(productsSale.subTotal)
-      .productId(productsSale.productId)
+      .productId(productsSale?.productId ?? "")
       .ticketId(productsSale.ticketId)
       .createdAt(productsSale.createdAt)
       .updatedAt(productsSale.updatedAt)

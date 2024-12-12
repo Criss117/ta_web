@@ -16,6 +16,7 @@ class TicketMapper {
       .productSales(
         ticket.productSale.map((ps) => ({
           ...ps,
+          productId: ps.id ?? "",
           ticket: null,
           product: null,
         }))
