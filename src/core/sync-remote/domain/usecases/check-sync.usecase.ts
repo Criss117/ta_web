@@ -1,5 +1,3 @@
-/** @format */
-
 import type SyncRemoteRepository from "../repositories/sync-remote.repository";
 import SyncRemoteUseCase from "./sync-remote.usecase";
 

@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=Tienda Andres
-Exec=gnome-terminal -- bash -c "/home/cristian/Desktop/projects/tienda_andres/code/ta_web/start.sh; exec bash"
-Type=Application
-Terminal=false

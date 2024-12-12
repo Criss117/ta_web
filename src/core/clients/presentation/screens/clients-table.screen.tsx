@@ -32,12 +32,20 @@ const ClientsTableScreen = ({ offset, page }: Props) => {
           label="Nombre de cliente"
         />
 
-        <Link
-          className={buttonVariants({ variant: "default" })}
-          href={ROUTES.CREATE_CLIENTS}
-        >
-          Crear un cliente
-        </Link>
+        <nav className="space-x-2">
+          <Link
+            className={buttonVariants({ variant: "default" })}
+            href={ROUTES.CREATE_CLIENTS}
+          >
+            Crear un cliente
+          </Link>
+          <Link
+            className={buttonVariants({ variant: "default" })}
+            href={ROUTES.CREATE_CLIENTS}
+          >
+            Reporte de Saldos
+          </Link>
+        </nav>
       </div>
       <ClientsTable page={page} offset={offset} query={query} />
     </div>

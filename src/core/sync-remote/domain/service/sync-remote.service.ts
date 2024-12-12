@@ -1,5 +1,3 @@
-/** @format */
-
 import { ClientRepository } from "@/core/clients/domain/repositories/clients.repository";
 import SyncRemoteEntity from "../entities/sync-remote.entity";
 import {

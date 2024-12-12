@@ -66,14 +66,14 @@ const TicketsProductsList = ({ clientId, tickets, ccNumber }: Props) => {
           <div className="my-auto mx-10 space-x-5">
             {currentTicketId.length <= 0 ? (
               <>
-                <Button disabled>Imprimir</Button>
+                {/* <Button disabled>Imprimir</Button> */}
                 <Button variant="destructive" disabled>
                   Eliminar
                 </Button>
               </>
             ) : (
               <>
-                <Button>Imprimir</Button>
+                {/* <Button>Imprimir</Button> */}
                 <DeleteAlertDialog
                   isPending={isPending}
                   isSuccess={isSuccess}

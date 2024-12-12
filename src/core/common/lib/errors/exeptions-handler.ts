@@ -1,5 +1,3 @@
-/** @format */
-
 import { CommonResponse } from "../../models/types";
 import HttpStatusCodes from "../http-status-code";
 

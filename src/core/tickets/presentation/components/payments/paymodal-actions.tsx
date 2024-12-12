@@ -30,12 +30,12 @@ const PayModalActions = ({ isCredit, ticket }: Props) => {
   };
   return (
     <>
-      <Button className="w-full" onClick={handleClick} disabled={isPending}>
+      {/* <Button className="w-full" onClick={handleClick} disabled={isPending}>
         <LoaderComponent
           title="Cobrar e imprimir Ticket"
           isLoading={isPending}
         />
-      </Button>
+      </Button> */}
       <Button className="w-full" onClick={handleClick} disabled={isPending}>
         <LoaderComponent
           title="Cobrar solo registrando la venta"

@@ -1,5 +1,3 @@
-/** @format */
-
 "use server";
 
 import { SyncRemote } from "@prisma/client";

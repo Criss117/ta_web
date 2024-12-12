@@ -1,5 +1,3 @@
-/** @format */
-
 import { Prisma } from "@prisma/client";
 import { CommonResponse } from "../models/types";
 import {

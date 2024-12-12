@@ -11,16 +11,16 @@ import CreateDebtPayment from "../debt-payment/create-debt-payment";
 import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 
 const ActionsNavList = [
-  {
-    title: "Imprimir Estado",
-    icon: Printer,
-    cmp: null,
-  },
-  {
-    title: "Imprimir Edo. Cuenta Completa",
-    icon: Printer,
-    cmp: null,
-  },
+  // {
+  //   title: "Imprimir Estado",
+  //   icon: Printer,
+  //   cmp: null,
+  // },
+  // {
+  //   title: "Imprimir Edo. Cuenta Completa",
+  //   icon: Printer,
+  //   cmp: null,
+  // },
   {
     title: "Abonar",
     icon: CircleDollarSign,

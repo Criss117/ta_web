@@ -23,6 +23,7 @@ export const ROUTES = {
   DELETE_PRODUCTS: "/products/delete",
   EDIT_CLIENTS: "/clients/edit",
   CREATE_CLIENTS: "/clients/create",
+  BALANCE_REPORT: "/clients/balance-report",
 } as const;
 
 export const NAVITEMS: NavItem[] = [

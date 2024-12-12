@@ -1,5 +1,3 @@
-/** @format */
-
 export const PRISMA_CODES = {
   ERRORS: [
     {

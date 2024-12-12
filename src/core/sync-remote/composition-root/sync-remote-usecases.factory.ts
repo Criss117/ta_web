@@ -1,5 +1,3 @@
-/** @format */
-
 import ClientRepositoryImlp from "@/core/clients/data/repositories/client.repository.impl";
 import SyncRemoteRepositoryImpl from "../data/repositories/sync-remote.repository.impl";
 import SyncRemoteService from "../domain/service/sync-remote.service";
