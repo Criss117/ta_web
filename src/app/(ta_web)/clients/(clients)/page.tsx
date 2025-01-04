@@ -4,13 +4,14 @@ import { ROUTES } from "@/lib/constants/nav";
 import ClientsTableScreen from "@Core/clients/presentation/screens/clients-table.screen";
 
 interface Props {
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string;
     offset?: string;
-  };
+  }>;
 }
 
-const ClientsPage = ({ searchParams }: Props) => {
+const ClientsPage = async (props: Props) => {
+  const searchParams = await props.searchParams;
   if (!searchParams) {
     redirect(ROUTES.CLIENTS);
   }
