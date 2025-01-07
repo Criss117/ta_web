@@ -1,7 +1,5 @@
-const BalanceReport = () => {
-  console.log("server");
-
-  return <div>ClientsRrtspos</div>;
+const BalancePage = () => {
+  return <div>BalancePage</div>;
 };
 
-export default BalanceReport;
+export default BalancePage;

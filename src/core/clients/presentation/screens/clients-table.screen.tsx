@@ -41,7 +41,7 @@ const ClientsTableScreen = ({ offset, page }: Props) => {
           </Link>
           <Link
             className={buttonVariants({ variant: "default" })}
-            href={ROUTES.CREATE_CLIENTS}
+            href={ROUTES.BALANCE_REPORT}
           >
             Reporte de Saldos
           </Link>
