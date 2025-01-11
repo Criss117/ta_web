@@ -8,6 +8,7 @@ import {
   SyncTableEnum,
 } from "@/core/sync-remote/domain/interfaces/sync-remote";
 import prisma from "@/lib/prisma";
+import { TicketStateEnum } from "../../domain/enums/ticket-state.enum";
 
 async function deleteTicketsAction(clientId: string, tx?: PrismaTx) {
   const prismaToUse = tx || prisma;
@@ -26,6 +27,7 @@ async function deleteTicketsAction(clientId: string, tx?: PrismaTx) {
       clientId,
     },
     data: {
+      state: TicketStateEnum.DELETED,
       deletedAt: new Date(),
       isActive: false,
     },

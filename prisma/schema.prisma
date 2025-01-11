@@ -43,17 +43,30 @@ model Client {
 
   tickets Ticket[]
   debtPayments DebtPayment[]
+  settleDebt SettleDebt[]
 }
 
 model DebtPayment {
   id String @id @default(uuid())
   amount Int
+  lastBalance Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   isActive Boolean @default(true)
 
   clientId String
+  client Client @relation(fields: [clientId], references: [id])
+}
+
+model SettleDebt {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  isActive Boolean @default(true)
+  
+  clientId String 
   client Client @relation(fields: [clientId], references: [id])
 }
 

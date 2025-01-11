@@ -36,6 +36,7 @@ async function createDebtPaymentAction(
         data: {
           amount,
           clientId,
+          lastBalance: client.balance,
         },
       });
 

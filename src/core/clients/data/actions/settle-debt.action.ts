@@ -37,6 +37,12 @@ async function settleDebtAction(
         },
       });
 
+      await tx.settleDebt.create({
+        data: {
+          clientId,
+        },
+      });
+
       await createSyncAction(
         {
           operation: SyncOperationEnum.SETTLE_DEBT,
@@ -61,6 +67,7 @@ async function settleDebtAction(
       },
     };
   } catch (error) {
+    console.log({ error });
     return validateError(error);
   }
 }

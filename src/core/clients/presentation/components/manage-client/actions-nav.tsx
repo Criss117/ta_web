@@ -1,14 +1,17 @@
 import {
   CircleDollarSign,
   CreditCard,
-  Printer,
   ReceiptText,
+  BookCopy,
 } from "lucide-react";
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
+import ClientEntity from "@/core/clients/domain/entitites/client.entity";
+
 import SettleDebt from "./settle-debt";
 import DebtPaymentList from "../debt-payment/debt-payment-list";
 import CreateDebtPayment from "../debt-payment/create-debt-payment";
-import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 
 const ActionsNavList = [
   // {
@@ -67,6 +70,12 @@ const ActionsNav = ({ disabled = false, client }: Props) => {
           </Button>
         );
       })}
+      <Button asChild variant="outline" className="space-x-2">
+        <Link href={`/clients/${client?.ccNumber}/report`}>
+          <BookCopy />
+          <span>Reporte</span>
+        </Link>
+      </Button>
     </nav>
   );
 };

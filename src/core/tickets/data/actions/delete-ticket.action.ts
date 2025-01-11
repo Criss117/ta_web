@@ -10,6 +10,7 @@ import {
 } from "@/core/sync-remote/domain/interfaces/sync-remote";
 import prisma from "@/lib/prisma";
 import { CommonResponse } from "@Core/common/models/types";
+import { TicketStateEnum } from "../../domain/enums/ticket-state.enum";
 
 async function deleteTicketAction(
   ticketId: string,
@@ -39,6 +40,7 @@ async function deleteTicketAction(
           },
         },
         data: {
+          state: TicketStateEnum.DELETED,
           deletedAt: new Date(),
           isActive: false,
         },

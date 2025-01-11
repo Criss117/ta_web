@@ -1,13 +1,14 @@
 import { NotFoundException } from "@/core/common/lib/errors/exeptions-handler";
-import TicketToSaleEntity from "../../domain/entities/ticket-to-sale.entity";
-import TicketEntity from "../../domain/entities/ticket.entity";
-import { TicketsRepository } from "../../domain/repositories/tickets.repository";
+import { CommonResponse } from "@/core/common/models/types";
+import ClientEntity from "@/core/clients/domain/entitites/client.entity";
+
 import deleteTicketAction from "../actions/delete-ticket.action";
 import makePaymentAction from "../actions/make-payment.action";
 import TicketMapper from "../mappers/ticket.mapper";
-import { CommonResponse } from "@/core/common/models/types";
-import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 import findTicketByIdAction from "../actions/find-ticket-by-id.action";
+import TicketEntity from "../../domain/entities/ticket.entity";
+import TicketToSaleEntity from "../../domain/entities/ticket-to-sale.entity";
+import { TicketsRepository } from "../../domain/repositories/tickets.repository";
 
 class TicketsRepositoryImpl implements TicketsRepository {
   private static instance: TicketsRepositoryImpl;
