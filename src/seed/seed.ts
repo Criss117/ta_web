@@ -4,11 +4,13 @@ import prisma from "../lib/prisma";
 async function main() {
   const items = JSON.parse(fs.readFileSync("./src/seed/data.json", "utf8"));
 
-  console.log("Seeding...");
+  console.info("Seeding...");
 
   await prisma.syncRemote.deleteMany().catch((e) => console.log(e));
 
   await prisma.debtPayment.deleteMany().catch((e) => console.log(e));
+
+  await prisma.settleDebt.deleteMany().catch((e) => console.log(e));
 
   await prisma.productSale.deleteMany().catch((e) => console.log(e));
 
@@ -32,7 +34,7 @@ async function main() {
     .catch((e) => console.log(e));
 
   prisma.$disconnect();
-  console.log("Completed");
+  console.info("Completed");
 }
 
 (() => {

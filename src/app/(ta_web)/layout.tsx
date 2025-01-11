@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 
 import NavBar from "@/components/ui/navbar";
 import { Toaster } from "@/components/ui/toaster";
