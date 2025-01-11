@@ -1,20 +1,19 @@
 "use client";
 
-import { useFindClientReport } from "../../application/hooks/use.find-client-report";
-import {
-  ClientReportTable,
-  ClientReportTableError,
-  ClientReportTableLoading,
-} from "../components/client-report-table";
+import { useFindClientReport } from "@/core/reports/client/application/hooks/use.find-client-report";
+import { ClientReportTable } from "../components/client-report-table";
+import SectionHeader from "@/components/ui/section-header";
+import { TITLES } from "@/lib/constants/metadata";
+import { formatCurrency } from "@/lib/utils";
+import BackButton from "@/components/ui/back-button";
+import ActionsNav from "@/core/clients/presentation/components/manage-client/actions-nav";
 
 interface Props {
   ccnumber: string;
 }
 
 const ClientReportScreen = ({ ccnumber }: Props) => {
-  const { data, isError, isFetching } = useFindClientReport(ccnumber);
-
-  if (isError) return <ClientReportTableError />;
+  const { data, isFetching } = useFindClientReport(ccnumber);
 
   return (
     <ClientReportTable

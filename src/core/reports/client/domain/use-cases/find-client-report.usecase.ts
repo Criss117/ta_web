@@ -13,7 +13,6 @@ export class FindClientReportUseCase {
   }
 
   execute(ccNumber: string) {
-    console.log("caching: find-client-report", { ccNumber });
     return this.clientReportRepository.findByCCNumber(ccNumber);
   }
 }

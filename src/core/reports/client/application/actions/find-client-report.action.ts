@@ -12,8 +12,6 @@ const findClientReportUseCase =
 export async function findClientReportAction(
   ccNumber: string
 ): Promise<CommonResponse<ClientReportPrimitive | null>> {
-  await sleep(3000);
-
   try {
     const executed = await findClientReportUseCase.execute(ccNumber);
 

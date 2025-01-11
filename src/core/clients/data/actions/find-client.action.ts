@@ -49,7 +49,7 @@ export async function findByIdOrCcNumber(
       include: {
         tickets: {
           where: {
-            state: findClientDto.obtainTickets ? "PENDING" : "NOT",
+            state: findClientDto.obtainTickets ? TicketStateEnum.PENDING : "",
             isActive: true,
           },
           orderBy: {

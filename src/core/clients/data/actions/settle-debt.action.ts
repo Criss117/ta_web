@@ -67,7 +67,6 @@ async function settleDebtAction(
       },
     };
   } catch (error) {
-    console.log({ error });
     return validateError(error);
   }
 }

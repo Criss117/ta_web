@@ -47,8 +47,6 @@ export class ClientReportRepositoryImpl implements ClientReportRepository {
       },
     });
 
-    console.log(debts);
-
     const clientReport = ClientReportMapper.consultToDomain(
       client,
       tickets,

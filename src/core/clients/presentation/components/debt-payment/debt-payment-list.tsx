@@ -79,6 +79,7 @@ const DebtPaymentList = ({ client }: Props) => {
           setSelectedDebtPayment={setSelectedDebtPay}
         />
         <DialogFooter className="h-[10%] flex sm:justify-between">
+          <Button onClick={() => setIsOpen(false)}>Cancelar</Button>
           <Button
             variant={selectedDebtPay === null ? "outline" : "destructive"}
             disabled={
@@ -88,7 +89,6 @@ const DebtPaymentList = ({ client }: Props) => {
           >
             Eliminar
           </Button>
-          <Button onClick={() => setIsOpen(false)}>Cancelar</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

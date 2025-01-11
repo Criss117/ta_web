@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CircleDollarSign,
   CreditCard,
@@ -12,6 +14,8 @@ import ClientEntity from "@/core/clients/domain/entitites/client.entity";
 import SettleDebt from "./settle-debt";
 import DebtPaymentList from "../debt-payment/debt-payment-list";
 import CreateDebtPayment from "../debt-payment/create-debt-payment";
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const ActionsNavList = [
   // {
@@ -49,8 +53,24 @@ interface Props {
 }
 
 const ActionsNav = ({ disabled = false, client }: Props) => {
+  const pathName = usePathname();
+
   return (
     <nav className="mt-5 space-x-5">
+      <Button
+        asChild
+        variant="outline"
+        className={cn(
+          "space-x-2",
+          pathName === `/clients/${client?.ccNumber}` && "border-black"
+        )}
+        disabled={disabled}
+      >
+        <Link href={`/clients/${client?.ccNumber}`}>
+          <BookCopy />
+          <span>Inicio</span>
+        </Link>
+      </Button>
       {ActionsNavList.map(({ title, icon: Icon, cmp: Cmp }, index) => {
         if (Cmp && !disabled && client) {
           return (
@@ -70,7 +90,16 @@ const ActionsNav = ({ disabled = false, client }: Props) => {
           </Button>
         );
       })}
-      <Button asChild variant="outline" className="space-x-2">
+      <Button
+        asChild
+        variant="outline"
+        className={cn(
+          "space-x-2",
+          pathName.includes(`/clients/${client?.ccNumber}/report`) &&
+            "border-black"
+        )}
+        disabled={disabled}
+      >
         <Link href={`/clients/${client?.ccNumber}/report`}>
           <BookCopy />
           <span>Reporte</span>
