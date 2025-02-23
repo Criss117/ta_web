@@ -25,11 +25,6 @@ const ProductsTable = ({ offset, page, query }: Props) => {
   });
 
   useEffect(() => {
-    if (page <= 0) return;
-    findProductsQuery.refetch();
-  }, [page, offset, query]);
-
-  useEffect(() => {
     if (data?.totalPage && page > data?.totalPage) {
       router.push(`?page=1&offset=${offset}`);
     }

@@ -77,7 +77,7 @@ const NavBar = ({ variant = "primary" }: Props) => {
       </div>
       <div className="flex justify-between flex-col">
         <Clock />
-        <SyncNotification />
+        {/* <SyncNotification /> */}
       </div>
     </nav>
   );
